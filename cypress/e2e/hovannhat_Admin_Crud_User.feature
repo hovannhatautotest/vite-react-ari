@@ -120,3 +120,17 @@ Feature: LOGIN FEATURE
     #     Then Required message "Vai trò" displayed under "Xin vui lòng chọn vai trò" field
 
     Rule: Verify error message
+        Scenario: SI-24: ERROR MESSAGE
+            #     When Click "Người Dùng" menu
+            When Click "Tạo mới" sub menu to "/vn/user/add"
+            When Enter "text" in "Họ và tên" with "_RANDOM_"
+            When Enter "email" in "Email" with "_RANDOM_"
+            When Enter "text" in "Mật khẩu" with "Password1!"
+            When Enter "text" in "Nhập lại mật khẩu" with "Password1!"
+            When Enter "phone" in "Số điện thoại" with "_RANDOM_"
+            When Enter date in "Ngày sinh" with "_RANDOM_"
+            When Click select "Vị trí" with "Tester"
+            When Enter date in "Ngày đầu đi làm" with "_RANDOM_"
+            When Click select "Vai trò" with "Supper Admin"
+            When Enter "words" in textarea "Mô tả" with "_RANDOM_"
+            When Select file in "Tải ảnh lên" with "image.jpg"
