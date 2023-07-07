@@ -89,7 +89,7 @@ Feature: LOGIN FEATURE
         Scenario: SI-17 Verify that the password can be displayed in text format when clicking on the 'Eye' icon.
             When Enter "text" in "Tên đăng nhập" with "hovannhat@gmail.com"
             And Enter "text" in "Mật khẩu" with "Nhat@01101999"
-            And Click Eye icon
+            And Click Eye icon with "Mật khẩu" and eq "0"
             Then User look password as text in "Mật khẩu"
 
     Rule: Verify refresh page

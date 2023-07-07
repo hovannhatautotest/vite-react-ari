@@ -59,7 +59,7 @@ Then('User look dashboard "{}"', common.validDashboard);
 Then('User look menu "{}" option', common.validTextMenu);
 Then('User look title "{}"', common.validtextTitle);
 Then('Click "{}" link', common.ClickForgotPassword);
-Then('Click Eye icon', common.ClickEyeIcon);
+Then('Click Eye icon with "{}" and eq "{}"', common.ClickEyeIcon);
 Then('User look title "{}" with form Forgot Password', common.validTitleForgotPassword);
 Then('User look password as text in "{}"', common.DisplayPassword);
 Then('Reload page', common.ReloadPage);
