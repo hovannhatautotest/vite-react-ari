@@ -1,0 +1,5 @@
+username = admin_balan@getnada.com
+password = Nhat@01101999
+validation = This is a required field!
+error1 = Tài khoản chưa được tạo hoặc chưa được kích hoạt.
+error2 = Tài khoản hoặc mật khẩu không đúng, vui lòng thử lại
