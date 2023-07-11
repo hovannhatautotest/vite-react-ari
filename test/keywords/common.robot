@@ -17,24 +17,29 @@ ${logo}        id:name-application
 
 ${notify}    xpath=//*[contains(@class, "swal2-confirm")]
 ${EYE}        css=#Layer_1.absolute
+
+${start_date}    xpath=//input[@placeholder="Ngày kết thúc"]
 *** Keywords ***
 
 Login to admin
   Enter "email" in "Tên đăng nhập" with "admin@admin.com"
   Enter "text" in "Mật khẩu" with "Password1!"
-  Click "Đăng nhập" button
+  Enter at "Mật khẩu" field to Login
+  # Click "Đăng nhập" button
   User look message "Thành công" popup
 
 Login to Manager
   Enter "email" in "Tên đăng nhập" with "hodutali_manager@husc.edu.vn"
   Enter "text" in "Mật khẩu" with "Nhat@01101999"
-  Click "Đăng nhập" button
+  Enter at "Mật khẩu" field to Login
+  # Click "Đăng nhập" button
   User look message "Thành công" popup
 
 Login to Staff
   Enter "email" in "Tên đăng nhập" with "hovannhat@gmail.com"
   Enter "text" in "Mật khẩu" with "Nhat@01101999"
-  Click "Đăng nhập" button
+  Enter at "Mật khẩu" field to Login
+  # Click "Đăng nhập" button
   User look message "Thành công" popup
 
 #### Setup e Teardown
@@ -231,7 +236,6 @@ Click assign list "${list}"
   END
   Click                     xpath=//*[contains(@class, "ant-transfer-operation")]/button[2]
 
-
 ###  -----  Table  -----  ###
 # Tìm phần tử trong danh sách dựa trên tên.
 Get Element Item By Name
@@ -367,3 +371,49 @@ User look "${name}" field EMPTY
     ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
     Element Text Should Be    ${element}    ${EMPTY}
 
+User look "${name}" field should be empty
+    ${element}        Set Variable       xpath=//span[text()='${name}']
+    Wait Until Element Is Visible                    ${element}
+    Element Text Should Be        ${element}        ${name}
+
+Enter leave date in "${field}" with "${text}"
+  ${text}=                  Get Random Text                   date                          ${text}
+  ${element}               Set Variable            xpath=//input[@placeholder="${field}"]
+  Click                     ${element}
+  Clear Text                ${element}
+  Fill Text                 ${element}                        ${text}
+
+User look leave date empty with "${field}"
+    ${element}               Set Variable            xpath=//input[@placeholder="${field}"]
+    Wait Until Element Is Visible            ${element}
+    Element Text Should Be                   ${element}            ${EMPTY}
+
+User look empty textarea with "${name}"
+    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+    Wait Until Element Is Visible        ${element}
+    Element Text Should Be    ${element}    ${EMPTY}
+
+Enter at "${name}" field to Login
+    ${element}=    Get Element Form Item By Name    ${name}    //input[contains(@class, "ant-input")]
+    Press Keys    ${element}    Enter
+
+Delele select "Thời gian" field
+    Click    css=span.ant-select-clear 
+
+User look all field should be empty
+    And User look "Chọn loại phép" field should be empty
+    And User look "Chọn thời gian" field should be empty
+    And User look leave date empty with "Ngày bắt đầu"
+    And User look leave date empty with "Ngày kết thúc"
+    And User look empty textarea with "Lý do"
+
+Click double "Quản lý" field with ${manager}
+    ${element}        Set Variable        xpath=//span[contains(text(),'${manager}')]
+    Wait Until Element Is Visible        ${element}
+    Double Click Element      ${element}
+
+Double Click Element
+    [Arguments]        ${elementLocator}
+    ${elementText}=        Get Random Text    Text        ${elementLocator}
+    Fill Text        ${elementLocator}        ${elementText}
+    Double Click Element        ${elementLocator}
