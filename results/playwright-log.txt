@@ -1,0 +1,96 @@
+{"level":30,"time":"2023-07-12T04:46:04.380Z","pid":12956,"hostname":"Admin","msg":"Listening on 54132"}
+{"level":30,"time":"2023-07-12T04:46:04.530Z","pid":12956,"hostname":"Admin","msg":"Start of node method getBrowserCatalog"}
+{"level":30,"time":"2023-07-12T04:46:04.532Z","pid":12956,"hostname":"Admin","msg":"End of node method getBrowserCatalog"}
+{"level":30,"time":"2023-07-12T04:46:04.542Z","pid":12956,"hostname":"Admin","msg":"Start of node method getBrowserCatalog"}
+{"level":30,"time":"2023-07-12T04:46:04.542Z","pid":12956,"hostname":"Admin","msg":"End of node method getBrowserCatalog"}
+================= Original suppressed error =================
+Error: Browser has been closed.
+    at PlaywrightState.getActiveBrowser (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:9436:15)
+    at PlaywrightServer.getActiveBrowser (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:9969:59)
+    at PlaywrightServer.setTimeout (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:10214:57)
+    at C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:821:17
+    at Http2ServerCallStream.safeDeserializeMessage (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-call.js:395:13)
+    at ServerHttp2Stream.onEnd (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-call.js:382:22)
+    at ServerHttp2Stream.emit (node:events:525:35)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+=============================================================
+{"level":30,"time":"2023-07-12T04:46:04.574Z","pid":12956,"hostname":"Admin","msg":"Start of node method newBrowser"}
+{"level":30,"time":"2023-07-12T04:46:06.241Z","pid":12956,"hostname":"Admin","msg":"End of node method newBrowser"}
+{"level":30,"time":"2023-07-12T04:46:06.254Z","pid":12956,"hostname":"Admin","msg":"Start of node method newPage"}
+{"level":30,"time":"2023-07-12T04:46:06.254Z","pid":12956,"hostname":"Admin","msg":"currentBrowser: [object Object]"}
+{"level":30,"time":"2023-07-12T04:46:06.336Z","pid":12956,"hostname":"Admin","msg":"Changed active context"}
+{"level":30,"time":"2023-07-12T04:46:07.352Z","pid":12956,"hostname":"Admin","msg":"Video path: undefined"}
+{"level":30,"time":"2023-07-12T04:46:07.353Z","pid":12956,"hostname":"Admin","msg":"Changed active page"}
+{"level":30,"time":"2023-07-12T04:46:09.811Z","pid":12956,"hostname":"Admin","msg":"End of node method newPage"}
+{"level":30,"time":"2023-07-12T04:46:10.015Z","pid":12956,"hostname":"Admin","msg":"Start of node method clearText"}
+{"level":30,"time":"2023-07-12T04:46:10.016Z","pid":12956,"hostname":"Admin","msg":"Strict mode is enabled, find Locator with xpath=//*[contains(@class, \"ant-form-item-label\")]/label[text()=\"Tên đăng nhập\"]/../../*[contains(@class, \"ant-form-item\")]//input[contains(@class, \"ant-input\")] in page."}
+{"level":30,"time":"2023-07-12T04:46:14.215Z","pid":12956,"hostname":"Admin","msg":"End of node method clearText"}
+{"level":30,"time":"2023-07-12T04:46:14.226Z","pid":12956,"hostname":"Admin","msg":"Start of node method fillText"}
+{"level":30,"time":"2023-07-12T04:46:14.227Z","pid":12956,"hostname":"Admin","msg":"Strict mode is enabled, find Locator with xpath=//*[contains(@class, \"ant-form-item-label\")]/label[text()=\"Tên đăng nhập\"]/../../*[contains(@class, \"ant-form-item\")]//input[contains(@class, \"ant-input\")] in page."}
+{"level":30,"time":"2023-07-12T04:46:14.356Z","pid":12956,"hostname":"Admin","msg":"End of node method fillText"}
+{"level":30,"time":"2023-07-12T04:46:14.918Z","pid":12956,"hostname":"Admin","msg":"Start of node method clearText"}
+{"level":30,"time":"2023-07-12T04:46:14.918Z","pid":12956,"hostname":"Admin","msg":"Strict mode is enabled, find Locator with xpath=//*[contains(@class, \"ant-form-item-label\")]/label[text()=\"Mật khẩu\"]/../../*[contains(@class, \"ant-form-item\")]//input[contains(@class, \"ant-input\")] in page."}
+{"level":30,"time":"2023-07-12T04:46:15.088Z","pid":12956,"hostname":"Admin","msg":"End of node method clearText"}
+{"level":30,"time":"2023-07-12T04:46:15.102Z","pid":12956,"hostname":"Admin","msg":"Start of node method fillText"}
+{"level":30,"time":"2023-07-12T04:46:15.102Z","pid":12956,"hostname":"Admin","msg":"Strict mode is enabled, find Locator with xpath=//*[contains(@class, \"ant-form-item-label\")]/label[text()=\"Mật khẩu\"]/../../*[contains(@class, \"ant-form-item\")]//input[contains(@class, \"ant-input\")] in page."}
+{"level":30,"time":"2023-07-12T04:46:15.182Z","pid":12956,"hostname":"Admin","msg":"End of node method fillText"}
+{"level":30,"time":"2023-07-12T04:46:15.219Z","pid":12956,"hostname":"Admin","msg":"Start of node method press"}
+{"level":30,"time":"2023-07-12T04:46:15.220Z","pid":12956,"hostname":"Admin","msg":"Strict mode is enabled, find Locator with xpath=//*[contains(@class, \"ant-form-item-label\")]/label[text()=\"Mật khẩu\"]/../../*[contains(@class, \"ant-form-item\")]//input[contains(@class, \"ant-input\")] in page."}
+{"level":30,"time":"2023-07-12T04:46:15.572Z","pid":12956,"hostname":"Admin","msg":"End of node method press"}
+{"level":30,"time":"2023-07-12T04:46:15.615Z","pid":12956,"hostname":"Admin","msg":"Start of node method getText"}
+{"level":30,"time":"2023-07-12T04:46:15.616Z","pid":12956,"hostname":"Admin","msg":"Strict mode is enabled, find Locator with id=swal2-html-container in page."}
+{"level":30,"time":"2023-07-12T04:46:18.172Z","pid":12956,"hostname":"Admin","msg":"Retrieved text for element id=swal2-html-container containing Thành công"}
+{"level":30,"time":"2023-07-12T04:46:18.172Z","pid":12956,"hostname":"Admin","msg":"End of node method getText"}
+{"level":30,"time":"2023-07-12T04:46:18.194Z","pid":12956,"hostname":"Admin","msg":"Start of node method waitForElementState"}
+{"level":30,"time":"2023-07-12T04:46:18.195Z","pid":12956,"hostname":"Admin","msg":"Strict mode is enabled, find Locator with xpath=//*[contains(@class, \"swal2-confirm\")] in page."}
+{"level":30,"time":"2023-07-12T04:46:18.317Z","pid":12956,"hostname":"Admin","msg":"Error of node method  waitForElementState"}
+================= Original suppressed error =================
+locator.waitFor: Timeout 100ms exceeded.
+=========================== logs ===========================
+waiting for locator('xpath=//*[contains(@class, "swal2-confirm")]') to be visible
+============================================================
+    at waitForElementState (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:8481:19)
+    at async PlaywrightServer.waitForElementsState (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:9984:28) {
+  name: 'TimeoutError'
+}
+=============================================================
+{"level":30,"time":"2023-07-12T04:46:18.332Z","pid":12956,"hostname":"Admin","msg":"Start of node method takeScreenshot"}
+{"level":30,"time":"2023-07-12T04:46:18.333Z","pid":12956,"hostname":"Admin","Take screenshot with options: ":{"path":"D:\\DEMO2\\vite-react-ari\\results\\browser\\screenshot\\fail-screenshot-1.png","fileType":"png","fullPage":false,"timeout":60000,"omitBackground":false}}
+{"level":30,"time":"2023-07-12T04:46:18.715Z","pid":12956,"hostname":"Admin","msg":"End of node method takeScreenshot"}
+{"level":30,"time":"2023-07-12T04:46:18.759Z","pid":12956,"hostname":"Admin","msg":"Start of node method waitForElementState"}
+{"level":30,"time":"2023-07-12T04:46:18.760Z","pid":12956,"hostname":"Admin","msg":"Strict mode is enabled, find Locator with xpath=//*[contains(@class, \"swal2-confirm\")] in page."}
+{"level":30,"time":"2023-07-12T04:46:21.510Z","pid":12956,"hostname":"Admin","msg":"End of node method waitForElementState"}
+{"level":30,"time":"2023-07-12T04:46:23.222Z","pid":12956,"hostname":"Admin","msg":"Start of node method closeAllBrowsers"}
+{"level":30,"time":"2023-07-12T04:46:23.280Z","pid":12956,"hostname":"Admin","msg":"Removed page=ae88d23a-7e7f-4559-8462-b8712cb9aec7 from context=db1ae2b7-f76c-42c8-8cba-339c5d0c4a61 page stack"}
+{"level":30,"time":"2023-07-12T04:46:58.634Z","pid":12956,"hostname":"Admin","msg":"End of node method closeAllBrowsers"}
+================= Original suppressed error =================
+Error: Browser has been closed.
+    at PlaywrightState.getActiveBrowser (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:9436:15)
+    at PlaywrightServer.getActiveBrowser (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:9969:59)
+    at PlaywrightServer.setTimeout (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:10214:57)
+    at C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:821:17
+    at Http2ServerCallStream.safeDeserializeMessage (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-call.js:395:13)
+    at ServerHttp2Stream.onEnd (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-call.js:382:22)
+    at ServerHttp2Stream.emit (node:events:525:35)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+=============================================================
+{"level":30,"time":"2023-07-12T04:46:58.657Z","pid":12956,"hostname":"Admin","msg":"Start of node method getBrowserCatalog"}
+{"level":30,"time":"2023-07-12T04:46:58.658Z","pid":12956,"hostname":"Admin","msg":"End of node method getBrowserCatalog"}
+================= Original suppressed error =================
+Error: Browser has been closed.
+    at PlaywrightState.getActiveBrowser (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:9436:15)
+    at PlaywrightServer.getActiveBrowser (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:9969:59)
+    at PlaywrightServer.setTimeout (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\index.js:10214:57)
+    at C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:821:17
+    at Http2ServerCallStream.safeDeserializeMessage (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-call.js:395:13)
+    at ServerHttp2Stream.onEnd (C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-call.js:382:22)
+    at ServerHttp2Stream.emit (node:events:525:35)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+=============================================================
+{"level":30,"time":"2023-07-12T04:46:58.686Z","pid":12956,"hostname":"Admin","msg":"Start of node method getBrowserCatalog"}
+{"level":30,"time":"2023-07-12T04:46:58.686Z","pid":12956,"hostname":"Admin","msg":"End of node method getBrowserCatalog"}
+{"level":30,"time":"2023-07-12T04:46:59.045Z","pid":12956,"hostname":"Admin","msg":"Start of node method closeAllBrowsers"}
+{"level":30,"time":"2023-07-12T04:46:59.045Z","pid":12956,"hostname":"Admin","msg":"End of node method closeAllBrowsers"}

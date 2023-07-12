@@ -3,6 +3,7 @@ Library             Browser
 Library             FakerLibrary        locale=en_IN
 Library             String
 Library            OperatingSystem
+
 *** Variables ***
 ${BROWSER}          chromium
 ${HEADLESS}         ${False}
@@ -19,6 +20,7 @@ ${notify}    xpath=//*[contains(@class, "swal2-confirm")]
 ${EYE}        css=#Layer_1.absolute
 
 ${start_date}    xpath=//input[@placeholder="Ngày kết thúc"]
+
 *** Keywords ***
 
 Login to admin
@@ -42,6 +44,10 @@ Login to Staff
   # Click "Đăng nhập" button
   User look message "Thành công" popup
 
+Go to page create data
+  Login to admin
+  When Click "Người Dùng" menu
+  When Click "Tạo mới" sub menu to "/vn/user/add"
 #### Setup e Teardown
 Setup
   Set Browser Timeout         ${BROWSER_TIMEOUT}
@@ -90,8 +96,7 @@ Title Should Be
 
 # Reload Page
 Reload Page
-    [Documentation]    Reloads the current page by simulating F5 key press
-    Run    python -c "import ctypes; ctypes.windll.user32.keybd_event(0x74, 0, 0, 0); ctypes.windll.user32.keybd_event(0x74, 0, 2, 0)"
+    Reload
 
 ###  -----  Form  -----  ###
 # Tạo một văn bản ngẫu nhiên dựa trên loại và giá trị đầu vào.
@@ -189,6 +194,7 @@ Enter date in "${name}" with "${text}"
 Click select "${name}" with "${text}"
   ${text}=                  Get Random Text                   Text                          ${text}
   ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-show-arrow")]
+  Wait Until Element Is Visible    ${element}
   Click                     ${element}
   ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
   Fill Text                                                   ${element}                    ${text}
@@ -327,6 +333,7 @@ User look message "${message}" popup
         Click               ${element}
   END
   Wait Until Element Is Not Exist    ${notify}
+
 # Nhấp vào nút xác nhận để thực hiện hành động.
 Click Confirm To Action
   ${element}                Set Variable                      xpath=//*[contains(@class, "ant-popover")]//*[contains(@class, "ant-btn-primary")]
@@ -353,7 +360,8 @@ User look title form Forgot Password "${title}"
 Click "Quên mật khẩu?" link
   Click   ${FORGOT_PASSWORD_LINK} 
 
-Required message "Email" field displayed under "${text}"
+Required message "${name}" field displayed under "${text}"
+  ${element}=               Get Element Form Item By Name     ${name}                //*[contains(@class, "ant-picker-input")]/input
   Wait Until Element Is Visible        //div[contains(text(),'${text}')]
   Element Text Should Be    //div[contains(text(),'${text}')]                        ${text}
 
@@ -407,13 +415,11 @@ User look all field should be empty
     And User look leave date empty with "Ngày kết thúc"
     And User look empty textarea with "Lý do"
 
-Click double "Quản lý" field with ${manager}
-    ${element}        Set Variable        xpath=//span[contains(text(),'${manager}')]
-    Wait Until Element Is Visible        ${element}
-    Double Click Element      ${element}
+User look "${name}" file with type "${type}"
+    ${element}=        Get Element Form Item By Name        ${name}        //input[contains(@class, "ant-input")]
+    ${password_field_type}        Get Attribute        ${element}        type
+    Should Be Equal As Strings        ${password_field_type}            ${type}
 
-Double Click Element
-    [Arguments]        ${elementLocator}
-    ${elementText}=        Get Random Text    Text        ${elementLocator}
-    Fill Text        ${elementLocator}        ${elementText}
-    Double Click Element        ${elementLocator}
+Click "${tepm}" submenu in "Người Dùng" menu
+    ${element}=        Set Variable        xpath=(//span[text()='Danh sách'])[2]
+    Click     ${element}
