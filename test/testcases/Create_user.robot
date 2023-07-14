@@ -355,10 +355,53 @@ CRU-42 Verify that Admin can search successfully when entering correct keyword t
     Search "phone" in "Tìm kiếm" with "_RANDOM_"
     No users are shown
 
-CRU-43 Verify that Next page and Previous page
+CRU-43 Verify that Next page
     Go to "Danh sách Người dùng" page
+    ${page_1_before}    Get_Element_Attribute with "page_1"    #page 1 mặc định
+    ${page_2_before}    Get_Element_Attribute with "page_2"
+    ${page_3_before}    Get_Element_Attribute with "page_3"
+    ${page_4_before}    Get_Element_Attribute with "page_4"
+    ${page_5_before}    Get_Element_Attribute with "page_5"
     Click ">" to "next" page
+    ${page_1_after}    Get_Element_Attribute with "page_1"
+    ${page_2_after}    Get_Element_Attribute with "page_2"    #page 2 mặc định
+    Should Not Be Equal    ${page_1_before}    ${page_1_after}
+    Should Not Be Equal    ${page_2_before}    ${page_2_after}
+    Click ">" to "next" page
+    ${page_3_after}    Get_Element_Attribute with "page_3"    #page 3 mặc định
+    Should Not Be Equal    ${page_2_before}    ${page_2_after}
+    Should Not Be Equal    ${page_3_before}    ${page_3_after}
+    Click ">" to "next" page
+    ${page_4_after}    Get_Element_Attribute with "page_4"    #page 4 mặc định
+    Should Not Be Equal    ${page_3_before}    ${page_3_after}
+    Should Not Be Equal    ${page_4_before}    ${page_4_after}
+    Click ">" to "next" page
+    ${page_5_after}    Get_Element_Attribute with "page_5"    #page 5 mặc định
+    Should Not Be Equal    ${page_4_before}    ${page_4_after}
+    Should Not Be Equal    ${page_5_before}    ${page_5_after}
+
+CRU-44 Verify that Previous page
+    Go to "Danh sách Người dùng" page
+    Click "page 5 number" to "page_5" page
+    ${page_1_before}    Get_Element_Attribute with "page_1"    
+    ${page_2_before}    Get_Element_Attribute with "page_2"
+    ${page_3_before}    Get_Element_Attribute with "page_3"
+    ${page_4_before}    Get_Element_Attribute with "page_4"
+    ${page_5_before}    Get_Element_Attribute with "page_5"    #page 5 mặc định
     Click "<" to "prev" page
-
-
-    
+    ${page_5_after}    Get_Element_Attribute with "page_5"
+    ${page_4_after}    Get_Element_Attribute with "page_4"    #page 4 mặc định
+    Should Not Be Equal    ${page_5_before}    ${page_5_after}
+    Should Not Be Equal    ${page_4_before}    ${page_4_after}
+    Click "<" to "prev" page
+    ${page_3_after}    Get_Element_Attribute with "page_3"    #page 3 mặc định
+    Should Not Be Equal    ${page_4_before}    ${page_4_after}
+    Should Not Be Equal    ${page_3_before}    ${page_3_after}
+    Click "<" to "prev" page
+    ${page_2_after}    Get_Element_Attribute with "page_2"    #page 2 mặc định
+    Should Not Be Equal    ${page_3_before}    ${page_3_after}
+    Should Not Be Equal    ${page_2_before}    ${page_2_after}
+    Click "<" to "prev" page
+    ${page_1_after}    Get_Element_Attribute with "page_1"    #page 1 mặc định
+    Should Not Be Equal    ${page_2_before}    ${page_2_after}
+    Should Not Be Equal    ${page_1_before}    ${page_1_after}

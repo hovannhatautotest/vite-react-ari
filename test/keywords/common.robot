@@ -18,6 +18,8 @@ ${username_valid}    Hồ Văn Nhật
 ${email_valid}    hovannhat@gmail.com
 ${phone_number_valid}    0941225407
 
+${type_class}    
+
 *** Keywords ***
 
 Login to admin
@@ -512,5 +514,11 @@ Click "${icon}" to "${next}" page
     ${element}=    Set Variable    //button[@aria-label="${next}"]
     Wait Until Element Is Visible    ${element}
     Click    ${element}
-    Log To Console    ${icon}
+    # Log To Console    ${icon}
     Sleep    3
+
+Get_Element_Attribute with "${page}"
+    ${element}    Set Variable    //button[@aria-label="${page}"]
+    Wait Until Element Is Visible    ${element}
+    ${attribute}    Get Attribute    ${element}    class
+    [Return]    ${attribute}
