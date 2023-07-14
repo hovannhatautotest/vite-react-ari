@@ -5,6 +5,7 @@ Library             String
 Library            OperatingSystem
 
 *** Variables ***
+
 ${BROWSER}          chromium
 ${HEADLESS}         ${False}
 ${BROWSER_TIMEOUT}  60 seconds
@@ -13,13 +14,9 @@ ${SHOULD_TIMEOUT}   0.1 seconds
 ${URL_DEFAULT}      http://localhost:5173
 ${STATE}            Evaluate  json.loads('''{}''')  json
 
-${FORGOT_PASSWORD_LINK}    css=button.text-blue-600
-${logo}        id:name-application
-
-${notify}    xpath=//*[contains(@class, "swal2-confirm")]
-${EYE}        css=#Layer_1.absolute
-
-${start_date}    xpath=//input[@placeholder="Ngày kết thúc"]
+${username_valid}    Hồ Văn Nhật
+${email_valid}    hovannhat@gmail.com
+${phone_number_valid}    0941225407
 
 *** Keywords ***
 
@@ -48,6 +45,22 @@ Go to page create data
   Login to admin
   When Click "Người Dùng" menu
   When Click "Tạo mới" sub menu to "/vn/user/add"
+
+Go to "Danh sách Người dùng" page
+    Login to admin
+    And Click "Người Dùng" menu
+    And Click "Danh sách" submenu in "Người Dùng" menu
+
+Enter invalid information
+  When Enter "text" in "Họ và tên" with "_RANDOM_"
+  And Enter "email" in "Email" with "_RANDOM_"
+  And Enter "text" in "Mật khẩu" with "Nhat@01101999"
+  And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
+  And Enter "phone" in "Số điện thoại" with "_RANDOM_"
+  And Enter date in "Ngày sinh" with "_RANDOM_"
+  And Click select "Vị trí" with "Tester"
+  And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
+  And Enter "words" in textarea "Mô tả" with "_RANDOM_"
 #### Setup e Teardown
 Setup
   Set Browser Timeout         ${BROWSER_TIMEOUT}
@@ -289,7 +302,6 @@ Click on the previously created "${name}" tree to edit
   ${element}=               Get Element Tree By Name          ${STATE["${name}"]}
   Click                     ${element}
 
-
 ###  -----  Element  -----  ###
 # Nhấp vào nút có nội dung là "${text}".
 Click "${text}" button
@@ -332,7 +344,7 @@ User look message "${message}" popup
   IF    '${passed}' == 'True'
         Click               ${element}
   END
-  Wait Until Element Is Not Exist    ${notify}
+  Wait Until Element Is Not Exist    ${element}
 
 # Nhấp vào nút xác nhận để thực hiện hành động.
 Click Confirm To Action
@@ -358,7 +370,8 @@ User look title form Forgot Password "${title}"
   Element Text Should Be    xpath=//h3[contains(text(),'${title}')]      ${title}
 
 Click "Quên mật khẩu?" link
-  Click   ${FORGOT_PASSWORD_LINK} 
+  ${element}=    Set Variable    //button[contains(@class, 'text-blue-600')]    
+  Click   ${element} 
 
 Required message "${name}" field displayed under "${text}"
   ${element}=               Get Element Form Item By Name     ${name}                //*[contains(@class, "ant-picker-input")]/input
@@ -373,7 +386,8 @@ User look title "${title}"
     Wait Until Element Is Not Exist    //h3[contains(text(),'${forgotpassword}')]
 
 Click "Eye" icon to display password
-    Click    ${EYE}
+    ${element}=    Set Variable    xpath=//*[contains(@class, 'absolute') and @id='Layer_1']
+    Click    ${element}
 
 User look "${name}" field EMPTY
     ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
@@ -405,8 +419,9 @@ Enter at "${name}" field to Login
     ${element}=    Get Element Form Item By Name    ${name}    //input[contains(@class, "ant-input")]
     Press Keys    ${element}    Enter
 
-Delele select "Thời gian" field
-    Click    css=span.ant-select-clear 
+Delele select "${name}" field
+    ${element}=               Get Element Form Item By Name     ${name}        //*[contains(@class, "ant-select-show-arrow")]
+    Click    //span[@class='ant-select-clear'] 
 
 User look all field should be empty
     And User look "Chọn loại phép" field should be empty
@@ -415,11 +430,87 @@ User look all field should be empty
     And User look leave date empty with "Ngày kết thúc"
     And User look empty textarea with "Lý do"
 
-User look "${name}" file with type "${type}"
+User look "${name}" field with type "${type}"
     ${element}=        Get Element Form Item By Name        ${name}        //input[contains(@class, "ant-input")]
     ${password_field_type}        Get Attribute        ${element}        type
     Should Be Equal As Strings        ${password_field_type}            ${type}
 
 Click "${tepm}" submenu in "Người Dùng" menu
-    ${element}=        Set Variable        xpath=(//span[text()='Danh sách'])[2]
+    ${element}=        Set Variable        xpath=(//span[text()='${tepm}'])[2]
     Click     ${element}
+    Sleep    3
+
+Click "${temp}" user has submitted a request for leave that needs to be approved
+    ${element}=        Get Elements        xpath=//button[@title="${temp}"]
+    Wait Until Element Is Visible    ${element}[0]
+    Click     ${element}[0]
+    Click Confirm To Action
+
+Click "Eye" icon to show "Mật khẩu" field and "Nhập lại mật khẩu" field
+    ${element}=    Get Elements    xpath=//*[contains(@class, 'absolute') and @id='Layer_1']
+    Click    ${element}[0]
+    Click    ${element}[1]
+
+View User List with "${role}"
+    ${user_list}=    Get Elements    xpath=//td[@class='ant-table-cell' and text()='${role}']
+    Run Keyword If  ${user_list}    View User List Loop    ${role}    ${user_list}
+    ...    ELSE    Log To Console    Không tìm thấy user có vai trò là "${role}" nào!
+
+View User List search key in "Họ và tên" field with "${username_valid}"
+    ${user_list}=    Get Elements    //span[@class="ml-1" and text()="${username_valid}"]
+    Run Keyword If  ${user_list}    View User List Loop    ${username_valid}    ${user_list}
+    ...    ELSE    Log To Console    Không tìm thấy user có tên là "${username_valid}" nào!
+
+View User List search key in "${type}" field with "${text}"
+    ${user_list}=    Get Elements    //td[contains(text(),'${text}')]
+    Run Keyword If  ${user_list}    View User List Loop    ${text}    ${user_list}
+    ...    ELSE    Log To Console    Không tìm thấy user có ${type} là "${text}" nào!
+
+View User List Loop
+    [Arguments]    ${role}    ${user_list}
+    ${user_count}=    Set Variable    0
+    ${stt}=    Set Variable    1
+    FOR    ${user}    IN    @{user_list}
+        ${user_role}    Get Text    ${user}
+        Run Keyword If    '${user_role}' == '${role}'    Log To Console     ${stt}. ${user_role}
+            ${user_count}=    Evaluate    ${user_count} + 1
+            ${stt}=    Evaluate    ${user_count} + 1
+    END
+    Log To Console    Tổng số lượng user ${user_role}: ${user_count}
+
+No users are shown
+    ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
+    Wait Until Element Is Visible    ${element}
+    ${text}=    Get Text    ${element}
+    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có User nào ứng với từ khóa tìm khiếm
+    
+Click list Role with "${role}"
+    ${element}=    Set Variable    xpath=//div[contains(@class, 'truncate') and text()='${role}']
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Sleep    3
+
+Increase the number of users displayed in the list
+    ${element}=        Set Variable    xpath=//span[@class="ant-select-selection-item" and @title="8"]
+    Click        ${element}
+    ${number}=        Set Variable    //div[@class="ant-select-item-option-content" and text()="40"]
+    Wait Until Element Is Visible    ${number}
+    Click    ${number}
+
+Search "${type}" in "${name}" with "${text}"
+    ${text}=                  Get Random Text                   ${type}                       ${text}
+    ${element}=               Set Variable        //input[@placeholder="${name}"]
+    Clear Text                ${element}
+    Fill Text                 ${element}                        ${text}                       True
+    ${cnt}=                   Get Length                        ${text}
+    IF  ${cnt} > 0
+        Set Global Variable     ${STATE["${name}"]}               ${text}
+    END
+    Sleep    3
+  
+Click "${icon}" to "${next}" page
+    ${element}=    Set Variable    //button[@aria-label="${next}"]
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Log To Console    ${icon}
+    Sleep    3
