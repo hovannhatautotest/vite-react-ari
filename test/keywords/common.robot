@@ -63,6 +63,11 @@ Go to "Edit User" page
     Go to "Danh sách Người dùng" page
     Select the user to edit
     Wait Until Element Spin
+Go to profile page
+    Login to Staff
+    Hover to avatar
+    Click "Thông tin cá nhân" to profile
+    Sleep    2
 
 Enter invalid information to create user
   When Enter "text" in "Họ và tên" with "_RANDOM_"
@@ -559,6 +564,16 @@ Select the user to edit
     Click    ${elements}[${randomIndex}]
     Sleep    2
 
+Select the user whose team has been deleted to edit
+    [Arguments]    
+    Wait Until Element Spin
+    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+    ${elementCount}    Get Length    ${elements}
+    # ${randomIndex}=    Evaluate    random.randint(0, ${elementCount}-1)
+    ${randomIndex}=    Evaluate    ${elementCount}-7
+    Click    ${elements}[${randomIndex}]
+    Sleep    2
+
 # Xóa thông tin hiện tại của trường: Ngày sinh hoặc Ngày đầu đi làm
 Delete information "${name}"
     IF  '${name}' == 'Ngày sinh'
@@ -618,3 +633,12 @@ User look all field should be empty        #STAFF_LEAVE MANAGER
     And User look leave date empty with "Ngày bắt đầu"
     And User look leave date empty with "Ngày kết thúc"
     And User look empty textarea with "Lý do"
+
+# #############--------------PROFILE----------------#########################
+Hover to avatar
+    Mouse Move Relative To        xpath=//div[contains(@class, 'text-right')]        0
+
+Click "${profile}" to profile
+    ${element}=        Set Variable        //div[text() = '${profile}']
+    Wait Until Element Is Visible          ${element}
+    Click    ${element}

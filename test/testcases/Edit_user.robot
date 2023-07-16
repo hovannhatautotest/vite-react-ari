@@ -196,4 +196,43 @@ EDU-20 Verify that account edit successfully & "Lưu và tạo mới" button
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Tạo mới người dùng"
-    
+
+#--------------------------------ERROR MESSAGE WHEN EDIT USER------------------------------------------
+EDU-21 Verify that error message display when edit user with Email is already taken & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    # TEST CASE FAILED
+    Go to "Danh sách Người dùng" page
+    And Select the user to edit
+    And Enter "email" in "Email" with "19t1051013@husc.edu.vn"
+    And Enter "words" in textarea "Mô tả" with "_RANDOM_"
+    And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Click "Lưu lại" button
+    Then User look message "Email đã được sử dụng" popup
+
+EDU-22 Verify that error message display when edit user with Email is already taken & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    # TEST CASE FAILED
+    Go to "Danh sách Người dùng" page
+    And Select the user to edit
+    And Enter "email" in "Email" with "19t1051013@husc.edu.vn"
+    And Enter "words" in textarea "Mô tả" with "_RANDOM_"
+    And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Click "Lưu và tạo mới" button
+    Then User look message "Email đã được sử dụng" popup
+
+EDU-23 Verify that error message display when edit user with team has been deleted & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    Go to "Danh sách Người dùng" page
+    And Select the user whose team has been deleted to edit
+    And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Click "Lưu lại" button
+    Then User look message "Internal server error" popup
+
+EDU-24 Verify that error message display when edit user with team has been deleted & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    Go to "Danh sách Người dùng" page
+    And Select the user whose team has been deleted to edit
+    And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Click "Lưu và tạo mới" button
+    Then User look message "Internal server error" popup
+
