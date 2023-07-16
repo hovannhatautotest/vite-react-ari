@@ -70,8 +70,7 @@ STA-06 Verify that Create leave management successfully with "Làm remote" & "L�
 STA-07 Verify that Create leave management successfully with "Làm remote" & "Lưu và tạo mới" button
     Login to Staff
     When Click "Tạo mới" sub menu to "/vn/dayoff/add"
-    ${element}=        Set Variable     css=div.text-xl
-    ${text_before}=        Get Text      ${element}
+    ${leave_date_before}    Get_Leave_date with "Ngày phép còn lại"
     And Click select "Loại phép" with "Làm remote"
     And Click select "Thời gian" with "Cả ngày"
     And Enter leave date in "Ngày bắt đầu" with "12-07-2023"
@@ -81,14 +80,10 @@ STA-07 Verify that Create leave management successfully with "Làm remote" & "L�
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
     And User look all field should be empty
-    ${text_after}=        Get Text      ${element}
+    ${leave_date_after}    Get_Leave_date with "Ngày phép còn lại"
     # Kiểm tra xem số lượng ngày nghỉ có thay đổi hay không
     # ----------------------------------------------------------
-    IF  '${text_before}' != '${text_after}'
-        Log To Console    Số lượng ngày nghỉ đã được thay đổi
-    ELSE
-        Log To Console    Số lượng ngày nghỉ không thay đổi
-    END
+    Should Be Equal    ${leave_date_before}    ${leave_date_after}
     # ----------------------------------------------------------
     Click "Huỷ bỏ" button
     Click "Xóa" button
@@ -111,8 +106,7 @@ STA-07 Verify that Create leave management successfully with "Làm remote" & "L�
 STA-09 Verify that Create leave management successfully with "Nghỉ phép không lương" & "Lưu và tạo mới" button
     Login to Staff
     When Click "Tạo mới" sub menu to "/vn/dayoff/add"
-    ${element}=        Set Variable     css=div.text-xl
-    ${text_before}=        Get Text      ${element}
+    ${leave_date_before}    Get_Leave_date with "Ngày phép còn lại"
     And Click select "Loại phép" with "Nghỉ phép không lương"
     And Click select "Thời gian" with "Chiều"
     And Enter leave date in "Ngày bắt đầu" with "12-07-2023"
@@ -122,14 +116,10 @@ STA-09 Verify that Create leave management successfully with "Nghỉ phép khôn
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
     And User look all field should be empty
-    ${text_after}=        Get Text      ${element}
+    ${leave_date_after}    Get_Leave_date with "Ngày phép còn lại"
     # Kiểm tra xem số lượng ngày nghỉ có thay đổi hay không
     # ----------------------------------------------------------
-    IF  '${text_before}' != '${text_after}'
-        Log To Console    Số lượng ngày nghỉ đã được thay đổi
-    ELSE
-        Log To Console    Số lượng ngày nghỉ không thay đổi
-    END
+    Should Be Equal    ${leave_date_before}    ${leave_date_after}
     # ---------------------------------------------------------- 
     Click "Huỷ bỏ" button
     Click "Xóa" button
@@ -152,8 +142,7 @@ STA-10 Verify that Create leave management successfully with "Nghỉ phép có l
 STA-11 Verify that Create leave management successfully with "Nghỉ phép có lương" & "Lưu và tạo mới" button
     Login to Staff
     When Click "Tạo mới" sub menu to "/vn/dayoff/add"
-    ${element}=        Set Variable     css=div.text-xl
-    ${text_before}=        Get Text      ${element}
+    ${leave_date_before}    Get_Leave_date with "Ngày phép còn lại"
     And Click select "Loại phép" with "Nghỉ phép có lương"
     And Click select "Thời gian" with "Sáng"
     And Enter leave date in "Ngày bắt đầu" with "11-07-2023"
@@ -162,17 +151,11 @@ STA-11 Verify that Create leave management successfully with "Nghỉ phép có l
     And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    ${text_after}=        Get Text      ${element}
+    ${leave_date_after}    Get_Leave_date with "Ngày phép còn lại"
     # Kiểm tra xem số lượng ngày nghỉ có thay đổi hay không
     # ----------------------------------------------------------
-    IF  '${text_before}' != '${text_after}'
-        Log To Console    Số lượng ngày nghỉ đã được thay đổi
-    ELSE
-        Log To Console    Số lượng ngày nghỉ không thay đổi
-    END
+    Should Not Be Equal    ${leave_date_before}    ${leave_date_after}
     # ----------------------------------------------------------
-    And Click "Huỷ bỏ" button
-    And CLick "Xóa" button
 # ============================ERROR MESSAGE===========================================
 STA-12 Verify that error message display when create new leave management with the leave date has been registered
     Login to Staff

@@ -33,7 +33,6 @@ DN-04 SI-04: Validation text with "Tên đăng nhập" field when enter invalid 
     Then Required message "Tên đăng nhập" displayed under "Xin vui lòng nhập địa chỉ email hợp lệ!" field
 
 # ---------------------ERROR MESAGE------------------------------------------------------------
-
 DN-05 Verify that Đăng nhập unsuccessfully because enter incorrect Email
     When Enter "email" in "Tên đăng nhập" with "_RANDOM_"
     And Enter "text" in "Mật khẩu" with "Password1!"
@@ -62,7 +61,6 @@ DN-08 Verify that Đăng nhập unsuccessfully because enter password less than 
     Then User look message "password must be longer than or equal to 6 characters" popup
 
 # ----------------------------------LOGIN SUCCESSFULLY-------------------------------------------------------------
-
 DN-09 Verify that Đăng nhập successfully accout Admin with valid Email and Mật khẩu
     [Tags]    @smoketest    @regression
     When Login to admin
@@ -85,8 +83,8 @@ DN-11 Verify that Đăng nhập successfully account Staff with valid Email and 
     Then User look title "Danh sách nghỉ phép"
     And User look menu "Nghỉ phép"
     And User look menu "Thiết lập"
-# ----------------------------------NAVIGATE FORGOT PASSWORD-------------------------------------------------------------
 
+# ----------------------------------NAVIGATE FORGOT PASSWORD-------------------------------------------------------------
 DN-12 Verify that CAN navigate to the "Forgot Password" page from the link on the Log In page
     [Tags]    @smoketest    @regression
     When Click "Quên mật khẩu?" link
@@ -133,5 +131,5 @@ DN-18: Verify refresh page
     When Enter "email" in "Tên đăng nhập" with "_RANDOM_"
     And Enter "text" in "Mật khẩu" with "_RANDOM_"
     And Reload Page
-    Then User look "Tên đăng nhập" field EMPTY
-    And User look "Mật khẩu" field EMPTY
+    Then User look "Tên đăng nhập" field empty
+    And User look "Mật khẩu" field empty
