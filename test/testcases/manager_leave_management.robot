@@ -172,6 +172,5 @@ STA-12 Verify that error message display when create new leave management with t
     Click "Xóa" button
 
 # # ## ============================Leave approval===========================================
-# STA-13 Verify that staff leave approval by Manager
-    # When Login to Manager
-    # And Click double with "Hồ Đức Tâm Linh"
+STA-13 Verify that staff leave approval by Manager
+    When Login to Manager

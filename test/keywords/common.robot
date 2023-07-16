@@ -16,7 +16,7 @@ ${URL_DEFAULT}      http://localhost:5173
 ${STATE}            Evaluate  json.loads('''{}''')  json
 
 ${username_valid}    Hồ Văn Nhật
-${email_valid}    hovannhat@gmail.com
+${email_valid}    hovannhat_staff@gmail.com
 ${phone_number_valid}    0941225407    
 
 *** Keywords ***
@@ -496,39 +496,35 @@ Increase the number of users displayed in the list
     Wait Until Element Is Visible    ${number}
     Click    ${number}
 
-# Kiểm tra user hiển thị đúng vai trò
-View User List with "${role}"
-    Wait Until Element Spin
-    ${user_list}=    Get Elements    xpath=//td[@class='ant-table-cell' and text()='${role}']
-    Run Keyword If  ${user_list}    View User List Loop    ${role}    ${user_list}
-    ...    ELSE    Log To Console    Không tìm thấy user có vai trò là "${role}" nào!
-
-# Kiểm tra user hiển thị đúng với từ khóa tìm kiếm với Họ và tên
-View User List search key in "Họ và tên" field with "${username_valid}"
-    Wait Until Element Spin
-    ${user_list}=    Get Elements    //span[@class="ml-1" and text()="${username_valid}"]
-    Run Keyword If  ${user_list}    View User List Loop    ${username_valid}    ${user_list}
-    ...    ELSE    Log To Console    Không tìm thấy user có tên là "${username_valid}" nào!
-
-# Kiểm tra user hiển thị đúng với từ khóa tìm kiếm với Email hoặc Số điện thoại
-View User List search key in "${type}" field with "${text}"
-    Wait Until Element Spin
-    ${user_list}=    Get Elements    //td[contains(text(),'${text}')]
-    Run Keyword If  ${user_list}    View User List Loop    ${text}    ${user_list}
-    ...    ELSE    Log To Console    Không tìm thấy user có ${type} là "${text}" nào!
-
-# Vòng lặp kiểm tra user có vai trò tương ứng
-View User List Loop
-    [Arguments]    ${role}    ${user_list}
-    ${user_count}=    Set Variable    0
+# Hiển thị danh sách người dùng
+Show list of users
+    ${elements}=        Get Elements        xpath=//tbody/tr
+    ${user_count}=    Set Variable    1
     ${stt}=    Set Variable    1
-    FOR    ${user}    IN    @{user_list}
-        ${user_role}    Get Text    ${user}
-        Run Keyword If    '${user_role}' == '${role}'    Log To Console     ${stt}. ${user_role}
+    FOR    ${item}    IN    @{elements}
+            ${username}=        Get Text    //tbody/tr[${user_count}]/td[1]/div[1]/span[1]
+            ${position}=        Get Text    //tbody/tr[${user_count}]/td[2]
+            ${role}=            Get Text    //tbody/tr[${user_count}]/td[3]
+            ${manager}=         Get Text    //tbody/tr[${user_count}]/td[4]
+            ${team}=            Get Text    //tbody/tr[${user_count}]/td[5]
+            ${Email}=           Get Text    //tbody/tr[${user_count}]/td[6]
+            ${phone_number}=    Get Text    //tbody/tr[${user_count}]/td[7]
+            ${start_date}=      Get Text    //tbody/tr[${user_count}]/td[8]
+            IF  '${manager}' == '${EMPTY}'
+                ${manager}=    Set Variable    Không có quản lý
+            END
+            
+            IF  '${team}' == '${EMPTY}'
+                ${team}=    Set Variable    Không có nhóm
+            END
+            
+            Log To Console        ${stt}. ${username} | ${position} | ${role} | ${manager} | ${team} | ${Email} | ${phone_number} | ${start_date}
+            Log To Console        =====================================================================================================================================================
             ${user_count}=    Evaluate    ${user_count} + 1
-            ${stt}=    Evaluate    ${user_count} + 1
+            ${stt}=    Evaluate    ${stt} + 1
     END
-    Log To Console    Tổng số lượng user ${user_role}: ${user_count}
+    ${total}=    Evaluate    ${user_count} - 1
+    Log To Console    Tổng số lượng user: ${total}
 
 # Không có user nào được hiển thị khi nhập từ khóa tìm kiếm không hợp lệ
 No users are shown

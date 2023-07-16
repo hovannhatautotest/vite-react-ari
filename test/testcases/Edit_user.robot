@@ -116,6 +116,7 @@ EDU-14 Verify that account edit successfully when change name
     And Enter "text" in "Họ và tên" with "_RANDOM_"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
@@ -127,6 +128,7 @@ EDU-15 Verify that account edit successfully when change Email
     And Enter "email" in "Email" with "_RANDOM_"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
@@ -138,6 +140,7 @@ EDU-16 Verify that account edit successfully when change Phone Number
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
@@ -160,6 +163,7 @@ EDU-17 Verify that account edit successfully when change Position
     And Click select "Vị trí" with "Developer"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
@@ -171,6 +175,7 @@ EDU-18 Verify that account edit successfully when change Start Date
     And Enter date in "Ngày đầu đi làm" with "_RANDOM"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
@@ -182,6 +187,7 @@ EDU-19 Verify that account edit successfully when change Role
     And Click select "Vai trò" with "Manager"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
@@ -193,12 +199,13 @@ EDU-20 Verify that account edit successfully & "Lưu và tạo mới" button
     And Enter "text" in "Họ và tên" with "_RANDOM_"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Tạo mới người dùng"
 
 #--------------------------------ERROR MESSAGE WHEN EDIT USER------------------------------------------
-EDU-21 Verify that error message display when edit user with Email is already taken & "Lưu và tạo mới" button
+EDU-21 Verify that error message display when edit user with Email is already taken & "Lưu lại" button
     [Tags]    @smoketest    @regression
     # TEST CASE FAILED
     Go to "Danh sách Người dùng" page
@@ -206,6 +213,7 @@ EDU-21 Verify that error message display when edit user with Email is already ta
     And Enter "email" in "Email" with "19t1051013@husc.edu.vn"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu lại" button
     Then User look message "Email đã được sử dụng" popup
 
@@ -225,6 +233,7 @@ EDU-23 Verify that error message display when edit user with team has been delet
     Go to "Danh sách Người dùng" page
     And Select the user whose team has been deleted to edit
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu lại" button
     Then User look message "Internal server error" popup
 
@@ -233,6 +242,7 @@ EDU-24 Verify that error message display when edit user with team has been delet
     Go to "Danh sách Người dùng" page
     And Select the user whose team has been deleted to edit
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
+    And Select file in "Tải ảnh lên" with "image.jpg"
     And Click "Lưu và tạo mới" button
     Then User look message "Internal server error" popup
 

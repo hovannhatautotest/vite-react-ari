@@ -147,7 +147,14 @@ PRO-19 Verify that account edit successfully when change password
     And Click "Lưu lại" button
     Then User look message "Thành công" popup
 
-PRO-20 Verify that account edit successfully when change Email
+PRO-20 Verify that account edit successfully when change Avatar
+    [Tags]    @smoketest    @regression
+    Go to profile page
+    And Select file in "Tải ảnh lên" with "image.jpg"
+    And Click "Lưu lại" button
+    Then User look message "Thành công" popup
+
+PRO-21 Verify that account edit successfully when change Email
     [Tags]    @smoketest    @regression
     Go to profile page
     And Enter "email" in "Email" with "_RANDOM_"

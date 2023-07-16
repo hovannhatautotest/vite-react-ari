@@ -312,42 +312,40 @@ CRU-34 Verify that the list of users all Role can be viewed successfully
     And Click "Người Dùng" menu
     And Click "Danh sách" submenu in "Người Dùng" menu
     And Increase the number of users displayed in the list
-    Then View User List with "Staff"
-    And View User List with "Manager"
-    And View User List with "Supper Admin"
+    Then Show list of users
 
 CRU-35 Verify that user can view the list of Staff successfully
     Go to "Danh sách Người dùng" page
-    Increase the number of users displayed in the list
+    And Increase the number of users displayed in the list
     And Click list Role with "Staff"
-    Then View User List with "Staff"
+    Then Show list of users
 
 CRU-36 Verify that user can view the list of Manager successfully
     Go to "Danh sách Người dùng" page
-    Increase the number of users displayed in the list
+    And Increase the number of users displayed in the list
     And Click list Role with "Manager"
-    Then View User List with "Manager"
+    Then Show list of users
 
 CRU-37 Verify that user can view the list of Supper Admin successfully
     Go to "Danh sách Người dùng" page
-    Increase the number of users displayed in the list
+    # And Increase the number of users displayed in the list
     And Click list Role with "Supper Admin"
-    Then View User List with "Supper Admin"
+    Then Show list of users
 
 CRU-38 Verify that Admin can search successfully when entering correct keyword to search box with "Họ và tên"
     Go to "Danh sách Người dùng" page
-    Search "text" in "Tìm kiếm" with "${username_valid}"
-    View User List search key in "Họ và tên" field with "${username_valid}"
+    And Search "text" in "Tìm kiếm" with "${username_valid}"
+    Then Show list of users
 
 CRU-39 Verify that Admin can search successfully when entering correct keyword to search box with "Email"
     Go to "Danh sách Người dùng" page
-    Search "email" in "Tìm kiếm" with "${email_valid}"
-    View User List search key in "Email" field with "${email_valid}"
+    And Search "email" in "Tìm kiếm" with "${email_valid}"
+    Then Show list of users
 
 CRU-40 Verify that Admin can search successfully when entering correct keyword to search box with "Phone"
     Go to "Danh sách Người dùng" page
-    Search "phone" in "Tìm kiếm" with "${phone_number_valid}"
-    View User List search key in "Phone" field with "${phone_number_valid}"
+    And Search "phone" in "Tìm kiếm" with "${phone_number_valid}"
+    Then Show list of users
 
 CRU-41 Verify that Admin can search successfully when entering correct keyword to search box with "Họ và tên"
     Go to "Danh sách Người dùng" page
