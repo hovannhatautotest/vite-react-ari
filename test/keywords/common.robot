@@ -8,66 +8,94 @@ Library            BuiltIn
 *** Variables ***
 
 ${BROWSER}          chromium
-${HEADLESS}         ${False}
+${HEADLESS}         ${True}
 ${BROWSER_TIMEOUT}  60 seconds
 ${SHOULD_TIMEOUT}   0.1 seconds
 
-${URL_DEFAULT}      http://localhost:5173
+${URL_DEFAULT}      http://v2.ari.com.vn/
 ${STATE}            Evaluate  json.loads('''{}''')  json
 
 ${username_valid}    Hồ Văn Nhật
 ${email_valid}    hovannhat_staff@gmail.com
 ${phone_number_valid}    0941225407    
 
+${class_rejected}    w-5 h-5 fill-red-500 !flex !justify-center
+${class_approved}    w-5 h-5 fill-green-500 !flex !justify-center
+
 *** Keywords ***
 
 Login to admin
   Enter "email" in "Tên đăng nhập" with "admin@admin.com"
   Enter "text" in "Mật khẩu" with "Password1!"
-  Enter at "Mật khẩu" field to Login
-  # Click "Đăng nhập" button
+  Click "Đăng nhập" button
   User look message "Thành công" popup
 
 Login to Manager
   Enter "email" in "Tên đăng nhập" with "hovannhat_manager@gmail.com"
   Enter "text" in "Mật khẩu" with "Nhat@01101999"
-  Enter at "Mật khẩu" field to Login
-  # Click "Đăng nhập" button
+  Click "Đăng nhập" button
   User look message "Thành công" popup
 
 Login to Staff
-  Enter "email" in "Tên đăng nhập" with "hovannhat_staff@gmail.com"
+  Enter "email" in "Tên đăng nhập" with "19t1051013@gmail.com"
   Enter "text" in "Mật khẩu" with "Nhat@01101999"
-  Enter at "Mật khẩu" field to Login
-  # Click "Đăng nhập" button
+  Click "Đăng nhập" button
   User look message "Thành công" popup
+
+Login to admin version english
+  When Change language with "Tiếng Anh"
+  And Enter "email" in "Username" with "admin@admin.com"
+  And Enter "text" in "Password" with "Password1!"
+  And Click "Log In" button
+  User look message "Success" popup
+
+Login to Manager version english
+  When Change language with "Tiếng Anh"
+  And Enter "email" in "Username" with "hovannhat_manager@gmail.com"
+  And Enter "text" in "Password" with "Nhat@01101999"
+  And Click "Log In" button
+  User look message "Success" popup
+
+Login to Staff version english
+  When Change language with "Tiếng Anh"
+  And Enter "email" in "Username" with "hovannhat_staff@gmail.com"
+  And Enter "text" in "Password" with "Nhat@01101999"
+  And Click "Log In" button
+  User look message "Success" popup
 
 Go to page create user
   Login to admin
   When Click "Người Dùng" menu
-  When Click "Tạo mới" sub menu to "/vn/user/add"
-
-Go to "Danh sách Người dùng" page
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click "Danh sách" submenu in "Người Dùng" menu
+  And Click "Tạo mới" button
+  Wait Until Element Spin
+  # When Click "Tạo mới" sub menu to "/vn/user/add"
     
 Go to page create team
     Login to Admin
     When Click "Thiết lập" menu
-    And Click "Nhóm" sub menu to "/vn/team"
+    And Click "Nhóm" sub menu to "vn/team"
     And Click "Tạo mới" button
     Wait Until Element Spin
 
-Go to "Edit User" page
-    Go to "Danh sách Người dùng" page
-    Select the user to edit
+Go to page edit team
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Nhóm" sub menu to "vn/team"
+    Select the team with "invalid" to edit
     Wait Until Element Spin
+
+Go to "Edit User" page
+    Login to admin
+    And Click "Người Dùng" menu
+    And Select the user with "invalid" to edit
+    Wait Until Element Spin
+
 Go to profile page
     Login to Staff
     Hover to avatar
     Click "Thông tin cá nhân" to profile
-    Sleep    2
+    Wait Until Element Spin
+    Wait Until Element Spin
 
 Enter invalid information to create user
   When Enter "text" in "Họ và tên" with "_RANDOM_"
@@ -122,6 +150,7 @@ Element Should Not Be Visible
 # Kiểm tra tiêu đề của trang web 
 Title Should Be
     [Arguments]    ${expectedTitle}
+    Wait Until Element Spin
     ${actualTitle}    Get Title
     Should Be Equal As Strings    ${actualTitle}    ${expectedTitle}
 
@@ -133,6 +162,10 @@ Reload Page
 Enter at "${name}" field to Login
     ${element}=    Get Element Form Item By Name    ${name}    //input[contains(@class, "ant-input")]
     Press Keys    ${element}    Enter
+
+#DASHBOARD CỦA  TRANG WEB
+User look dashboard "${dashboard}"
+    Element Text Should Be    //*[@id='name-application']    ${dashboard}
 
 ###  -----  Form  -----  ###
 # Tạo một văn bản ngẫu nhiên dựa trên loại và giá trị đầu vào.
@@ -237,6 +270,21 @@ Click select "${name}" with "${text}"
     Set Global Variable     ${STATE["${name}"]}               ${text}
   END
 
+# Chọn quản lý
+Click select ${manager} with "${text}"
+  ${text}=                  Get Random Text                   Text                          ${text}
+  ${element}=               Get Element Form Item By Name     ${manager}                       //*[contains(@class, "ant-select-show-arrow")]
+  Wait Until Element Is Visible    ${element}
+  Click                     ${element}
+  ${element}=               Get Element Form Item By Name     ${manager}                       //*[contains(@class, "ant-select-selection-search-input")]
+  Fill Text                                                   ${element}                    ${text}
+  Wait Until Element Is Visible     xpath=//span[contains(text(),'${text}')]
+  Click                     xpath=//span[contains(text(),'${text}')]
+  ${cnt}=                   Get Length                        ${text}
+  IF  ${cnt} > 0
+    Set Global Variable     ${STATE["${manager}"]}               ${text}
+  END
+
 # Nhập giá trị vào trường edit trên form.
 Enter "${type}" in editor "${name}" with "${text}"
   ${text}=                  Get Random Text                   ${type}                       ${text}
@@ -244,7 +292,7 @@ Enter "${type}" in editor "${name}" with "${text}"
   Clear Text                                                  ${element}
   Fill Text                                                   ${element}                    ${text}
 
-# 
+# Upload file
 Select file in "${name}" with "${text}"
   ${element}=               Get Element Form Item By Name     ${name}                       //input[@type = "file"]
   Upload File By Selector   ${element}                        test/upload/${text}
@@ -300,7 +348,6 @@ Click on the "${text}" button in the "${name}" table line
   Click                     ${element}
   Click Confirm To Action
 
-
 ###  -----  Tree  -----  ###
 # Tìm phần tử trong cây dựa trên tên.
 Get Element Tree By Name
@@ -341,7 +388,8 @@ Select on the "${text}" item line
 
 # Nhấp vào menu có nội dung là "${text}".
 Click "${text}" menu
-  Click                     xpath=//li[contains(@class, "menu") and descendant::span[contains(text(), "${text}")]]
+  Click                     xpath=//li[span[contains(text(), "${text}")]]
+  Wait Until Element Spin
 
 # Nhấp vào submenu có nội dung là "${text}" và điều hướng đến "${url}".
 Click "${text}" sub menu to "${url}"
@@ -402,10 +450,10 @@ Required message "${name}" field displayed under "${text}"
 
 # Kiểm tra Menu khi đăng nhập thành công
 User look menu "${text}"
-  Element Text Should Be    xpath=//li[contains(@class, "menu") and descendant::span[contains(text(), "${text}")]]    ${text}
+  Element Text Should Be    xpath=//li[span[contains(text(), "${text}")]]    ${text}
  
 # Click vào link "Quên mật khẩu?"
-Click "Quên mật khẩu?" link
+Click "${name}" link
   ${element}=    Set Variable    //button[contains(@class, 'text-blue-600')]    
   Click   ${element}
 
@@ -433,6 +481,10 @@ User look "${name}" field empty
     ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
     Element Text Should Be    ${element}    ${EMPTY}
 
+# Chọn ngôn ngữ tiếng anh
+Change language with "${text}"
+    Click    //span[contains(@class, "ant-select-selection-item")]
+    Click    //*[contains(@class, "ant-select-item-option-content") and text()="${text}"]
 # #############--------------CREATE USER----------------#########################
 # Click sub menu "Danh sách" trong menu "Người Dùng"
 Click "${list}" submenu in "Người Dùng" menu
@@ -474,9 +526,12 @@ Click list Role with "${role}"
     Wait Until Element Is Visible    ${element}
     Click    ${element}
     Wait Until Element Spin
+    Wait Until Element Spin
 
 # Nhập từ khóa cần tìm kiếm
 Search "${type}" in "${name}" with "${text}"
+    Wait Until Element Spin
+    Wait Until Element Spin
     ${text}=                  Get Random Text                   ${type}                       ${text}
     ${element}=               Set Variable        //input[@placeholder="${name}"]
     Clear Text                ${element}
@@ -485,21 +540,20 @@ Search "${type}" in "${name}" with "${text}"
     IF  ${cnt} > 0
         Set Global Variable     ${STATE["${name}"]}               ${text}
     END
-    Sleep    3
+    Sleep    4
 
 # Tăng số lượng user được hiển thị lên 40 user
 Increase the number of users displayed in the list
-    Wait Until Element Spin
-    ${element}=        Set Variable    xpath=//span[@class="ant-select-selection-item" and @title="8"]
+    ${element}=        Set Variable    xpath=//span[@class="ant-select-selection-item" and @title="9"]
     Click        ${element}
-    ${number}=        Set Variable    //div[@class="ant-select-item-option-content" and text()="40"]
+    ${number}=        Set Variable    //div[@class="ant-select-item-option-content" and text()="45"]
     Wait Until Element Is Visible    ${number}
     Click    ${number}
 
 # Hiển thị danh sách người dùng
 Show list of users
-    ${elements}=        Get Elements        xpath=//tbody/tr
-    ${user_count}=    Set Variable    1
+    ${elements}=        Get Elements        xpath=//tr[@class='ant-table-row ant-table-row-level-0']
+    ${user_count}=    Set Variable    2
     ${stt}=    Set Variable    1
     FOR    ${item}    IN    @{elements}
             ${username}=        Get Text    //tbody/tr[${user_count}]/td[1]/div[1]/span[1]
@@ -509,7 +563,6 @@ Show list of users
             ${team}=            Get Text    //tbody/tr[${user_count}]/td[5]
             ${Email}=           Get Text    //tbody/tr[${user_count}]/td[6]
             ${phone_number}=    Get Text    //tbody/tr[${user_count}]/td[7]
-            ${start_date}=      Get Text    //tbody/tr[${user_count}]/td[8]
             IF  '${manager}' == '${EMPTY}'
                 ${manager}=    Set Variable    Không có quản lý
             END
@@ -518,21 +571,46 @@ Show list of users
                 ${team}=    Set Variable    Không có nhóm
             END
             
-            Log To Console        ${stt}. ${username} | ${position} | ${role} | ${manager} | ${team} | ${Email} | ${phone_number} | ${start_date}
+            Log To Console        ${stt}. ${username} | ${position} | ${role} | ${manager} | ${team} | ${Email} | ${phone_number} |
             Log To Console        =====================================================================================================================================================
             ${user_count}=    Evaluate    ${user_count} + 1
             ${stt}=    Evaluate    ${stt} + 1
     END
-    ${total}=    Evaluate    ${user_count} - 1
+    ${total}=    Evaluate    ${user_count} - 2
+    Log To Console    Tổng số lượng user: ${total}
+
+The page is refreshed with empty fields
+    Then User look "Họ và tên" field empty
+    And User look "Email" field empty
+    And User look "Mật khẩu" field empty
+    And User look "Nhập lại mật khẩu" field empty
+    And User look "Số điện thoại" field empty
+
+# Hiển thị danh sách nhóm
+Show list of teams
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//tr[@class='ant-table-row ant-table-row-level-0']
+    ${team_count}=    Set Variable    2
+    ${stt}=    Set Variable    1
+    FOR    ${item}    IN    @{elements}
+        ${team_name}=        Get Text        //tbody[1]/tr[${team_count}]/td[1]
+        ${manager}=          Get Text        //tbody/tr[${team_count}]/td[2]/div[1]/span[1]
+        Log To Console        ${stt}. ${team_name} || ${manager}
+        Log To Console        =======================================
+        ${team_count}=    Evaluate    ${team_count} + 1
+        ${stt}=    Evaluate    ${stt} + 1
+    END
+    ${total}=    Evaluate    ${team_count} - 2
     Log To Console    Tổng số lượng user: ${total}
 
 # Không có user nào được hiển thị khi nhập từ khóa tìm kiếm không hợp lệ
-No users are shown
+No ${name} are shown
     Wait Until Element Spin
     ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
     Wait Until Element Is Visible    ${element}
     ${text}=    Get Text    ${element}
-    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có User nào ứng với từ khóa tìm khiếm
+    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm khiếm
 
 # Chọn Next page hoặc Previous page  
 Click "${icon}" to "${next}" page
@@ -550,25 +628,20 @@ Get_Element_Attribute with "${page}"
 
 # #############--------------EDIT USER----------------#########################
 # Chọn user cần chỉnh sửa
-Select the user to edit
+Select the ${text} with "${name}" to edit
     [Arguments]    
     Wait Until Element Spin
     ${elements}            Get Elements            xpath=//button[@title="Sửa"]
     ${elementCount}    Get Length    ${elements}
-    # ${randomIndex}=    Evaluate    random.randint(0, ${elementCount}-1)
-    ${randomIndex}=    Evaluate    ${elementCount}-5
+    IF  '${name}'=='team has been deleted'
+        ${randomIndex}=    Evaluate    ${elementCount}-4
+    ELSE IF    '${name}'=='Còn những yêu cầu nghỉ cần duyệt'
+        ${randomIndex}=    Evaluate    ${elementCount}-9
+    ELSE IF   '${name}'=='invalid'
+        ${randomIndex}=    Evaluate    ${elementCount}-5
+    END
     Click    ${elements}[${randomIndex}]
-    Sleep    2
-
-Select the user whose team has been deleted to edit
-    [Arguments]    
     Wait Until Element Spin
-    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
-    ${elementCount}    Get Length    ${elements}
-    # ${randomIndex}=    Evaluate    random.randint(0, ${elementCount}-1)
-    ${randomIndex}=    Evaluate    ${elementCount}-7
-    Click    ${elements}[${randomIndex}]
-    Sleep    2
 
 # Xóa thông tin hiện tại của trường: Ngày sinh hoặc Ngày đầu đi làm
 Delete information "${name}"
@@ -594,7 +667,7 @@ Delele select "${name}" field when edit user
 
 # #############--------------STAFF LEAVE MANAGEMENT----------------#########################
 # Nhập ngày bắt đầu nghỉ hoặc ngày kết thúc nghỉ
-Enter leave date in "${field}" with "${text}"            #NHẬP NGÀY NGHỈ BẮT ĐẦU VÀ KẾT THÚC
+Enter leave date in "${field}" with "${text}"            # NHẬP NGÀY NGHỈ BẮT ĐẦU VÀ KẾT THÚC
   ${text}=                  Get Random Text                   date                          ${text}
   ${element}               Set Variable            xpath=//input[@placeholder="${field}"]
   Click                     ${element}
@@ -630,11 +703,63 @@ User look all field should be empty        #STAFF_LEAVE MANAGER
     And User look leave date empty with "Ngày kết thúc"
     And User look empty textarea with "Lý do"
 
+# Hiển thị danh sách ngày nghỉ đã tạo
+Show list of "${name}" leave date
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//tr[@class="ant-table-row ant-table-row-level-0"]
+    ${user_count}=    Set Variable    2
+    ${stt}=    Set Variable    1
+    FOR    ${item}    IN    @{elements}
+      ${username}=              Get Text        //tbody/tr[${user_count}]/td[2]/div[1]/span[1]
+      ${manager}=               Get Text        //tbody/tr[${user_count}]/td[3]/div[1]/span[1]
+      ${type}=                  Get Text        //tbody/tr[${user_count}]/td[4]
+      ${time}=                  Get Text        //tbody/tr[${user_count}]/td[5]
+      ${leave_date}=            Get Text        //tbody/tr[${user_count}]/td[6]
+      ${status}=                Get Text        //tbody/tr[${user_count}]/td[7]
+      ${approvated_date}=       Get Text        //tbody/tr[${user_count}]/td[8]
+      ${approvated_by}=         Get Text        //tbody/tr[${user_count}]/td[9]/div[1]/span[1]
+      # ${status_leave_path}      Set Variable    //tbody/tr[${user_count}]/td[6]/*[1]    
+      # ${status_leave}=       Get Attribute      ${status_leave_path}    class
+      
+      # IF  '${status_leave}' == '${class_rejected}'
+      #   ${status}=    Set Variable    Không được phê duyệt
+      # ELSE IF  '${status_leave}' == '${class_approved}'
+      #   ${status}=    Set Variable    Đã phê duyệt
+      # END
+    
+      IF  '${approvated_date}' == ''
+        ${status}=    Set Variable    Đang chờ phê duyệt
+      END
+
+      Log To Console        ${stt}. Họ và tên: ${username} | Quản lý: ${manager} | Loại phép: ${type} | Thời gian: ${time} | Ngày nghỉ: ${leave_date} | Trạng thái: ${status} | Ngày phê duyệt: ${approvated_date} | Người phê duyệt: ${approvated_by}
+      Log To Console        ================================================================================================================================================================================================================================================================
+      ${user_count}=    Evaluate    ${user_count} + 1
+      ${stt}=    Evaluate    ${stt} + 1
+    END
+    ${total}=    Evaluate    ${user_count} - 2
+    IF     '${name}'=='created'
+      Log To Console    Total number of holidays ${name}: ${total}
+    ELSE IF    '${name}'=='approved'
+      Log To Console    Total number of ${name} holidays: ${total}
+    ELSE IF    '${name}'=='pending'
+      Log To Console    Total number of days off ${name} approval: ${total}
+    END
+
+Filter the list of holidays with the status of "${status}"
+    Click    //thead/tr[1]/th[6]/div[1]/span[2]
+    Click    //span[contains(text(),'${status}')]
+    Click "Tìm kiếm" button
 # #############--------------PROFILE----------------#########################
 Hover to avatar
     Mouse Move Relative To        xpath=//div[contains(@class, 'text-right')]        0
 
-Click "${profile}" to profile
+Click "${profile}" to ${name}
     ${element}=        Set Variable        //div[text() = '${profile}']
     Wait Until Element Is Visible          ${element}
     Click    ${element}
+
+# #############--------------MANAGER LEAVE MANAGEMENT----------------#########################
+Select the leave application to be approved
+    ${element}=        Get Elements         //*[contains(@class, "ant-table-row")]
+    Click   ${element}[1]    left    2

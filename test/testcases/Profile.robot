@@ -9,7 +9,7 @@ Test Teardown       Tear Down
 # ---------------------NAVIGATE CREATE USER PAGE-------------------------------------------------------
 PRO-01 Verify that it is possible to navigate to the page for edit profile
     [Tags]    @smoketest    @regression
-    When Login to Staff
+    Login to Staff
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     Then User look title "Thông tin cá nhân"
@@ -117,7 +117,7 @@ PRO-15 Verify that validation text in "Nhập lại mật khẩu" field does not
     And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Nhập lại mật khẩu" displayed under "Hai mật khẩu không giống nhau!" field
 
-#--------------------------------EDIT USER SUCCESSFULLY------------------------------------------
+#--------------------------------EDIT PROFILE SUCCESSFULLY------------------------------------------
 PRO-16 Verify that account edit successfully when change name
     [Tags]    @smoketest    @regression
     Go to profile page
@@ -161,11 +161,10 @@ PRO-21 Verify that account edit successfully when change Email
     And Click "Lưu lại" button
     Then User look message "Thành công" popup
 
-# #--------------------------------ERROR MESSAGE WHEN EDIT USER------------------------------------------
-# PRO-28 Verify that error message display when edit user with Email is already taken
-#     [Tags]    @smoketest    @regression
-#     # TEST CASE FAILED
-#     Go to profile page
-#     And Enter "email" in "Email" with "19t1051013@husc.edu.vn"
-#     And Click "Lưu lại" button
-#     Then User look message "Email đã được sử dụng" popup
+# #--------------------------------LOG OUT SUCCESSFULLY------------------------------------------
+PRO-22 Verify that can log out successfully
+    [Tags]    @smoketest    @regression
+    Login to Staff
+    When Hover to avatar
+    And Click "Đăng xuất" to logout
+    Then User look title "Đăng nhập"
