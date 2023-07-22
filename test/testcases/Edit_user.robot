@@ -21,7 +21,7 @@ EDU-01 Verify that validation text in "Họ và tên" field
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Enter "text" in "Họ và tên" with "${EMPTY}"
-    And Enter "email" in "Email" with "_RANDOM_"
+    And Enter "email" in "Email" with "${EMPTY}"
     Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
 
 EDU-03 Verify that validation text in "Email" field
@@ -30,7 +30,7 @@ EDU-03 Verify that validation text in "Email" field
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Enter "email" in "Email" with "${EMPTY}"
-    And Enter "text" in "Họ và tên" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Email" displayed under "Xin vui lòng nhập email" field
 
 EDU-04 Verify that validation text in "Email" field when enter invalid email format and less than 6 characters long
@@ -39,7 +39,7 @@ EDU-04 Verify that validation text in "Email" field when enter invalid email for
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Enter "email" in "Email" with "text"
-    And Enter "text" in "Họ và tên" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Email" field displayed under "Xin vui lòng nhập địa chỉ email hợp lệ!"
     And Required message "Email" field displayed under "Xin vui lòng nhập tối thiểu 6 ký tự!"
 
@@ -49,7 +49,7 @@ EDU-05 Verify that validation text in "Email" field when enter invalid email for
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Enter "text" in "Email" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Email" field displayed under "Xin vui lòng nhập địa chỉ email hợp lệ!"
 
 EDU-06 Verify that validation text in "Số điện thoại" field
@@ -58,7 +58,7 @@ EDU-06 Verify that validation text in "Số điện thoại" field
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Enter "phone" in "Số điện thoại" with "${EMPTY}"
-    And Enter "text" in "Họ và tên" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
 
 EDU-07 Verify that validation text in "Số điện thoại" field invalid phone number format
@@ -67,7 +67,7 @@ EDU-07 Verify that validation text in "Số điện thoại" field invalid phone
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Enter "text" in "Số điện thoại" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Số điện thoại" displayed under "Xin vui lòng chỉ nhập số" field
 
 EDU-08 Verify that validation text in "Số điện thoại" field greater than 12 characters
@@ -76,7 +76,7 @@ EDU-08 Verify that validation text in "Số điện thoại" field greater than 
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Enter "number" in "Số điện thoại" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa phải có 12 ký tự số!" field
 
 EDU-09 Verify that validation text in "Ngày sinh" field
@@ -85,7 +85,7 @@ EDU-09 Verify that validation text in "Ngày sinh" field
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Delete information "Ngày sinh"
-    And Enter "text" in "Họ và tên" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Ngày sinh" displayed under "Xin vui lòng chọn ngày sinh" field
 
 EDU-10 Verify that validation text in "Vị tri" field
@@ -93,7 +93,7 @@ EDU-10 Verify that validation text in "Vị tri" field
     Login to admin
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
-    And Delele select "Vị trí" field when edit user
+    And Delele select "Vị trí" field
     Then Required message "Vị trí" displayed under "Xin vui lòng chọn vị trí" field
 
 EDU-11 Verify that validation text in "Ngày đầu đi làm" field
@@ -102,7 +102,7 @@ EDU-11 Verify that validation text in "Ngày đầu đi làm" field
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
     And Delete information "Ngày đầu đi làm"
-    And Enter "text" in "Họ và tên" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with "${EMPTY}"
     Then Required message "Ngày đầu đi làm" displayed under "Xin vui lòng chọn ngày đầu đi làm" field
 
 EDU-12 Verify that validation text in "Vai trò" field
@@ -110,7 +110,7 @@ EDU-12 Verify that validation text in "Vai trò" field
     Login to admin
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
-    And Delele select "Vai trò" field when edit user
+    And Delele select "Vai trò" field
     Then Required message "Vai trò" displayed under "Xin vui lòng chọn vai trò" field
 
 EDU-13 Verify that validation text in "Ngày nghỉ" field
@@ -121,7 +121,7 @@ EDU-13 Verify that validation text in "Ngày nghỉ" field
     And Click "Lưu lại" button
     Then Required message "Ngày nghỉ" displayed under "Xin vui lòng nhập ngày nghỉ" field
 
-#--------------------------------ERROR MESSAGE WHEN EDIT USER------------------------------------------
+##--------------------------------ERROR MESSAGE WHEN EDIT USER------------------------------------------
 EDU-14 Verify that error message display when edit user with Email is already taken & "Lưu lại" button
     [Tags]    @smoketest    @regression
     # TEST CASE FAILED
@@ -265,7 +265,7 @@ EDU-27 Verify that account edit successfully when change Manager
     Login to admin
     When Click "Người Dùng" menu
     And Select the user with "invalid" to edit
-    And Click select "Quản lý" with "Hồ Văn Nhật"
+    And Click select Quản lý with "Hoàng Diệu"
     And Enter "leave date" in "Ngày nghỉ" with "_RANDOM_"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup

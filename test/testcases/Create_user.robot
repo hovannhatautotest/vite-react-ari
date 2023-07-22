@@ -14,7 +14,7 @@ Test Teardown       Tear Down
 #     And Click "Tạo mới" sub menu to "/vn/user/add"
 #     Then User look title "Tạo mới người dùng"
 
-CRU-02 Verify that it is possible to navigate to the page for creating a new user using the "Tạo mới" button in the "Danh sách" menu.
+CRU-01 Verify that it is possible to navigate to the page for creating a new user using the "Tạo mới" button in the "Danh sách" menu.
     [Tags]    @smoketest    @regression
     Login to Admin
     And Click "Người Dùng" menu
@@ -289,14 +289,12 @@ CRU-31 Verify that can see "Mật khẩu" và "Nhập lại mật khẩu" field 
 CRU-32 Verify that Delete user unsuccessfully because user has submitted a request for leave that needs to be approved.
     Login to admin
     And Click "Người Dùng" menu
-    And Increase the number of users displayed in the list
     And Click "Xóa" user has submitted a request for leave that needs to be approved
     Then User look message "Còn những yêu cầu nghỉ cần duyệt" popup
 
 CRU-33 Verify that Delete user unsuccessfully because user still managing other people
     Login to admin
     And Click "Người Dùng" menu
-    And Increase the number of users displayed in the list
     And Click "Xóa" user still managing other people
     Then User look message "common.user.Still managing other people" popup
 
@@ -371,17 +369,12 @@ CRU-44 Verify that Admin can search unsuccessfully when entering incorrect keywo
     And Search "phone" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU-45 Verify that Next page
+CRU-45 Verify that Next page and Previous page
     Login to admin
     And Click "Người Dùng" menu
-    Click ">" to "next" page
+    And Click ">" to "next" page
     Log To Console    Danh sách user trang 2
-    Show list of users
-
-CRU-46 Verify that Previous page
-    Login to admin
-    And Click "Người Dùng" menu
-    When Click "page 2 number" to "page_2" page
+    Then Show list of users
     And Click "<" to "prev" page
-    Then Log To Console    Danh sách user trang 1
-    And Show list of users 
+    Log To Console    Danh sách user trang 1
+    Then Show list of users 

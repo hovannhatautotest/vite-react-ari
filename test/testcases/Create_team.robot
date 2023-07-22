@@ -16,36 +16,50 @@ CRT-01 Verify that it is possible to navigate to the page for creating a new tea
     Then User look title "Thêm mới nhóm"
 
 # ---------------------VALIDATION TEXT-------------------------------------------------
-CRT-02 Verify that create team unsuccessfull because blank all field
+CRT-02 Verify that create team unsuccessfull because blank all field & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Click "Lưu lại" button
     Then Required message "Tên Nhóm" displayed under "Xin vui lòng nhập tên nhóm" field
     And Required message "Quản lý" displayed under "Xin vui lòng chọn quản lý" field
 
-CRT-03 Verify that create team unsuccessfull because blank all field
+CRT-03 Verify that create team unsuccessfull because blank all field & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Click "Lưu và tạo mới" button
     Then Required message "Tên Nhóm" displayed under "Xin vui lòng nhập tên nhóm" field
     And Required message "Quản lý" displayed under "Xin vui lòng chọn quản lý" field
 
-CRT-04 Verify that create team unsuccessfull because no enter "Tên Nhóm" field
+CRT-04 Verify that create team unsuccessfull because no enter "Tên Nhóm" field & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Click select "Quản lý" with "Hồ Văn Nhật"
     And Click "Lưu lại" button
     Then Required message "Tên Nhóm" displayed under "Xin vui lòng nhập tên nhóm" field
 
-CRT-05 Verify that create team unsuccessfull because no enter "Quản lý" field
+CRT-05 Verify that create team unsuccessfull because no enter "Tên Nhóm" field & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to page create team
+    And Click select "Quản lý" with "Hồ Văn Nhật"
+    And Click "Lưu và tạo mới" button
+    Then Required message "Tên Nhóm" displayed under "Xin vui lòng nhập tên nhóm" field
+
+CRT-06 Verify that create team unsuccessfull because no enter "Quản lý" field & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
     And Click "Lưu lại" button
     Then Required message "Quản lý" displayed under "Xin vui lòng chọn quản lý" field
 
+CRT-07 Verify that create team unsuccessfull because no enter "Quản lý" field & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to page create team
+    And Enter "text" in "Tên Nhóm" with "_RANDOM_"
+    And Click "Lưu và tạo mới" button
+    Then Required message "Quản lý" displayed under "Xin vui lòng chọn quản lý" field
+
 # ---------------------------ERROR MESSAGE----------------------------------------
-CRT-06 Verify that create team unsuccessfull because team is already taken    # TEST CASE FAILED 
+CRT-08 Verify that create team unsuccessfull because team is already taken & "Lưu lại" button    # TEST CASE FAILED 
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "Nhân viên ARI"
@@ -53,12 +67,23 @@ CRT-06 Verify that create team unsuccessfull because team is already taken    # 
     And Click select "Quản lý" with "Hồ Văn Nhật"
     And Click "Lưu lại" button
     Then User look message "Tên Nhóm đã được sử dụng" popup
+    When Click on the "Xóa" button in the "Tên Nhóm" table line
+    Then User look message "Xóa thành công" popup
+
+CRT-09 Verify that create team unsuccessfull because team is already taken & "Lưu và tạo mới" button    # TEST CASE FAILED 
+    [Tags]    @smoketest    @regression
+    When Go to page create team
+    And Enter "text" in "Tên Nhóm" with "Nhân viên ARI"
+    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Click select "Quản lý" with "Hồ Văn Nhật"
+    And Click "Lưu và tạo mới" button
+    Then User look message "Tên Nhóm đã được sử dụng" popup
     And Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên Nhóm" table line
     Then User look message "Xóa thành công" popup
 
 # ---------------------------CREATE TEAM SUCCESSFULLY---------------------------------------
-CRT-07 Verify that creating a team successfully with the sanme manager with "Lưu lại" button
+CRT-10 Verify that creating a team successfully with the sanme manager with "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
@@ -70,7 +95,7 @@ CRT-07 Verify that creating a team successfully with the sanme manager with "Lư
     When Click on the "Xóa" button in the "Tên Nhóm" table line
     Then User look message "Xóa thành công" popup
 
-CRT-08 Verify that creating a team successfully with the same manager with "Lưu và tạo mới" button
+CRT-11 Verify that creating a team successfully with the same manager with "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
@@ -83,49 +108,137 @@ CRT-08 Verify that creating a team successfully with the same manager with "Lưu
     When Click on the "Xóa" button in the "Tên Nhóm" table line
     Then User look message "Xóa thành công" popup
 
+CRT-12 Verify that create new team is successful when create team with another manager & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to page create team
+    And Enter "text" in "Tên Nhóm" with "_RANDOM_"
+    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Click select "Quản lý" with "Hoàng Diệu"
+    And Click "Lưu lại" button
+    Then User look message "Tạo thành công" popup
+    And User look title "Nhóm"
+    When Click on the "Xóa" button in the "Tên Nhóm" table line
+    Then User look message "Xóa thành công" popup
+
+CRT-13 Verify that create new team is successful when create team with another manager & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to page create team
+    And Enter "text" in "Tên Nhóm" with "_RANDOM_"
+    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Click select "Quản lý" with "Hoàng Diệu"
+    And Click "Lưu và tạo mới" button
+    Then User look message "Tạo thành công" popup
+    And User look title "Thêm mới nhóm"
+    And Click "Huỷ bỏ" button
+    When Click on the "Xóa" button in the "Tên Nhóm" table line
+    Then User look message "Xóa thành công" popup
+
+CRT-14 Verify that create new team is successful when create team with leave description blank & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to page create team
+    And Enter "text" in "Tên Nhóm" with "_RANDOM_"
+    And Click select "Quản lý" with "Hoàng Diệu"
+    And Click "Lưu lại" button
+    Then User look message "Tạo thành công" popup
+    And User look title "Nhóm"
+
+CRT-15 Verify that create new team is successful when create team with leave description blank & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to page create team
+    And Enter "text" in "Tên Nhóm" with "_RANDOM_"
+    And Click select "Quản lý" with "Hoàng Diệu"
+    And Click "Lưu và tạo mới" button
+    Then User look message "Tạo thành công" popup
+    And User look title "Thêm mới nhóm"
+
+###-------------------RELOAD PAGE-----------------------------------------------------------------------------------------
+CRT-16 Verify entered data not showing when Refresh with F5 key
+    [Tags]    @smoketest    @regression
+    When Go to page create team
+    And Enter "text" in "Tên Nhóm" with "_RANDOM_"
+    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Click select "Quản lý" with "Hoàng Diệu"
+    And Reload Page
+    Then User look "Tên Nhóm" field empty
+    And User look textarea "user.Description" field empty
+    And User look select "Quản lý" field empty
+
 ##=======================VIEW LIST OF TEAM====================================##
-CRT-09 Verify that user can view the list of teams successfully
+CRT-17 Verify that user can view the list of teams successfully
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Nhóm" sub menu to "vn/team"
     Then Show list of teams
 
-CRT-10 Verify that Admin can search successfully when entering correct keyword to search box with "Tên nhóm"
+CRT-18 Verify that Admin can search successfully when entering correct keyword to search box with "Tên nhóm"
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Nhóm" sub menu to "vn/team"
     And Search "text" in "Tìm kiếm" with "Nhóm 1"
     Then Show list of teams
 
-CRT-11 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box
+CRT-19 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Nhóm" sub menu to "vn/team"
     And Search "text" in "Tìm kiếm" with "_RANDOM_"
     Then No team are shown
 
+CRT-20 Verify that Next page and Previous page
+    Login to admin
+    When Click "Thiết lập" menu
+    And Click "Nhóm" sub menu to "vn/team"
+    And Click ">" to "next" page
+    Log To Console    Danh sách team trang 2
+    Then Show list of teams
+    And Click "<" to "prev" page
+    Log To Console    Danh sách team trang 1
+    Then Show list of teams 
+
 ##=======================VERIFY EDIT TEAM================================##
-CRT-12 Verify that user can edit team's name successfully
+# ---------------------VALIDATION TEXT-------------------------------------------------
+EDT-01 Verify that edit team unsuccessfull because no enter "Tên Nhóm" field & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to page edit team
+    And Enter "text" in "Tên Nhóm" with "${EMPTY}"
+    And Click "Lưu lại" button
+    Then Required message "Tên Nhóm" displayed under "Xin vui lòng nhập tên nhóm" field
+
+EDT-02 Verify that edit team unsuccessfull because no enter "Tên Nhóm" field & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to page edit team
+    And Enter "text" in "Tên Nhóm" with "${EMPTY}"
+    And Click "Lưu và tạo mới" button
+    Then Required message "Tên Nhóm" displayed under "Xin vui lòng nhập tên nhóm" field
+
+EDT-03 Verify that edit team unsuccessfull because no enter "Quản lý" field
+    [Tags]    @smoketest    @regression
+    When Go to page edit team
+    And Delele select at "Quản lý" field
+    Then Required message "Quản lý" displayed under "Xin vui lòng chọn quản lý" field
+
+##========================ERROR MESSAGE WHEN EDIT TEAM=====================================##
+EDT-04 Verify that user can edit team's name successfully        #TEST CASE FAILED
+    Go to page edit team
+    And Enter "text" in "Tên Nhóm" with "Nhân viên ARI"
+    And Click "Lưu lại" button
+    Then User look message "Tên nhóm đã được sử dụng" popup
+
+##========================EDIT TEAM SUCCESSFULLY=====================================##
+EDT-05 Verify that user can edit team's name successfully
     Go to page edit team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
 
-CRT-13 Verify that Team edit successfully when change manager has team
-    Go to page edit team
-    And Click select "Quản lý" with "Lê Tiến Đạt"
-    And Click "Lưu lại" button
-    Then User look message "Cập nhật thành công" popup
-
-CRT-14 Verify that Team edit successfully when change manager has no team
+EDT-06 Verify that user can edit team successfully when change manager has team
     Go to page edit team
     And Click select "Quản lý" with "Hoàng Diệu"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
 
-##========================ERROR MESSAGE WHEN EDIT TEAM=====================================##
-CRT-15 Verify that user can edit team's name successfully        #TEST CASE FAILED
+EDT-07 Verify that user can edit team successfully when change manager has no team
     Go to page edit team
-    And Enter "text" in "Tên Nhóm" with "Nhóm 3"
+    And Click select "Quản lý" with "Hồ Văn Nhật"
     And Click "Lưu lại" button
-    Then User look message "Tên nhóm đã được sử dụng" popup
+    Then User look message "Cập nhật thành công" popup

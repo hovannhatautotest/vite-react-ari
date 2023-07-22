@@ -8,7 +8,7 @@ Library            BuiltIn
 *** Variables ***
 
 ${BROWSER}          chromium
-${HEADLESS}         ${True}
+${HEADLESS}         ${False}
 ${BROWSER_TIMEOUT}  60 seconds
 ${SHOULD_TIMEOUT}   0.1 seconds
 
@@ -481,6 +481,15 @@ User look "${name}" field empty
     ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
     Element Text Should Be    ${element}    ${EMPTY}
 
+User look textarea "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look select "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+    
+
 # Chọn ngôn ngữ tiếng anh
 Change language with "${text}"
     Click    //span[contains(@class, "ant-select-selection-item")]
@@ -490,11 +499,6 @@ Change language with "${text}"
 Click "${list}" submenu in "Người Dùng" menu
     ${element}=        Set Variable        xpath=(//span[text()='${list}'])[2]
     Click     ${element}
-
-# Xóa thông tin tại các trường vị trí, vai trò
-Delele select "${name}" field
-    ${element}=               Get Element Form Item By Name     ${name}        //*[contains(@class, "ant-select-show-arrow")]
-    Click    //span[@class='ant-select-clear'] 
 
 # XÓA USER KHI USER ĐÓ CÒN NHỮNG YÊU CẦU NGHỈ PHÉP CẦN PHÊ DUYỆT
 Click "${delete}" user has submitted a request for leave that needs to be approved
@@ -610,7 +614,7 @@ No ${name} are shown
     ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
     Wait Until Element Is Visible    ${element}
     ${text}=    Get Text    ${element}
-    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm khiếm
+    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm kiếm
 
 # Chọn Next page hoặc Previous page  
 Click "${icon}" to "${next}" page
@@ -634,13 +638,14 @@ Select the ${text} with "${name}" to edit
     ${elements}            Get Elements            xpath=//button[@title="Sửa"]
     ${elementCount}    Get Length    ${elements}
     IF  '${name}'=='team has been deleted'
-        ${randomIndex}=    Evaluate    ${elementCount}-4
+        ${randomIndex}=    Evaluate    ${elementCount}-3
     ELSE IF    '${name}'=='Còn những yêu cầu nghỉ cần duyệt'
-        ${randomIndex}=    Evaluate    ${elementCount}-9
+        ${randomIndex}=    Evaluate    ${elementCount}-8
     ELSE IF   '${name}'=='invalid'
         ${randomIndex}=    Evaluate    ${elementCount}-5
     END
     Click    ${elements}[${randomIndex}]
+    Wait Until Element Spin
     Wait Until Element Spin
 
 # Xóa thông tin hiện tại của trường: Ngày sinh hoặc Ngày đầu đi làm
@@ -656,7 +661,7 @@ Delete information "${name}"
     And Enter date in "${name}" with ""     
 
 # Xóa thông tin hiện tại của trường: Vị trí hoặc Vai trò
-Delele select "${name}" field when edit user
+Delele select "${name}" field
     IF  '${name}' == 'Vị trí'
         ${num}=    Evaluate    0
     ELSE IF  '${name}' == 'Vai trò'
@@ -664,6 +669,10 @@ Delele select "${name}" field when edit user
     END
     ${elements}=               Get Elements        //span[@class='ant-select-clear'] 
     Click    ${elements}[${num}]
+
+Delele select at "Quản lý" field
+    ${elements}=               Get Element        //span[@class='ant-select-clear'] 
+    Click    ${elements}
 
 # #############--------------STAFF LEAVE MANAGEMENT----------------#########################
 # Nhập ngày bắt đầu nghỉ hoặc ngày kết thúc nghỉ
