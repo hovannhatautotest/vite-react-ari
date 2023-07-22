@@ -231,6 +231,11 @@ Enter "${type}" in "${name}" with "${text}"
     Set Global Variable     ${STATE["${name}"]}               ${text}
   END
 
+# Click vào trường dữ liệu trên form.
+Click in "${name}" field
+  ${element}=               Get Element Form Item By Name     ${name}                       //input[contains(@class, "ant-input")]
+  Click                     ${element}                        
+
 # Nhập giá trị vào trường textarea trên form.
 Enter "${type}" in textarea "${name}" with "${text}"
   ${text}=                  Get Random Text                   ${type}                       ${text}
@@ -761,7 +766,7 @@ Filter the list of holidays with the status of "${status}"
     Click "Tìm kiếm" button
 # #############--------------PROFILE----------------#########################
 Hover to avatar
-    Mouse Move Relative To        xpath=//div[contains(@class, 'text-right')]        0
+    Mouse Move Relative To        xpath=//header/div[1]/div[2]/section[1]/div[1]        0
 
 Click "${profile}" to ${name}
     ${element}=        Set Variable        //div[text() = '${profile}']
