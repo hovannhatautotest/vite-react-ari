@@ -19,8 +19,8 @@ ${username_valid}    Hồ Văn Nhật
 ${email_valid}    hovannhat_staff@gmail.com
 ${phone_number_valid}    0941225407    
 
-${class_rejected}    w-5 h-5 fill-red-500 !flex !justify-center
-${class_approved}    w-5 h-5 fill-green-500 !flex !justify-center
+${class_rejected}    w-5 h-5 fill-red-500
+${class_approved}    w-5 h-5 fill-green-500
 
 *** Keywords ***
 
@@ -561,7 +561,7 @@ Increase the number of users displayed in the list
 
 # Hiển thị danh sách người dùng
 Show list of users
-    ${elements}=        Get Elements        xpath=//tr[@class='ant-table-row ant-table-row-level-0']
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
     ${user_count}=    Set Variable    2
     ${stt}=    Set Variable    1
     FOR    ${item}    IN    @{elements}
@@ -599,7 +599,7 @@ The page is refreshed with empty fields
 Show list of teams
     Wait Until Element Spin
     Wait Until Element Spin
-    ${elements}=        Get Elements        xpath=//tr[@class='ant-table-row ant-table-row-level-0']
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
     ${team_count}=    Set Variable    2
     ${stt}=    Set Variable    1
     FOR    ${item}    IN    @{elements}
@@ -719,31 +719,40 @@ User look all field should be empty        #STAFF_LEAVE MANAGER
 
 # Hiển thị danh sách ngày nghỉ đã tạo
 Show list of "${name}" leave date
-    Wait Until Element Spin
-    Wait Until Element Spin
-    ${elements}=        Get Elements        xpath=//tr[@class="ant-table-row ant-table-row-level-0"]
+    Sleep    3
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
     ${user_count}=    Set Variable    2
     ${stt}=    Set Variable    1
     FOR    ${item}    IN    @{elements}
       ${username}=              Get Text        //tbody/tr[${user_count}]/td[2]/div[1]/span[1]
-      ${manager}=               Get Text        //tbody/tr[${user_count}]/td[3]/div[1]/span[1]
-      ${type}=                  Get Text        //tbody/tr[${user_count}]/td[4]
-      ${time}=                  Get Text        //tbody/tr[${user_count}]/td[5]
-      ${leave_date}=            Get Text        //tbody/tr[${user_count}]/td[6]
-      ${status}=                Get Text        //tbody/tr[${user_count}]/td[7]
-      ${approvated_date}=       Get Text        //tbody/tr[${user_count}]/td[8]
-      ${approvated_by}=         Get Text        //tbody/tr[${user_count}]/td[9]/div[1]/span[1]
-      # ${status_leave_path}      Set Variable    //tbody/tr[${user_count}]/td[6]/*[1]    
-      # ${status_leave}=       Get Attribute      ${status_leave_path}    class
       
-      # IF  '${status_leave}' == '${class_rejected}'
-      #   ${status}=    Set Variable    Không được phê duyệt
-      # ELSE IF  '${status_leave}' == '${class_approved}'
-      #   ${status}=    Set Variable    Đã phê duyệt
-      # END
+      ${element_manager}=               Get Elements    //tbody/tr[${user_count}]/td[3]
+      ${manager}                Get Text        ${element_manager}[0]     
+      
+      ${element_type}=          Get Elements    //tbody/tr[${user_count}]/td[4]
+      ${type}=                  Get Text        ${element_type}[0]
+
+      ${element_time}=          Get Elements    //tbody/tr[${user_count}]/td[5]
+      ${time}=                  Get Text        ${element_time}[0]
+
+      ${element_leave_date}=    Get Elements    //tbody/tr[${user_count}]/td[6]
+      ${leave_date}=            Get Text        ${element_leave_date}[0]
+      
+      ${approvated_date}=       Get Text        //tbody/tr[${user_count}]/td[8]
+      ${approvated_by}=         Get Text        //tbody/tr[${user_count}]/td[9]
     
       IF  '${approvated_date}' == ''
         ${status}=    Set Variable    Đang chờ phê duyệt
+      END
+      
+      IF     '${name}'=='approved'
+        ${status}=    Set Variable    Đã phê duyệt
+      ELSE IF    '${name}'=='rejected'
+        ${status}=    Set Variable    Từ chối phê duyệt
+      ELSE IF    '${name}'=='pending'
+        ${status}=    Set Variable    Đang chờ phê duyệt
+      ELSE IF    '${name}'=='created'
+        ${status}=    Set Variable    ${EMPTY}
       END
 
       Log To Console        ${stt}. Họ và tên: ${username} | Quản lý: ${manager} | Loại phép: ${type} | Thời gian: ${time} | Ngày nghỉ: ${leave_date} | Trạng thái: ${status} | Ngày phê duyệt: ${approvated_date} | Người phê duyệt: ${approvated_by}
@@ -756,14 +765,12 @@ Show list of "${name}" leave date
       Log To Console    Total number of holidays ${name}: ${total}
     ELSE IF    '${name}'=='approved'
       Log To Console    Total number of ${name} holidays: ${total}
+    ELSE IF    '${name}'=='rejected'
+      Log To Console    Total number of days off ${name} approval: ${total}
     ELSE IF    '${name}'=='pending'
       Log To Console    Total number of days off ${name} approval: ${total}
     END
 
-Filter the list of holidays with the status of "${status}"
-    Click    //thead/tr[1]/th[6]/div[1]/span[2]
-    Click    //span[contains(text(),'${status}')]
-    Click "Tìm kiếm" button
 # #############--------------PROFILE----------------#########################
 Hover to avatar
     Mouse Move Relative To        xpath=//header/div[1]/div[2]/section[1]/div[1]        0
@@ -773,7 +780,102 @@ Click "${profile}" to ${name}
     Wait Until Element Is Visible          ${element}
     Click    ${element}
 
-# #############--------------MANAGER LEAVE MANAGEMENT----------------#########################
-Select the leave application to be approved
+# #############--------------ADMIN LEAVE MANAGEMENT----------------#########################
+Select leave management pending approval
     ${element}=        Get Elements         //*[contains(@class, "ant-table-row")]
-    Click   ${element}[1]    left    2
+    Click   ${element}[0]    left    2
+    Wait Until Element Spin
+
+Select an approved leave management
+    ${element}=        Get Elements         //*[contains(@class, "ant-table-row")]
+    Click   ${element}[2]    left    2
+    Wait Until Element Spin
+
+Select a leave management that is rejected approval
+    ${element}=        Get Elements         //*[contains(@class, "ant-table-row")]
+    Click   ${element}[3]    left    2
+    Wait Until Element Spin
+
+Filter the list of holidays with the status of "${status}"
+    Click    //thead/tr[1]/th[7]/div[1]/span[2]/*[1]
+    Click    //span[contains(text(),'${status}')]
+    Click "Tìm kiếm" button
+
+User can view the details of the holiday ${name}
+    Log To Console    Chi tiết ngày nghỉ
+    
+    ${code}    Get Text    //tbody/tr[1]/td[1]
+    Log To Console    Mã: ${code}
+    Log To Console    ==================================
+
+    ${fullname}    Get Text    //tbody/tr[2]/td[1]//div[1]/span[1]
+    Log To Console    Họ và tên: ${fullname}
+    Log To Console    ==================================
+
+    ${manager}    Get Text    //tbody/tr[3]/td[1]//div[1]/span[1]
+    Log To Console    Quản lý: ${manager}
+    Log To Console    ==================================
+
+    ${type}    Get Text    //tbody/tr[4]/td[1]
+    Log To Console    Loại phép: ${type}
+    Log To Console    ==================================
+
+    ${time}    Get Text    //tbody/tr[5]/td[1]
+    Log To Console    Thời gian: ${time}
+    Log To Console    ==================================
+
+    ${leave_date}    Get Text    //tbody/tr[6]/td[1]
+    Log To Console    Ngày nghỉ: ${leave_date}
+    Log To Console    ==================================
+
+    ${reason}    Get Text    //tbody/tr[7]/td[1]
+    Log To Console    Lý do: ${reason}
+    Log To Console    ==================================
+    
+    IF  '${name}' == 'Pending'
+        Log To Console    ==========================================
+    ELSE IF  '${name}' == 'Approvated'
+        Verify status
+    ELSE IF  '${name}' == 'Rejected'
+        Verify status
+        ${reason_rejected}    Get Text    //tbody/tr[11]/td[1]
+        Log To Console    Lý do từ chối: ${reason_rejected}
+    END
+
+Verify status
+    ${class_attribute}    Get Attribute    //tbody/tr[8]/td[1]/*[1]    class
+    IF  '${class_attribute}' == '${class_approved}'
+        ${status}=    Set Variable    Đã phê duyệt
+    ELSE IF  '${class_attribute}' == '${class_rejected}'
+            ${status}=    Set Variable    Từ chối phê duyệt
+    END
+    Log To Console    Trạng thái: ${status}
+    Log To Console    ==================================
+        
+    ${approvated_at}    Get Text    //tbody/tr[9]/td[1]
+    Log To Console    Ngày phê duyệt: ${approvated_at}
+    Log To Console    ==================================
+
+    ${approvated_by}    Get Text    //tbody/tr[10]/td[1]//div[1]/span[1]
+    Log To Console    Phê duyệt bởi: ${approvated_by}
+    Log To Console    ==================================
+
+Fillter the leave list by leave date with start date: ${start_date} and end date: ${end_date}
+    ${element}    Get Element    //thead/tr[1]/th[6]/div[1]/span[2]/*[1]
+    Click    ${element}
+    And Enter leave date in "Ngày bắt đầu" with "${start_date}"
+    And Enter leave date in "Ngày kết thúc" with "${end_date}"
+    Press Keys    xpath=//input[@placeholder="Ngày kết thúc"]    Enter
+    And Click "Tìm kiếm" button
+    Wait Until Element Spin
+    Wait Until Element Spin
+
+Fillter the leave list by approvated date with start date: ${start_date} and end date: ${end_date}
+    ${element}    Get Element    //thead/tr[1]/th[8]/div[1]/span[2]/*[1]
+    Click    ${element}
+    And Enter leave date in "Ngày bắt đầu" with "${start_date}"
+    And Enter leave date in "Ngày kết thúc" with "${end_date}"
+    Press Keys    xpath=//input[@placeholder="Ngày kết thúc"]    Enter
+    And Click "Tìm kiếm" button
+    Wait Until Element Spin
+    Wait Until Element Spin
