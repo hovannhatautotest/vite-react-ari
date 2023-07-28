@@ -6,7 +6,7 @@ Test Teardown       Tear Down
 
 *** Test Cases ***
 
-# ---------------------NAVIGATE CREATE USER PAGE-------------------------------------------------------
+# ---------------------NAVIGATE CREATE TEAM PAGE-------------------------------------------------------
 CRT-01 Verify that it is possible to navigate to the page for creating a new team
     [Tags]    @smoketest    @regression
     Login to Admin
@@ -168,14 +168,14 @@ CRT-17 Verify that user can view the list of teams successfully
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Nhóm" sub menu to "vn/team"
-    Then Show list of teams
+    Then Show list of "teams"
 
 CRT-18 Verify that Admin can search successfully when entering correct keyword to search box with "Tên nhóm"
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Nhóm" sub menu to "vn/team"
     And Search "text" in "Tìm kiếm" with "Nhóm 1"
-    Then Show list of teams
+    Then Show list of "teams"
 
 CRT-19 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box
     Login to Admin
@@ -190,10 +190,10 @@ CRT-20 Verify that Next page and Previous page
     And Click "Nhóm" sub menu to "vn/team"
     And Click ">" to "next" page
     Log To Console    Danh sách team trang 2
-    Then Show list of teams
+    Then Show list of "teams"
     And Click "<" to "prev" page
     Log To Console    Danh sách team trang 1
-    Then Show list of teams 
+    Then Show list of "teams" 
 
 ##=======================VERIFY EDIT TEAM================================##
 # ---------------------VALIDATION TEXT-------------------------------------------------

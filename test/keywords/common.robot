@@ -8,7 +8,7 @@ Library            BuiltIn
 *** Variables ***
 
 ${BROWSER}          chromium
-${HEADLESS}         ${True}
+${HEADLESS}         ${False}
 ${BROWSER_TIMEOUT}  60 seconds
 ${SHOULD_TIMEOUT}   0.1 seconds
 
@@ -31,14 +31,14 @@ Login to admin
   User look message "Thành công" popup
 
 Login to Manager
-  Enter "email" in "Tên đăng nhập" with "hovannhat_manager@gmail.com"
-  Enter "text" in "Mật khẩu" with "Nhat@01101999"
+  Enter "email" in "Tên đăng nhập" with "manager@gmail.com"
+  Enter "text" in "Mật khẩu" with "Tester@123"
   Click "Đăng nhập" button
   User look message "Thành công" popup
 
 Login to Staff
-  Enter "email" in "Tên đăng nhập" with "19t1051013@gmail.com"
-  Enter "text" in "Mật khẩu" with "Nhat@01101999"
+  Enter "email" in "Tên đăng nhập" with "staff@gmail.com"
+  Enter "text" in "Mật khẩu" with "Tester@123"
   Click "Đăng nhập" button
   User look message "Thành công" popup
 
@@ -51,15 +51,15 @@ Login to admin version english
 
 Login to Manager version english
   When Change language with "Tiếng Anh"
-  And Enter "email" in "Username" with "hovannhat_manager@gmail.com"
-  And Enter "text" in "Password" with "Nhat@01101999"
+  And Enter "email" in "Username" with "manager@gmail.com"
+  And Enter "text" in "Password" with "Tester@123"
   And Click "Log In" button
   User look message "Success" popup
 
 Login to Staff version english
   When Change language with "Tiếng Anh"
-  And Enter "email" in "Username" with "hovannhat_staff@gmail.com"
-  And Enter "text" in "Password" with "Nhat@01101999"
+  And Enter "email" in "Username" with "staff@gmail.com"
+  And Enter "text" in "Password" with "Tester@123"
   And Click "Log In" button
   User look message "Success" popup
 
@@ -69,7 +69,13 @@ Go to page create user
   And Click "Tạo mới" button
   Wait Until Element Spin
   # When Click "Tạo mới" sub menu to "/vn/user/add"
-    
+
+Go to "Edit User" page
+    Login to admin
+    And Click "Người Dùng" menu
+    And Select the user with "invalid" to edit
+    Wait Until Element Spin    
+
 Go to page create team
     Login to Admin
     When Click "Thiết lập" menu
@@ -84,18 +90,47 @@ Go to page edit team
     Select the team with "invalid" to edit
     Wait Until Element Spin
 
-Go to "Edit User" page
-    Login to admin
-    And Click "Người Dùng" menu
-    And Select the user with "invalid" to edit
-    Wait Until Element Spin
-
 Go to profile page
     Login to Staff
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     Wait Until Element Spin
     Wait Until Element Spin
+
+Go to create code page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Mã" sub menu
+    And Click "Thêm mới" button
+    Sleep    2
+
+Go to edit code page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Mã" sub menu
+    And Select the code with "invalid" to edit
+    Sleep    2
+
+Go to create data ${type} page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Dữ liệu" sub menu
+    And Click list Data_Type with "${type}"
+    And Click "Tạo mới" button
+    Sleep    2
+
+Go to edit data page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Dữ liệu" sub menu
+    And Select the Data with "invalid" to edit
+    Sleep    2
+
+Go to list data ${name} page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Dữ liệu" sub menu
+    And Click list Data_Type with "${name}"
 
 Enter invalid information to create user
   When Enter "text" in "Họ và tên" with "_RANDOM_"
@@ -107,6 +142,7 @@ Enter invalid information to create user
   And Click select "Vị trí" with "Tester"
   And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
   And Enter "words" in textarea "Mô tả" with "_RANDOM_"
+
 #### Setup e Teardown
 Setup
   Set Browser Timeout         ${BROWSER_TIMEOUT}
@@ -162,8 +198,10 @@ Reload Page
 Enter at "${name}" field to Login
     ${element}=    Get Element Form Item By Name    ${name}    //input[contains(@class, "ant-input")]
     Press Keys    ${element}    Enter
+    Click Confirm To Action
+    Scroll By                 ${None}
 
-#DASHBOARD CỦA  TRANG WEB
+# DASHBOARD CỦA TRANG WEB
 User look dashboard "${dashboard}"
     Element Text Should Be    //*[@id='name-application']    ${dashboard}
 
@@ -186,6 +224,9 @@ Get Random Text
     ${new_text}=            Set Variable                      ${words[0]} ${random}
   ELSE IF  ${cnt} > 0 and '${type}' == 'number'
     ${new_text}=            FakerLibrary.Random Int           min=1000000000000             max=9999999999999
+    ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'order number'
+    ${new_text}=            FakerLibrary.Random Int           min=0             max=999999999
     ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'leave date'
     ${new_text}=            FakerLibrary.Random Int           min=0             max=16
@@ -236,7 +277,7 @@ Click in "${name}" field
   ${element}=               Get Element Form Item By Name     ${name}                       //input[contains(@class, "ant-input")]
   Click                     ${element}                        
 
-# Nhập giá trị vào trường textarea trên form.
+# Nhập giá trị vào trường Mô tả trên form.
 Enter "${type}" in textarea "${name}" with "${text}"
   ${text}=                  Get Random Text                   ${type}                       ${text}
   ${element}=               Get Element Form Item By Name     ${name}                       //textarea
@@ -349,8 +390,8 @@ Get Element Table Item By Name
 # Nhấp vào nút trong một hàng của bảng.
 Click on the "${text}" button in the "${name}" table line
   Wait Until Element Spin
-  ${element}=               Get Element Table Item By Name    ${STATE["${name}"]}           //button[@title = "${text}"]
-  Click                     ${element}
+  ${element}=               Get Elements           //button[@title = "${text}"]
+  Click                     ${element}[0]
   Click Confirm To Action
 
 ###  -----  Tree  -----  ###
@@ -403,6 +444,13 @@ Click "${text}" sub menu to "${url}"
   ${curent_url}=            Get Url
   Should Contain            ${curent_url}                     ${URL_DEFAULT}${url}
 
+# Nhấp vào submenu có nội dung là "${text}".
+Click "${text}" sub menu
+  Wait Until Element Spin
+  Click                     xpath=//a[contains(@class, "sub-menu") and descendant::span[contains(text(), "${text}")]]
+  Wait Until Element Spin
+  Wait Until Element Spin
+
 # Kiểm tra xem thông báo lỗi có hiển thị đúng vị trí mong đợi không
 Required message "${name}" displayed under "${text}" field
   ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-form-item-explain-error")]
@@ -444,6 +492,7 @@ Wait Until Element Spin
 # -------------------------------------------------------------------------------------------------------------
 User look title "${title}"  
     Wait Until Element Spin
+    # Sleep    3
     Title Should Be    ${title}
 
 # #############--------------LOGIN----------------#########################
@@ -494,11 +543,11 @@ User look select "${name}" field empty
     ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
     Element Text Should Be    ${element}    ${EMPTY}
     
-
 # Chọn ngôn ngữ tiếng anh
 Change language with "${text}"
     Click    //span[contains(@class, "ant-select-selection-item")]
     Click    //*[contains(@class, "ant-select-item-option-content") and text()="${text}"]
+
 # #############--------------CREATE USER----------------#########################
 # Click sub menu "Danh sách" trong menu "Người Dùng"
 Click "${list}" submenu in "Người Dùng" menu
@@ -530,8 +579,8 @@ Click "Eye" icon to show "Mật khẩu" field and "Nhập lại mật khẩu" fi
     Click    ${element}[1]
 
 # Chon danh sách user ứng với vai trò tương ứng
-Click list Role with "${role}"
-    ${element}=    Set Variable    xpath=//div[contains(@class, 'truncate') and text()='${role}']
+Click list ${name} with "${text}"
+    ${element}=    Set Variable    xpath=//div[contains(@class, 'truncate') and text()='${text}']
     Wait Until Element Is Visible    ${element}
     Click    ${element}
     Wait Until Element Spin
@@ -595,23 +644,47 @@ The page is refreshed with empty fields
     And User look "Nhập lại mật khẩu" field empty
     And User look "Số điện thoại" field empty
 
-# Hiển thị danh sách nhóm
-Show list of teams
+# Hiển thị danh sách
+Show list of "${name}"
     Wait Until Element Spin
     Wait Until Element Spin
     ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
-    ${team_count}=    Set Variable    2
+    ${count}=    Set Variable    2
     ${stt}=    Set Variable    1
-    FOR    ${item}    IN    @{elements}
-        ${team_name}=        Get Text        //tbody[1]/tr[${team_count}]/td[1]
-        ${manager}=          Get Text        //tbody/tr[${team_count}]/td[2]/div[1]/span[1]
-        Log To Console        ${stt}. ${team_name} || ${manager}
-        Log To Console        =======================================
-        ${team_count}=    Evaluate    ${team_count} + 1
+    
+    IF  '${name}' == 'teams'
+        FOR    ${item}    IN    @{elements}
+          ${team_name}=        Get Text        //tbody[1]/tr[${count}]/td[1]
+          ${manager}=          Get Text        //tbody/tr[${count}]/td[2]/div[1]/span[1]
+          Log To Console        ${stt}. ${team_name} || ${manager}
+          Log To Console        =======================================
+          ${count}=    Evaluate    ${count} + 1
+          ${stt}=    Evaluate    ${stt} + 1
+        END
+    
+    ELSE IF  '${name}' == 'codes'
+      FOR    ${item}    IN    @{elements}
+        ${code}=             Get Text        //tbody[1]/tr[${count}]/td[1]
+        ${name_code}=        Get Text        //tbody[1]/tr[${count}]/td[2]
+        ${Description}=      Get Text        //tbody[1]/tr[${count}]/td[3]  
+        Log To Console        ${stt}. Mã: ${code} || Tên mã: ${name_code} || Mô tả: ${Description}
+        Log To Console        ===================================================================================
+        ${count}=    Evaluate    ${count} + 1
         ${stt}=    Evaluate    ${stt} + 1
+      END
+    
+    ELSE IF  '${name}' == 'data'
+      FOR    ${item}    IN    @{elements}
+        ${name_data}=             Get Text        //tbody[1]/tr[${count}]/td[1]
+        ${order}=        Get Text        //tbody[1]/tr[${count}]/td[2]
+        Log To Console        ${stt}. Tên dữ liệu: ${name_data} || Order: ${order}
+        Log To Console        ===================================================================================
+        ${count}=    Evaluate    ${count} + 1
+        ${stt}=    Evaluate    ${stt} + 1
+      END
     END
-    ${total}=    Evaluate    ${team_count} - 2
-    Log To Console    Tổng số lượng user: ${total}
+    ${total}=    Evaluate    ${count} - 2
+    Log To Console    Tổng số lượng ${name}: ${total}
 
 # Không có user nào được hiển thị khi nhập từ khóa tìm kiếm không hợp lệ
 No ${name} are shown
@@ -647,7 +720,7 @@ Select the ${text} with "${name}" to edit
     ELSE IF    '${name}'=='Còn những yêu cầu nghỉ cần duyệt'
         ${randomIndex}=    Evaluate    ${elementCount}-8
     ELSE IF   '${name}'=='invalid'
-        ${randomIndex}=    Evaluate    ${elementCount}-5
+        ${randomIndex}=    Evaluate    ${elementCount}-${elementCount}
     END
     Click    ${elements}[${randomIndex}]
     Wait Until Element Spin
@@ -879,3 +952,18 @@ Fillter the leave list by approvated date with start date: ${start_date} and end
     And Click "Tìm kiếm" button
     Wait Until Element Spin
     Wait Until Element Spin
+
+##=========================CREATE CODE===============================================
+User look title form "${text}"
+    ${element}    Set Variable    //h1[@class="text-xl font-bold hidden sm:block" and //h1[text() = "${text}"]]
+    Wait Until Element Is Visible    ${element}
+    Element Text Should Be    ${element}    ${text}
+
+##=========================CREATE DATA===============================================
+Select language with "${name}"
+    ${element}    Set Variable    //div[@id='rc-tabs-0-tab-1' and text()='${name}']   
+    Click    ${element}
+Enter information when create data
+    And Enter "order number" in "Order" with "_RANDOM_"
+    And Enter "text" in "Name" with "_RANDOM_"
+    And Enter "text" in textarea "Description" with "_RANDOM_"      

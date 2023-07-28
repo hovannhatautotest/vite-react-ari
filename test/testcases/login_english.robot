@@ -99,8 +99,8 @@ LG-11 Verify that Log In successfully account Staff with valid Email and Mật k
 LG-12 Verifi that successfully login when using the Enter key
     [Tags]    @smoketest    @regression
     When Change language with "Tiếng Anh"
-    And Enter "email" in "Username" with "hovannhat_manager@gmail.com"
-    And Enter "text" in "Password" with "Nhat@01101999"
+    And Enter "email" in "Username" with "manager@gmail.com"
+    And Enter "text" in "Password" with "Tester@123"
     And Enter at "Password" field to Login
     Then User look message "Success" popup
     And User look dashboard "Admin"

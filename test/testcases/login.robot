@@ -61,7 +61,7 @@ LG-08 Verify that Đăng nhập unsuccessfully because enter password less than 
     And Click "Đăng nhập" button
     Then User look message "password must be longer than or equal to 6 characters" popup
 
-# ----------------------------------LOGIN SUCCESSFULLY-------------------------------------------------------------
+# # ----------------------------------LOGIN SUCCESSFULLY-------------------------------------------------------------
 LG-09 Verify that Đăng nhập successfully accout Admin with valid Email and Mật khẩu
     [Tags]    @smoketest    @regression
     When Login to admin
@@ -90,8 +90,8 @@ LG-11 Verify that Đăng nhập successfully account Staff with valid Email and 
 
 LG-12 Verify that successfully login when using the Enter key
     [Tags]    @smoketest    @regression
-    Enter "email" in "Tên đăng nhập" with "hovannhat_staff@gmail.com"
-    Enter "text" in "Mật khẩu" with "Nhat@01101999"
+    Enter "email" in "Tên đăng nhập" with "staff@gmail.com"
+    Enter "text" in "Mật khẩu" with "Tester@123"
     Enter at "Mật khẩu" field to Login
     Then User look title "Danh sách nghỉ phép"
     And User look menu "Nghỉ phép"
