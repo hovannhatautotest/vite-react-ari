@@ -63,7 +63,7 @@ CRT-08 Verify that create team unsuccessfull because team is already taken & "L�
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "Nhân viên ARI"
-    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Enter "text" in textarea "Mô tả" with "_RANDOM_"
     And Click select "Quản lý" with "Hồ Văn Nhật"
     And Click "Lưu lại" button
     Then User look message "Tên Nhóm đã được sử dụng" popup
@@ -74,7 +74,7 @@ CRT-09 Verify that create team unsuccessfull because team is already taken & "L�
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "Nhân viên ARI"
-    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Enter "text" in textarea "Mô tả" with "_RANDOM_"
     And Click select "Quản lý" with "Hồ Văn Nhật"
     And Click "Lưu và tạo mới" button
     Then User look message "Tên Nhóm đã được sử dụng" popup
@@ -87,7 +87,7 @@ CRT-10 Verify that creating a team successfully with the sanme manager with "Lư
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
-    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Enter "text" in textarea "Mô tả" with "_RANDOM_"
     And Click select "Quản lý" with "Hồ Văn Nhật"
     And Click "Lưu lại" button
     Then User look message "Tạo thành công" popup
@@ -99,7 +99,7 @@ CRT-11 Verify that creating a team successfully with the same manager with "Lưu
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
-    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Enter "text" in textarea "Mô tả" with "_RANDOM_"
     And Click select "Quản lý" with "Hồ Văn Nhật"
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
@@ -112,8 +112,8 @@ CRT-12 Verify that create new team is successful when create team with another m
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
-    And Enter "text" in textarea "user.Description" with "_RANDOM_"
-    And Click select "Quản lý" with "Hoàng Diệu"
+    And Enter "text" in textarea "Mô tả" with "_RANDOM_"
+    And Click select "Quản lý" with "Hoàng Anh"
     And Click "Lưu lại" button
     Then User look message "Tạo thành công" popup
     And User look title "Nhóm"
@@ -124,8 +124,8 @@ CRT-13 Verify that create new team is successful when create team with another m
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
-    And Enter "text" in textarea "user.Description" with "_RANDOM_"
-    And Click select "Quản lý" with "Hoàng Diệu"
+    And Enter "text" in textarea "Mô tả" with "_RANDOM_"
+    And Click select "Quản lý" with "Hoàng Anh"
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
     And User look title "Thêm mới nhóm"
@@ -137,7 +137,7 @@ CRT-14 Verify that create new team is successful when create team with leave des
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
-    And Click select "Quản lý" with "Hoàng Diệu"
+    And Click select "Quản lý" with "Hoàng Anh"
     And Click "Lưu lại" button
     Then User look message "Tạo thành công" popup
     And User look title "Nhóm"
@@ -146,7 +146,7 @@ CRT-15 Verify that create new team is successful when create team with leave des
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
-    And Click select "Quản lý" with "Hoàng Diệu"
+    And Click select "Quản lý" with "Hoàng Anh"
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
     And User look title "Thêm mới nhóm"
@@ -156,11 +156,11 @@ CRT-16 Verify entered data not showing when Refresh with F5 key
     [Tags]    @smoketest    @regression
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
-    And Enter "text" in textarea "user.Description" with "_RANDOM_"
+    And Enter "text" in textarea "Mô tả" with "_RANDOM_"
     And Click select "Quản lý" with "Hoàng Diệu"
     And Reload Page
     Then User look "Tên Nhóm" field empty
-    And User look textarea "user.Description" field empty
+    And User look textarea "Mô tả" field empty
     And User look select "Quản lý" field empty
 
 ##=======================VIEW LIST OF TEAM====================================##
@@ -174,7 +174,7 @@ CRT-18 Verify that Admin can search successfully when entering correct keyword t
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Nhóm" sub menu to "vn/team"
-    And Search "text" in "Tìm kiếm" with "Nhóm 1"
+    And Search "text" in "Tìm kiếm" with "Nhân viên ARI"
     Then Show list of "teams"
 
 CRT-19 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box
@@ -233,7 +233,7 @@ EDT-05 Verify that user can edit team's name successfully
 
 EDT-06 Verify that user can edit team successfully when change manager has team
     Go to page edit team
-    And Click select "Quản lý" with "Hoàng Diệu"
+    And Click select "Quản lý" with "Hoàng Anh"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
 

@@ -15,8 +15,8 @@ ${SHOULD_TIMEOUT}   0.1 seconds
 ${URL_DEFAULT}      http://v2.ari.com.vn/
 ${STATE}            Evaluate  json.loads('''{}''')  json
 
-${username_valid}    Hồ Văn Nhật
-${email_valid}    hovannhat_staff@gmail.com
+${username_valid}    Hoàng Diệu
+${email_valid}    staff@gmail.com
 ${phone_number_valid}    0941225407    
 
 ${class_rejected}    w-5 h-5 fill-red-500
@@ -25,8 +25,8 @@ ${class_approved}    w-5 h-5 fill-green-500
 *** Keywords ***
 
 Login to admin
-  Enter "email" in "Tên đăng nhập" with "admin@admin.com"
-  Enter "text" in "Mật khẩu" with "Password1!"
+  Enter "email" in "Tên đăng nhập" with "hovannhat@admin.com"
+  Enter "text" in "Mật khẩu" with "Nhat@01101999"
   Click "Đăng nhập" button
   User look message "Thành công" popup
 
@@ -44,8 +44,8 @@ Login to Staff
 
 Login to admin version english
   When Change language with "Tiếng Anh"
-  And Enter "email" in "Username" with "admin@admin.com"
-  And Enter "text" in "Password" with "Password1!"
+  And Enter "email" in "Username" with "hovannhat@admin.com"
+  And Enter "text" in "Password" with "Nhat@01101999"
   And Click "Log In" button
   User look message "Success" popup
 
@@ -63,17 +63,18 @@ Login to Staff version english
   And Click "Log In" button
   User look message "Success" popup
 
-Go to page create user
+Go to page create user with the "${role}" role
   Login to admin
   When Click "Người Dùng" menu
+  And Click list Role with "${role}"
   And Click "Tạo mới" button
   Wait Until Element Spin
-  # When Click "Tạo mới" sub menu to "/vn/user/add"
 
-Go to "Edit User" page
+Go to page edit user with the "${role}" role
     Login to admin
     And Click "Người Dùng" menu
-    And Select the user with "invalid" to edit
+    And Click list Role with "${role}"
+    And Select the user with "valid" to edit
     Wait Until Element Spin    
 
 Go to page create team
@@ -91,7 +92,7 @@ Go to page edit team
     Wait Until Element Spin
 
 Go to profile page
-    Login to Staff
+    Login to admin
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     Wait Until Element Spin
@@ -228,8 +229,11 @@ Get Random Text
   ELSE IF  ${cnt} > 0 and '${type}' == 'order number'
     ${new_text}=            FakerLibrary.Random Int           min=0             max=999999999
     ${new_text}=            Convert To String                 ${new_text}
-  ELSE IF  ${cnt} > 0 and '${type}' == 'leave date'
+  ELSE IF  ${cnt} > 0 and '${type}' == 'leave date valid'
     ${new_text}=            FakerLibrary.Random Int           min=0             max=16
+    ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'leave date invalid'
+    ${new_text}=            FakerLibrary.Random Int           min=17             max=99
     ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'percentage'
     ${new_text}=            FakerLibrary.Random Int           max=100
@@ -556,19 +560,21 @@ Click "${list}" submenu in "Người Dùng" menu
 
 # XÓA USER KHI USER ĐÓ CÒN NHỮNG YÊU CẦU NGHỈ PHÉP CẦN PHÊ DUYỆT
 Click "${delete}" user has submitted a request for leave that needs to be approved
+    Click list Role with "Staff"
     Wait Until Element Spin
     ${elements}=        Get Elements        xpath=//button[@title="${delete}"]
     ${elementCount}    Get Length            ${elements}
-    ${randomIndex}=    Evaluate              ${elementCount}-6
+    ${randomIndex}=    Evaluate              ${elementCount}-1
     Click     ${elements}[${randomIndex}]
     Click Confirm To Action
 
 # XÓA USER KHI USER ĐÓ ĐANG QUẢN LÝ MỘT USER KHÁC
 Click "${delete}" user still managing other people
+    Click list Role with "Manager"    
     Wait Until Element Spin
     ${elements}=        Get Elements        xpath=//button[@title="${delete}"]
     ${elementCount}    Get Length            ${elements}
-    ${randomIndex}=    Evaluate              ${elementCount}-5
+    ${randomIndex}=    Evaluate              ${elementCount}-1
     Click     ${elements}[${randomIndex}]
     Click Confirm To Action
 
@@ -608,35 +614,6 @@ Increase the number of users displayed in the list
     Wait Until Element Is Visible    ${number}
     Click    ${number}
 
-# Hiển thị danh sách người dùng
-Show list of users
-    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
-    ${user_count}=    Set Variable    2
-    ${stt}=    Set Variable    1
-    FOR    ${item}    IN    @{elements}
-            ${username}=        Get Text    //tbody/tr[${user_count}]/td[1]/div[1]/span[1]
-            ${position}=        Get Text    //tbody/tr[${user_count}]/td[2]
-            ${role}=            Get Text    //tbody/tr[${user_count}]/td[3]
-            ${manager}=         Get Text    //tbody/tr[${user_count}]/td[4]
-            ${team}=            Get Text    //tbody/tr[${user_count}]/td[5]
-            ${Email}=           Get Text    //tbody/tr[${user_count}]/td[6]
-            ${phone_number}=    Get Text    //tbody/tr[${user_count}]/td[7]
-            IF  '${manager}' == '${EMPTY}'
-                ${manager}=    Set Variable    Không có quản lý
-            END
-            
-            IF  '${team}' == '${EMPTY}'
-                ${team}=    Set Variable    Không có nhóm
-            END
-            
-            Log To Console        ${stt}. ${username} | ${position} | ${role} | ${manager} | ${team} | ${Email} | ${phone_number} |
-            Log To Console        =====================================================================================================================================================
-            ${user_count}=    Evaluate    ${user_count} + 1
-            ${stt}=    Evaluate    ${stt} + 1
-    END
-    ${total}=    Evaluate    ${user_count} - 2
-    Log To Console    Tổng số lượng user: ${total}
-
 The page is refreshed with empty fields
     Then User look "Họ và tên" field empty
     And User look "Email" field empty
@@ -652,7 +629,31 @@ Show list of "${name}"
     ${count}=    Set Variable    2
     ${stt}=    Set Variable    1
     
-    IF  '${name}' == 'teams'
+    IF  '${name}' == 'users'
+        FOR    ${item}    IN    @{elements}
+          ${fullname}=        Get Text    //tbody/tr[${count}]/td[1]/div[1]/span[1]
+          ${position}=        Get Text    //tbody/tr[${count}]/td[2]
+          ${role}=            Get Text    //tbody/tr[${count}]/td[3]
+          ${manager}=         Get Text    //tbody/tr[${count}]/td[4]
+          ${team}=            Get Text    //tbody/tr[${count}]/td[5]
+          ${Email}=           Get Text    //tbody/tr[${count}]/td[6]
+          ${phone_number}=    Get Text    //tbody/tr[${count}]/td[7]
+          
+          IF  '${manager}' == '${EMPTY}'
+            ${manager}=    Set Variable    Không có quản lý
+          END
+            
+          IF  '${team}' == '${EMPTY}'
+            ${team}=    Set Variable    Không có nhóm
+          END
+          
+          Log To Console        ${stt}. ${fullname} | ${position} | ${role} | ${manager} | ${team} | ${Email} | ${phone_number} |
+          Log To Console        ========================================================================================================
+          ${count}=    Evaluate    ${count} + 1
+          ${stt}=    Evaluate    ${stt} + 1
+        END
+    
+    ELSE IF  '${name}' == 'teams'
         FOR    ${item}    IN    @{elements}
           ${team_name}=        Get Text        //tbody[1]/tr[${count}]/td[1]
           ${manager}=          Get Text        //tbody/tr[${count}]/td[2]/div[1]/span[1]
@@ -684,7 +685,7 @@ Show list of "${name}"
       END
     END
     ${total}=    Evaluate    ${count} - 2
-    Log To Console    Tổng số lượng ${name}: ${total}
+    Log To Console    Tổng số lượng ${name} là: ${total}
 
 # Không có user nào được hiển thị khi nhập từ khóa tìm kiếm không hợp lệ
 No ${name} are shown
@@ -715,12 +716,10 @@ Select the ${text} with "${name}" to edit
     Wait Until Element Spin
     ${elements}            Get Elements            xpath=//button[@title="Sửa"]
     ${elementCount}    Get Length    ${elements}
-    IF  '${name}'=='team has been deleted'
-        ${randomIndex}=    Evaluate    ${elementCount}-3
-    ELSE IF    '${name}'=='Còn những yêu cầu nghỉ cần duyệt'
-        ${randomIndex}=    Evaluate    ${elementCount}-8
-    ELSE IF   '${name}'=='invalid'
+    IF  '${name}'=='valid'
         ${randomIndex}=    Evaluate    ${elementCount}-${elementCount}
+    ELSE IF  '${name}'=='Còn những yêu cầu nghỉ cần duyệt'
+        ${randomIndex}=    Evaluate    ${elementCount}-1
     END
     Click    ${elements}[${randomIndex}]
     Wait Until Element Spin
@@ -793,13 +792,13 @@ User look all field should be empty        #STAFF_LEAVE MANAGER
 # Hiển thị danh sách ngày nghỉ đã tạo
 Show list of "${name}" leave date
     Sleep    3
-    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
-    ${user_count}=    Set Variable    2
+    ${elements}=          Get Elements        xpath=//*[contains(@class, "ant-table-row")]
+    ${user_count}=        Set Variable        2
     ${stt}=    Set Variable    1
     FOR    ${item}    IN    @{elements}
       ${username}=              Get Text        //tbody/tr[${user_count}]/td[2]/div[1]/span[1]
       
-      ${element_manager}=               Get Elements    //tbody/tr[${user_count}]/td[3]
+      ${element_manager}=       Get Elements    //tbody/tr[${user_count}]/td[3]/div[1]/span[1]
       ${manager}                Get Text        ${element_manager}[0]     
       
       ${element_type}=          Get Elements    //tbody/tr[${user_count}]/td[4]
@@ -854,19 +853,17 @@ Click "${profile}" to ${name}
     Click    ${element}
 
 # #############--------------ADMIN LEAVE MANAGEMENT----------------#########################
-Select leave management pending approval
-    ${element}=        Get Elements         //*[contains(@class, "ant-table-row")]
-    Click   ${element}[0]    left    2
-    Wait Until Element Spin
-
-Select an approved leave management
-    ${element}=        Get Elements         //*[contains(@class, "ant-table-row")]
-    Click   ${element}[2]    left    2
-    Wait Until Element Spin
-
-Select a leave management that is rejected approval
-    ${element}=        Get Elements         //*[contains(@class, "ant-table-row")]
-    Click   ${element}[3]    left    2
+Select the leave date status as ${status}
+    ${elements}=        Get Elements         //*[contains(@class, "ant-table-row")]
+    ${number}=    Get Length    ${elements}    
+    IF     '${status}'=='Pending'
+      ${index}=    Evaluate    ${number}-5
+    ELSE IF    '${status}'=='Approved'
+      ${index}=    Evaluate    ${number}-2
+    ELSE IF    '${status}'=='Rejected'
+      ${index}=    Evaluate    ${number}-1
+    END
+    Click   ${elements}[${index}]    left    2
     Wait Until Element Spin
 
 Filter the list of holidays with the status of "${status}"
@@ -907,7 +904,7 @@ User can view the details of the holiday ${name}
     
     IF  '${name}' == 'Pending'
         Log To Console    ==========================================
-    ELSE IF  '${name}' == 'Approvated'
+    ELSE IF  '${name}' == 'Approved'
         Verify status
     ELSE IF  '${name}' == 'Rejected'
         Verify status

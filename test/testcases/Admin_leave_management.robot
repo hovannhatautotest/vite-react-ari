@@ -12,19 +12,19 @@ ALM_01 Check the ability to display the user's leave list table
 
 ALM_02 Check the ability to double-click on a leave request that is pending approval to display the details
     Login to admin
-    Select leave management pending approval
+    When Select the leave date status as Pending
     Then User look title "Chi tiết ngày nghỉ"
     And User can view the details of the holiday Pending
 
 ALM_03 Check the ability to double-click on an approved leave list to display the details
     Login to admin
-    Select an approved leave management
+    When Select the leave date status as Approved
     Then User look title "Chi tiết ngày nghỉ"
-    And User can view the details of the holiday Approvated
+    And User can view the details of the holiday Approved
 
 ALM_04 Check the ability to double-click on a rejected leave list to display the details
     Login to admin
-    Select a leave management that is rejected approval
+    When Select the leave date status as Rejected
     Then User look title "Chi tiết ngày nghỉ"
     And User can view the details of the holiday Rejected
 
@@ -45,10 +45,10 @@ ALM-07 Check the ability to filter the leave list by approval status with "Rejec
 
 ALM-08 Check the ability to fillter the leave list by leave date
     Login to admin
-    When Fillter the leave list by leave date with start date: 05/06/2023 and end date: 24/07/2023
+    When Fillter the leave list by leave date with start date: 25/07/2023 and end date: 29/07/2023
     Then Show list of "created" leave date
 
 ALM-09 Check the ability to fillter the leave list by approvated date
     Login to admin
-    When Fillter the leave list by approvated date with start date: 05/06/2023 and end date: 24/07/2023
+    When Fillter the leave list by approvated date with start date: 25/07/2023 and end date: 29/07/2023
     Then Show list of "created" leave date
