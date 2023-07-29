@@ -133,6 +133,12 @@ Go to list data ${name} page
     And Click "Dữ liệu" sub menu
     And Click list Data_Type with "${name}"
 
+Go to create leave date page
+    Login to Staff
+    When Click "Tạo mới" button
+    Wait Until Element Spin
+    Wait Until Element Spin
+
 Enter invalid information to create user
   When Enter "text" in "Họ và tên" with "_RANDOM_"
   And Enter "email" in "Email" with "_RANDOM_"
@@ -717,7 +723,7 @@ Select the ${text} with "${name}" to edit
     ${elements}            Get Elements            xpath=//button[@title="Sửa"]
     ${elementCount}    Get Length    ${elements}
     IF  '${name}'=='valid'
-        ${randomIndex}=    Evaluate    ${elementCount}-${elementCount}
+        ${randomIndex}=    Evaluate    ${elementCount}-2
     ELSE IF  '${name}'=='Còn những yêu cầu nghỉ cần duyệt'
         ${randomIndex}=    Evaluate    ${elementCount}-1
     END
@@ -740,6 +746,8 @@ Delete information "${name}"
 # Xóa thông tin hiện tại của trường: Vị trí hoặc Vai trò
 Delele select "${name}" field
     IF  '${name}' == 'Vị trí'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' == 'Thời gian'
         ${num}=    Evaluate    0
     ELSE IF  '${name}' == 'Vai trò'
         ${num}=    Evaluate    1
@@ -854,16 +862,21 @@ Click "${profile}" to ${name}
 
 # #############--------------ADMIN LEAVE MANAGEMENT----------------#########################
 Select the leave date status as ${status}
+    Filter the list of holidays with the status of "${status}"
     ${elements}=        Get Elements         //*[contains(@class, "ant-table-row")]
-    ${number}=    Get Length    ${elements}    
     IF     '${status}'=='Pending'
-      ${index}=    Evaluate    ${number}-5
-    ELSE IF    '${status}'=='Approved'
-      ${index}=    Evaluate    ${number}-2
-    ELSE IF    '${status}'=='Rejected'
-      ${index}=    Evaluate    ${number}-1
+      Click   ${elements}[1]    left    2
+    ELSE IF     '${status}'=='Approved'
+      Click   ${elements}[0]    left    2
+    ELSE IF     '${status}'=='Rejected'
+      Click   ${elements}[0]    left    2
     END
-    Click   ${elements}[${index}]    left    2
+    Wait Until Element Spin
+
+Select the leave date status as ${status} when not managing that staff
+    Filter the list of holidays with the status of "${status}"
+    ${elements}=        Get Elements         //*[contains(@class, "ant-table-row")]
+    Click   ${elements}[0]    left    2
     Wait Until Element Spin
 
 Filter the list of holidays with the status of "${status}"
@@ -949,6 +962,12 @@ Fillter the leave list by approvated date with start date: ${start_date} and end
     And Click "Tìm kiếm" button
     Wait Until Element Spin
     Wait Until Element Spin
+
+##====================MANAGER LEAVE MANAGEMENT======================================
+User look button "${button}"
+    ${element}    Set Variable    xpath=//button[@title = "${button}"]
+    ${text}       Get Text        ${element}
+    Element Text Should Be    ${element}    ${text}    
 
 ##=========================CREATE CODE===============================================
 User look title form "${text}"
