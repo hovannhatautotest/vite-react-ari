@@ -115,19 +115,19 @@ CRC-11 Verify that create new Code is successful when blank description & "Lưu 
     When Click on the "Xóa" button in the "Tên mã" table line
     Then User look message "Xóa thành công" popup
 
-###-------------------RELOAD PAGE-----------------------------------------------------------------------------------------
-# CRC-12 Verify entered data not showing when Refresh with F5 key
-#     [Tags]    @smoketest    @regression
-#     When Go to create code page
-#     And Enter "text" in "Tên mã" with "_RANDOM_"
-#     And Enter "text" in "Mã" with "_RANDOM_"
-#     And Enter "text" in textarea "Mô tả" with "_RANDOM_"
-#     And Reload Page
-#     Then User look "Tên mã" field empty
-#     And User look "Mã" field empty
-#     And User look textarea "Mô tả" field empty
+# # ###-------------------RELOAD PAGE-----------------------------------------------------------------------------------------
+# # # CRC-12 Verify entered data not showing when Refresh with F5 key
+# # #     [Tags]    @smoketest    @regression
+# # #     When Go to create code page
+# # #     And Enter "text" in "Tên mã" with "_RANDOM_"
+# # #     And Enter "text" in "Mã" with "_RANDOM_"
+# # #     And Enter "text" in textarea "Mô tả" with "_RANDOM_"
+# # #     And Reload Page
+# # #     Then User look "Tên mã" field empty
+# # #     And User look "Mã" field empty
+# # #     And User look textarea "Mô tả" field empty
 
-# ##=======================VIEW LIST OF CODE====================================##
+# # ##=======================VIEW LIST OF CODE====================================##
 CRC-13 Verify that the list of Codes can be viewed successfully
     Login to Admin
     When Click "Thiết lập" menu
@@ -201,8 +201,22 @@ EDC-04 Verify that error message display when edit Code with "Mã" is already ta
     And Click "Lưu và tạo mới" button
     Then User look message "Internal server error" popup
 
-#========================EDIT CODE SUCCESSFULLY=====================================##
-EDC-05 Verify that the code can be successfully edited when changing the "Tên mã" field & "Lưu lại" button
+EDC-05 Verify that error message display when changing "Mã" field & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to page edit code
+    And Enter "text" in "Mã" with "_RANDOM_"
+    And Click "Lưu lại" button
+    Then User look message "Internal server error" popup
+
+EDC-06 Verify that error message display when changing "Mã" field & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to page edit code
+    And Enter "text" in "Mã" with "_RANDOM_"
+    And Click "Lưu và tạo mới" button
+    Then User look message "Internal server error" popup
+
+# #========================EDIT CODE SUCCESSFULLY=====================================##
+EDC-07 Verify that the code can be successfully edited when changing the "Tên mã" field & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to edit code page
     And Enter "text" in "Tên mã" with "_RANDOM_"
@@ -210,7 +224,7 @@ EDC-05 Verify that the code can be successfully edited when changing the "Tên m
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Mã"
 
-EDC-06 Verify that the code can be successfully edited when changing the "Tên mã" field & "Lưu và tạo mới" button
+EDC-08 Verify that the code can be successfully edited when changing the "Tên mã" field & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to edit code page
     And Enter "text" in "Tên mã" with "_RANDOM_"
@@ -218,7 +232,7 @@ EDC-06 Verify that the code can be successfully edited when changing the "Tên m
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách nghỉ phép"
 
-EDC-07 Verify that the code can be successfully edited when changing "Mã" field & "Lưu lại" button
+EDC-09 Verify that the code can be successfully edited when changing the "Mã" field & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to edit code page
     And Enter "text" in "Mã" with "_RANDOM_"
@@ -226,7 +240,7 @@ EDC-07 Verify that the code can be successfully edited when changing "Mã" field
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Mã"
 
-EDC-08 Verify that the code can be successfully edited when changing "Mã" field & "Lưu và tạo mới" button
+EDC-10 Verify that the code can be successfully edited when changing the "Mã" field & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to edit code page
     And Enter "text" in "Mã" with "_RANDOM_"
@@ -234,7 +248,7 @@ EDC-08 Verify that the code can be successfully edited when changing "Mã" field
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách nghỉ phép"
 
-EDC-09 Verify that the code can be successfully edited when changing "Mô tả" field & "Lưu lại" button
+EDC-11 Verify that the code can be successfully edited when changing "Mô tả" field & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to edit code page
     And Enter "text" in textarea "Mô tả" with "_RANDOM_"
@@ -242,7 +256,7 @@ EDC-09 Verify that the code can be successfully edited when changing "Mô tả" 
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Mã"
 
-EDC-10 Verify that the code can be successfully edited when changing "Mô tả" field & "Lưu và tạo mới" button
+EDC-12 Verify that the code can be successfully edited when changing "Mô tả" field & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to edit code page
     And Enter "text" in textarea "Mô tả" with "_RANDOM_"

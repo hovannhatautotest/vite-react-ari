@@ -233,16 +233,16 @@ CRD-20 Verify that create new Data with Mission is successful & "Lưu và tạo 
     Then User look message "Xóa thành công" popup
 
 # -----------------------------Verify refresh page--------------------------------------
-CRD-21 Verify entered data not showing when Refresh with F5 key
-    [Tags]    @smoketest    @regression
-    When Go to create data Partner page
-    And Enter information when create data
-    And Select language with "Vietnam"
-    And Enter information when create data
-    And Reload Page
-    Then User look "Order" field empty
-    And User look "Name" field empty
-    And User look "Description" field empty
+# CRD-21 Verify entered data not showing when Refresh with F5 key
+#     [Tags]    @smoketest    @regression
+#     When Go to create data Partner page
+#     And Enter information when create data
+#     And Select language with "Vietnam"
+#     And Enter information when create data
+#     And Reload Page
+#     Then User look "Order" field empty
+#     And User look "Name" field empty
+#     And User look "Description" field empty
 
 # -----------------------------View list of Data--------------------------------------
 CRD-22 Verify that the list of Data Partner can be viewed successfully

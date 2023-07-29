@@ -74,7 +74,7 @@ Go to page edit user with the "${role}" role
     Login to admin
     And Click "Người Dùng" menu
     And Click list Role with "${role}"
-    And Select the user with "valid" to edit
+    And Select the user with "valid" to edit    # Chọn User thứ 2 để edit
     Wait Until Element Spin    
 
 Go to page create team
@@ -109,7 +109,16 @@ Go to edit code page
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Mã" sub menu
-    And Select the code with "invalid" to edit
+    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+    Click    ${elements}[0]    
+    Sleep    2
+
+Go to page edit code    # Đến trang edit code khi code đó đang có user sử dụng
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Mã" sub menu
+    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+    Click    ${elements}[1]    
     Sleep    2
 
 Go to create data ${type} page
@@ -564,7 +573,7 @@ Click "${list}" submenu in "Người Dùng" menu
     ${element}=        Set Variable        xpath=(//span[text()='${list}'])[2]
     Click     ${element}
 
-# XÓA USER KHI USER ĐÓ CÒN NHỮNG YÊU CẦU NGHỈ PHÉP CẦN PHÊ DUYỆT
+# XÓA USER KHI USER ĐÓ CÒN NHỮNG YÊU CẦU NGHỈ PHÉP CẦN PHÊ DUYỆT (Có 3 user Staff, chọn User thứ 2 để xóa)
 Click "${delete}" user has submitted a request for leave that needs to be approved
     Click list Role with "Staff"
     Wait Until Element Spin
@@ -574,7 +583,7 @@ Click "${delete}" user has submitted a request for leave that needs to be approv
     Click     ${elements}[${randomIndex}]
     Click Confirm To Action
 
-# XÓA USER KHI USER ĐÓ ĐANG QUẢN LÝ MỘT USER KHÁC
+# XÓA USER KHI USER ĐÓ ĐANG QUẢN LÝ MỘT USER KHÁC (Có 3 user Manager, chọn User thứ 2 để xóa)
 Click "${delete}" user still managing other people
     Click list Role with "Manager"    
     Wait Until Element Spin
@@ -723,9 +732,9 @@ Select the ${text} with "${name}" to edit
     ${elements}            Get Elements            xpath=//button[@title="Sửa"]
     ${elementCount}    Get Length    ${elements}
     IF  '${name}'=='valid'
-        ${randomIndex}=    Evaluate    ${elementCount}-2
+        ${randomIndex}=    Evaluate    ${elementCount}-2        #Chon User thứ 2
     ELSE IF  '${name}'=='Còn những yêu cầu nghỉ cần duyệt'
-        ${randomIndex}=    Evaluate    ${elementCount}-1
+        ${randomIndex}=    Evaluate    ${elementCount}-1        #Chọn User thứ 3
     END
     Click    ${elements}[${randomIndex}]
     Wait Until Element Spin
