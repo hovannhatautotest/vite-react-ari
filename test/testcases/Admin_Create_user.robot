@@ -311,55 +311,55 @@ CRU-35 Verify that user can view the list of Staff successfully
     And Click list Role with "Staff"
     Then Show list of "users"
 
-CRU-37 Verify that user can view the list of Manager successfully
+CRU-36 Verify that user can view the list of Manager successfully
     Login to admin
     And Click "Người Dùng" menu
     And Click list Role with "Manager"
     Then Show list of "users"
 
-CRU-38 Verify that user can view the list of Supper Admin successfully
+CRU-37 Verify that user can view the list of Supper Admin successfully
     Login to admin
     And Click "Người Dùng" menu
     And Click list Role with "Supper Admin"
     Then Show list of "users"
 
-CRU-39 Verify that Admin can search successfully when entering correct keyword to search box with "Họ và tên"
+CRU-38 Verify that Admin can search successfully when entering correct keyword to search box with "Họ và tên"
     Login to admin
     And Click "Người Dùng" menu
     And Search "text" in "Tìm kiếm" with "${username_valid}"
     Then Show list of "users"
 
-CRU-40 Verify that Admin can search successfully when entering correct keyword to search box with "Email"
+CRU-39 Verify that Admin can search successfully when entering correct keyword to search box with "Email"
     Login to admin
     And Click "Người Dùng" menu
     And Search "email" in "Tìm kiếm" with "${email_valid}"
     Then Show list of "users"
 
-CRU-41 Verify that Admin can search successfully when entering correct keyword to search box with "Phone"
+CRU-40 Verify that Admin can search successfully when entering correct keyword to search box with "Phone"
     Login to admin
     And Click "Người Dùng" menu
     And Search "phone" in "Tìm kiếm" with "${phone_number_valid}"
     Then Show list of "users"
 
-CRU-42 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Họ và tên"
+CRU-41 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Họ và tên"
     Login to admin
     And Click "Người Dùng" menu
     And Search "text" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU-43 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Email"
+CRU-42 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Email"
     Login to admin
     And Click "Người Dùng" menu
     And Search "email" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU-44 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Phone number"
+CRU-43 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Phone number"
     Login to admin
     And Click "Người Dùng" menu
     And Search "phone" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-# CRU-45 Verify that Next page and Previous page
+# CRU-44 Verify that Next page and Previous page
 #     Login to admin
 #     And Click "Người Dùng" menu
 #     And Click ">" to "next" page
