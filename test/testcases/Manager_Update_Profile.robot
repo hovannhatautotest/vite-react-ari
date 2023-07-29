@@ -9,7 +9,7 @@ Test Teardown       Tear Down
 # ---------------------NAVIGATE CREATE USER PAGE-------------------------------------------------------
 PRO-01 Verify that it is possible to navigate to the page for update profile
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     Then User look title "Thông tin cá nhân"
@@ -17,7 +17,7 @@ PRO-01 Verify that it is possible to navigate to the page for update profile
 # ---------------------VALIDATION TEXT-------------------------------------------------
 PRO-02 Verify that validation text in "Họ và tên" field when blank "Họ và tên" field
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "text" in "Họ và tên" with "${EMPTY}"
@@ -26,7 +26,7 @@ PRO-02 Verify that validation text in "Họ và tên" field when blank "Họ và
 
 PRO-03 Verify that validation text in "Email" field when blank "Email" field
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "email" in "Email" with "${EMPTY}"
@@ -35,7 +35,7 @@ PRO-03 Verify that validation text in "Email" field when blank "Email" field
 
 PRO-04 Verify that validation text in "Email" field when enter invalid email format and less than 6 characters long
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "email" in "Email" with "text"
@@ -45,7 +45,7 @@ PRO-04 Verify that validation text in "Email" field when enter invalid email for
 
 PRO-05 Verify that validation text in "Email" field when enter invalid email format and greater than 6 characters long
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "text" in "Email" with "_RANDOM_"
@@ -54,7 +54,7 @@ PRO-05 Verify that validation text in "Email" field when enter invalid email for
 
 PRO-06 Verify that validation text in "Mật khẩu" field when enter "Mật khẩu" field less than 6 characters
     [Tags]          @smoketest         @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     When Enter "text" in "Mật khẩu" with "12345"
@@ -64,7 +64,7 @@ PRO-06 Verify that validation text in "Mật khẩu" field when enter "Mật kh�
 
 PRO-07 Verify that validation text in "Mật khẩu" field when enter "Mật khẩu" field not enough security
     [Tags]          @smoketest         @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     When Enter "text" in "Mật khẩu" with "_RANDOM_"
@@ -73,7 +73,7 @@ PRO-07 Verify that validation text in "Mật khẩu" field when enter "Mật kh�
 
 PRO-08 Verify that validation text in "Nhập lại mật khẩu" field when enter "Nhập lại mật khẩu" field less than 8 characters
     [Tags]          @smoketest         @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     When Enter "text" in "Nhập lại mật khẩu" with "Nhat123"
@@ -83,7 +83,7 @@ PRO-08 Verify that validation text in "Nhập lại mật khẩu" field when ent
 
 PRO-09 Verify that validation text in "Nhập lại mật khẩu" field when enter "Nhập lại mật khẩu" field greater than 8 characters
     [Tags]          @smoketest         @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     When Enter "text" in "Nhập lại mật khẩu" with "_RANDOM_"
@@ -93,7 +93,7 @@ PRO-09 Verify that validation text in "Nhập lại mật khẩu" field when ent
 
 PRO-10 Verify that validation text in "Nhập lại mật khẩu" field when enter "Nhập lại mật khẩu" field does not match
     [Tags]          @smoketest         @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     When Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
@@ -103,7 +103,7 @@ PRO-10 Verify that validation text in "Nhập lại mật khẩu" field when ent
 
 PRO-11 Verify that validation text in "Số điện thoại" field when blank "Số điện thoại" field
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "phone" in "Số điện thoại" with "${EMPTY}"
@@ -112,7 +112,7 @@ PRO-11 Verify that validation text in "Số điện thoại" field when blank "S
 
 PRO-12 Verify that validation text in "Số điện thoại" field When enter invalid phone number format
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "text" in "Số điện thoại" with "_RANDOM_"
@@ -121,7 +121,7 @@ PRO-12 Verify that validation text in "Số điện thoại" field When enter in
 
 PRO-13 Verify that validation text in "Số điện thoại" field When enter phone number greater than 12 characters
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "number" in "Số điện thoại" with "_RANDOM_"
@@ -130,7 +130,7 @@ PRO-13 Verify that validation text in "Số điện thoại" field When enter ph
 
 PRO-14 Verify that validation text in "Ngày sinh" field When blank "Ngày sinh" field
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Delete information "Ngày sinh"
@@ -139,62 +139,62 @@ PRO-14 Verify that validation text in "Ngày sinh" field When blank "Ngày sinh"
 
 PRO-15 Verify that validation text in "Vị tri" field when blank "Vị trí"
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Delele select "Vị trí" field
     Then Required message "Vị trí" displayed under "Xin vui lòng chọn vị trí" field
 
 ##========================ERROR MESSAGE==========================================================
-# PRO-16 Verify that Staff can update successfully when change name        #TEST CASE FAILED
+# PRO-16 Verify that Manager can update successfully when change name        #TEST CASE FAILED
 #     [Tags]    @smoketest    @regression
-#     Login to Staff
+#     Login to Manager
 #     Hover to avatar
 #     Click "Thông tin cá nhân" to profile
-#     And Enter "text" in "Họ và tên" with "staff@gmail.com"
+#     And Enter "text" in "Họ và tên" with "Manager@gmail.com"
 #     And Click "Lưu lại" button
 #     Then User look message "Email đã được sử dụng" popup
 
 #--------------------------------EDIT PROFILE SUCCESSFULLY------------------------------------------
-PRO-17 Verify that Staff can update successfully when change name
+PRO-17 Verify that Manager can update successfully when change name
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "text" in "Họ và tên" with "_RANDOM_"
     And Click "Lưu lại" button
     Then User look message "Thành công" popup
 
-PRO-18 Verify that Staff can update successfully when change Email
+PRO-18 Verify that Manager can update successfully when change Email
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
-    And Enter "email" in "Email" with "staff@gmail.com"
+    And Enter "email" in "Email" with "manager@gmail.com"
     And Click "Lưu lại" button
     Then User look message "Thành công" popup
 
-PRO-19 Verify that Staff can update successfully when change Phone Number
+PRO-19 Verify that Manager can update successfully when change Phone Number
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
     And Click "Lưu lại" button
     Then User look message "Thành công" popup
 
-PRO-20 Verify that Staff can update successfully when change Date Of Birth
+PRO-20 Verify that Manager can update successfully when change Date Of Birth
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     And Enter date in "Ngày sinh" with "_RANDOM_"
     And Click "Lưu lại" button
     Then User look message "Thành công" popup
 
-PRO-21 Verify that Staff can update successfully when change password
+PRO-21 Verify that Manager can update successfully when change password
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     When Enter "text" in "Mật khẩu" with "Tester@123"
@@ -204,7 +204,7 @@ PRO-21 Verify that Staff can update successfully when change password
 
 # -------------------DISPLAY PASSWORD AND RETYPE PASSWORD--------------------------------------------------------------
 PRO-22 Verify that can see "Mật khẩu" và "Nhập lại mật khẩu" field are displayed as characters
-    Login to Staff
+    Login to Manager
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     When Enter "text" in "Mật khẩu" with "Nhat@01101999"
@@ -214,9 +214,9 @@ PRO-22 Verify that can see "Mật khẩu" và "Nhập lại mật khẩu" field 
     And User look "Nhập lại mật khẩu" field with type "text"
 
 # #--------------------------------LOG OUT SUCCESSFULLY------------------------------------------
-PRO-23 Verify that Staff can log out successfully
+PRO-23 Verify that Manager can log out successfully
     [Tags]    @smoketest    @regression
-    Login to Staff
+    Login to Manager
     When Hover to avatar
     And Click "Đăng xuất" to logout
     Then User look title "Đăng nhập"
