@@ -63,90 +63,123 @@ Login to Staff version english
   And Click "Log In" button
   User look message "Success" popup
 
-Go to page create user with the "${role}" role
+Go to page ${name} user with the "${role}" role
   Login to admin
   When Click "Người Dùng" menu
-  And Click list Role with "${role}"
-  And Click "Tạo mới" button
+  IF  '${role}' == 'Staff'
+    Wait Until Element Spin
+  ELSE IF  '${role}' != 'Staff'
+    Click list Role with "${role}"
+  END
+  IF  '${name}' == 'create'
+    Click "Tạo mới" button
+  ELSE IF  '${name}' == 'edit'
+    Select user need to edit
+  END
   Wait Until Element Spin
+  Sleep    ${SHOULD_TIMEOUT}   
 
-Go to page edit user with the "${role}" role
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click list Role with "${role}"
-    And Select the user with "valid" to edit    # Chọn User thứ 2 để edit
-    Wait Until Element Spin    
-
-Go to page create team
+Go to page ${name} team
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Nhóm" sub menu to "vn/team"
-    And Click "Tạo mới" button
+    IF  '${name}' == 'create'
+      Click "Tạo mới" button
+    ELSE IF  '${name}' == 'edit'
+      Select team need to edit
+    END
     Wait Until Element Spin
-
-Go to page edit team
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Nhóm" sub menu to "vn/team"
-    Select the team with "invalid" to edit
-    Wait Until Element Spin
+    Sleep    ${SHOULD_TIMEOUT}
 
 Go to profile page
     Login to admin
     Hover to avatar
     Click "Thông tin cá nhân" to profile
     Wait Until Element Spin
+    Sleep    ${SHOULD_TIMEOUT}
+
+Go to ${name} code page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Mã" sub menu
+    IF  '${name}' == 'create'
+      Click "Thêm mới" button
+    ELSE IF  '${name}' == 'edit'
+      Select Code need to edit
+      Sleep    2
+    END   
     Wait Until Element Spin
-
-Go to create code page
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Mã" sub menu
-    And Click "Thêm mới" button
-    Sleep    2
-
-Go to edit code page
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Mã" sub menu
-    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
-    Click    ${elements}[0]    
-    Sleep    2
+    Sleep    ${SHOULD_TIMEOUT}
+    
+Select ${name} need to edit
+  ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+  IF  '${name}' == 'Post'
+    Click    ${elements}[2]
+  ELSE IF  '${name}' != 'post'
+    Click    ${elements}[0]
+  END
+  Wait Until Element Spin 
 
 Go to page edit code    # Đến trang edit code khi code đó đang có user sử dụng
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Mã" sub menu
     ${elements}            Get Elements            xpath=//button[@title="Sửa"]
-    Click    ${elements}[1]    
+    Click    ${elements}[1]  
     Sleep    2
 
-Go to create data ${type} page
+Go to ${name} data ${type} page
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Dữ liệu" sub menu
-    And Click list Data_Type with "${type}"
-    And Click "Tạo mới" button
-    Sleep    2
+    IF  '${type}' == 'Partner'
+      Wait Until Element Spin
+    ELSE IF  '${type}' != 'Partner'
+      Click list Data_Type with "${type}"
+    END
+    IF  '${name}' == 'create'
+      Click "Tạo mới" button
+      Wait Until Element Spin
+      Sleep    ${SHOULD_TIMEOUT}
+    ELSE IF  '${name}' == 'edit'
+      Select Data need to edit
+      Sleep    2
+    ELSE IF  '${name}' == 'list'
+      Wait Until Element Spin
+      Sleep    ${SHOULD_TIMEOUT}
+    END
 
-Go to edit data page
+Go to edit name post type
     Login to Admin
     When Click "Thiết lập" menu
-    And Click "Dữ liệu" sub menu
-    And Select the Data with "invalid" to edit
+    And Click "Post" sub menu
+    And Click on the "Sửa" button in "Projects" at Post Type
     Sleep    2
 
-Go to list data ${name} page
+Go to ${name} post ${type} page
     Login to Admin
     When Click "Thiết lập" menu
-    And Click "Dữ liệu" sub menu
-    And Click list Data_Type with "${name}"
+    And Click "Post" sub menu
+    IF  '${type}' == 'Projects'
+      Wait Until Element Spin
+    ELSE IF  '${name}' == 'News'
+      Click list Post_Type with "${type}"
+    END
+    IF  '${name}' == 'create'
+      Click "Tạo mới" button
+    ELSE IF  '${name}' == 'edit'
+      Select Post need to edit
+    ELSE IF  '${name}' == 'list'
+      Wait Until Element Spin
+    END
+    Wait Until Element Spin
+    Sleep    ${SHOULD_TIMEOUT}
 
 Go to create leave date page
     Login to Staff
     When Click "Tạo mới" button
     Wait Until Element Spin
-    Wait Until Element Spin
+    Sleep    ${SHOULD_TIMEOUT}
 
 Enter invalid information to create user
   When Enter "text" in "Họ và tên" with "_RANDOM_"
@@ -691,9 +724,19 @@ Show list of "${name}"
     
     ELSE IF  '${name}' == 'data'
       FOR    ${item}    IN    @{elements}
-        ${name_data}=             Get Text        //tbody[1]/tr[${count}]/td[1]
-        ${order}=        Get Text        //tbody[1]/tr[${count}]/td[2]
+        ${name_data}=        Get Text        //tbody[1]/tr[${count}]/td[1]
+        ${order}=            Get Text        //tbody[1]/tr[${count}]/td[2]
         Log To Console        ${stt}. Tên dữ liệu: ${name_data} || Order: ${order}
+        Log To Console        ===================================================================================
+        ${count}=    Evaluate    ${count} + 1
+        ${stt}=    Evaluate    ${stt} + 1
+      END
+    
+    ELSE IF  '${name}' == 'post'
+      FOR    ${item}    IN    @{elements}
+        ${name_post}=       Get Text        //tbody[1]/tr[${count}]/td[1]
+        ${slug}=            Get Text        //tbody[1]/tr[${count}]/td[2]
+        Log To Console        ${stt}. Tên Post: ${name_post} || Slug: ${slug}
         Log To Console        ===================================================================================
         ${count}=    Evaluate    ${count} + 1
         ${stt}=    Evaluate    ${stt} + 1
@@ -808,7 +851,7 @@ User look all field should be empty        #STAFF_LEAVE MANAGER
 
 # Hiển thị danh sách ngày nghỉ đã tạo
 Show list of "${name}" leave date
-    Sleep    3
+    Wait Until Element Spin
     ${elements}=          Get Elements        xpath=//*[contains(@class, "ant-table-row")]
     ${user_count}=        Set Variable        2
     ${stt}=    Set Variable    1
@@ -986,9 +1029,32 @@ User look title form "${text}"
 
 ##=========================CREATE DATA===============================================
 Select language with "${name}"
-    ${element}    Set Variable    //div[@id='rc-tabs-0-tab-1' and text()='${name}']   
+    ${element}    Set Variable    //div[text()='${name}']   
     Click    ${element}
-Enter information when create data
+
+Enter information when ${name} data
     And Enter "order number" in "Order" with "_RANDOM_"
     And Enter "text" in "Name" with "_RANDOM_"
-    And Enter "text" in textarea "Description" with "_RANDOM_"      
+    And Enter "text" in textarea "Description" with "_RANDOM_"
+
+###========================CREATE POST====================================================
+Click on the "${text}" button in "${name}" at Post Type
+  Wait Until Element Spin
+  ${element}=               Get Elements           //button[@title = "${text}"]
+  IF  '${name}' == 'Projects'
+      Click                     ${element}[0]
+  ELSE IF  '${name}' == 'News'
+      Click                     ${element}[1]
+  END
+  Click Confirm To Action
+
+Press "${enter}" Key
+    ${element}=               Get Element Form Item By Name     Name                       //input[contains(@class, "ant-input")]
+    Press Keys                ${element}                        ${enter}
+
+Enter information when ${name} post
+    And Enter date in "Created At" with "_RANDOM_"
+    And Enter "text" in "Name" with "_RANDOM_"
+    And Enter "text" in "Slug" with "_RANDOM_"
+    And Enter "text" in textarea "Description" with "_RANDOM_"
+    And Enter "text" in editor "Content" with "_RANDOM_"

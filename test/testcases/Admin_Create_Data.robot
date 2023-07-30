@@ -6,7 +6,7 @@ Test Teardown       Tear Down
 
 *** Test Cases ***
 
-# ---------------------Navigate to Create Data page-------------------------------------------------------
+## =============================Navigate to Create Data page===================================
 CRD-01 Verify that it is possible to navigate to the page for creating a new Data with Partner
     [Tags]    @smoketest    @regression
     Login to Admin
@@ -56,7 +56,7 @@ CRD-05 Verify that it is possible to navigate to the page for creating a new Dat
     Then User look title form "Tạo mới dữ liệu Mission"
     And User look title "Tạo mới dữ liệu Mission"
 
-#---------------------VALIDATION TEXT-------------------------------------------------
+##===================================VALIDATION TEXT===================================
 CRD-06 Verify that validation text when create new Data with blank "Name" field
     [Tags]    @smoketest    @regression
     When Go to create data Partner page
@@ -78,7 +78,7 @@ CRD-08 Verify that the "Order" field validation text is displayed when entering 
     And Enter "text" in "Name" with ""
     Then Required message "Order" displayed under "Xin vui lòng chỉ nhập số" field
 
-# ---------------------------ERROR MESSAGE----------------------------------------
+# ===================================ERROR MESSAGE===================================
 CRD-09 Verify that error message display when create new Code with "Mã" is already taken with "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create data Partner page
@@ -97,7 +97,7 @@ CRD-10 Verify that error message display when create new Code with "Mã" is alre
     And Click "Lưu và tạo mới" button
     Then User look message "Tên đã tồn tại" popup
 
-# ---------------------------CREATE SUCCESSFULLY----------------------------------------
+# ===================================CREATE SUCCESSFULLY===================================
 CRD-11 Verify that create new Data with Partner is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create data Partner page
@@ -269,3 +269,156 @@ CRD-26 Verify that the list of Data Mission can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list data Mission page
     Then Show list of "data"
+
+##=======================VERIFY EDIT CODE================================##
+# ---------------------NAVIGATE TO EIDT CODE PAGE-------------------------------------------------
+EDD-01 Verify that it is possible to navigate to the page for Edit Data
+    [Tags]    @smoketest    @regression
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Dữ liệu" sub menu
+    And Select Data need to edit
+    Then User look title "pages.Data/Edit"
+    And User look title form "pages.Data/Edit"
+
+# # ---------------------VALIDATION TEXT-------------------------------------------------
+EDD-02 Verify that validation text when Edit Data with blank "Name" field
+    [Tags]    @smoketest    @regression
+    When Go to edit data Partner page
+    And Enter "text" in "Name" with ""
+    And Enter "text" in "Order" with ""
+    Then Required message "Name" displayed under "Xin vui lòng nhập name" field
+
+EDD-03 Verify that validation text of "Order" field display when enter data invalid "Order" field
+    [Tags]    @smoketest    @regression
+    When Go to edit data Partner page
+    And Enter "text" in "Order" with "_RANDOM_"
+    And Enter "text" in "Name" with ""
+    Then Required message "Order" displayed under "Xin vui lòng chỉ nhập số" field
+
+EDD-04 Verify that the "Order" field validation text is displayed when entering data in the "Order" field with invalid quantities
+    [Tags]    @smoketest    @regression
+    When Go to edit data Partner page
+    And Enter "number" in "Order" with "_RANDOM_"
+    And Enter "text" in "Name" with ""
+    Then Required message "Order" displayed under "Xin vui lòng chỉ nhập số" field
+
+# ---------------------------ERROR MESSAGE----------------------------------------
+EDD-05 Verify that error message display when create new Code with "Mã" is already taken with "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Partner page
+    And Enter "order number" in "Order" with "_RANDOM_"
+    And Enter "text" in "Name" with "Partner_01"
+    And Enter "text" in textarea "Description" with "_RANDOM_"
+    And Click "Lưu lại" button
+    Then User look message "Tên đã tồn tại" popup
+
+EDD-06 Verify that error message display when create new Code with "Mã" is already taken with "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Partner page
+    And Enter "order number" in "Order" with "_RANDOM_"
+    And Enter "text" in "Name" with "Partner_01"
+    And Enter "text" in textarea "Description" with "_RANDOM_"
+    And Click "Lưu và tạo mới" button
+    Then User look message "Tên đã tồn tại" popup
+
+# ---------------------------CREATE SUCCESSFULLY----------------------------------------
+EDD-07 Verify that Edit Data with Partner is successful & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Partner page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu lại" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách Dữ liệu"
+
+EDD-08 Verify that Edit Data with Partner is successful & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Partner page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu và tạo mới" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách nghỉ phép"
+
+EDD-09 Verify that Edit Data with Member is successful & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Member page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu lại" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách Dữ liệu"
+
+EDD-10 Verify that Edit Data with Member is successful & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Member page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu và tạo mới" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách nghỉ phép"
+
+EDD-11 Verify that Edit Data with Value is successful & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Value page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu lại" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách Dữ liệu"
+
+EDD-12 Verify that Edit Data with Value is successful & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Value page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu và tạo mới" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách nghỉ phép"
+
+EDD-13 Verify that Edit Data with Services is successful & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Services page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu lại" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách Dữ liệu"
+
+EDD-14 Verify that Edit Data with Services is successful & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Services page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu và tạo mới" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách nghỉ phép"
+
+EDD-15 Verify that Edit Data with Mission is successful & "Lưu lại" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Mission page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu lại" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách Dữ liệu"
+
+EDD-16 Verify that Edit Data with Mission is successful & "Lưu và tạo mới" button
+    [Tags]    @smoketest    @regression
+    When Go to edit data Mission page
+    Enter information when edit data
+    Select language with "Vietnam"
+    Enter information when edit data
+    And Click "Lưu và tạo mới" button
+    Then User look message "Cập nhật thành công" popup
+    And User look title "Danh sách nghỉ phép"
