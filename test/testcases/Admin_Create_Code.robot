@@ -85,9 +85,8 @@ CRC-09 Verify that create new Code is successful with "Lưu và tạo mới" but
     And Enter "text" in textarea "Mô tả" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    And User look title "Danh sách nghỉ phép"
-    When Click "Thiết lập" menu
-    And Click "Mã" sub menu
+    And User look title "Thêm mới mã Position"
+    And Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên mã" table line
     Then User look message "Xóa thành công" popup
 
@@ -109,9 +108,8 @@ CRC-11 Verify that create new Code is successful when blank description & "Lưu 
     And Enter "text" in "Mã" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    And User look title "Danh sách nghỉ phép"
-    When Click "Thiết lập" menu
-    And Click "Mã" sub menu
+    And User look title "Thêm mới mã Position"
+    And Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên mã" table line
     Then User look message "Xóa thành công" popup
 
@@ -240,7 +238,7 @@ EDC-09 Verify that the code can be successfully edited when changing the "Tên m
     And Enter "text" in "Tên mã" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
-    And User look title "Danh sách nghỉ phép"
+    And User look title "Thêm mới mã Position"
 
 EDC-10 Verify that the code can be successfully edited when changing the "Mã" field & "Lưu lại" button
     [Tags]    @smoketest    @regression
@@ -256,7 +254,7 @@ EDC-11 Verify that the code can be successfully edited when changing the "Mã" f
     And Enter "text" in "Mã" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
-    And User look title "Danh sách nghỉ phép"
+    And User look title "Thêm mới mã Position"
 
 EDC-12 Verify that the code can be successfully edited when changing "Mô tả" field & "Lưu lại" button
     [Tags]    @smoketest    @regression
@@ -272,4 +270,4 @@ EDC-13 Verify that the code can be successfully edited when changing "Mô tả" 
     And Enter "text" in textarea "Mô tả" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
-    And User look title "Danh sách nghỉ phép"
+    And User look title "Thêm mới mã Position"
