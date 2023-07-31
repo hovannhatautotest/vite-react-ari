@@ -135,12 +135,11 @@ CP-09 Verify that create new Post with Project is successful & "Lưu và tạo m
     Enter information when create post
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    And User look title "Danh sách nghỉ phép"
-    When Click "Thiết lập" menu
-    And Click "Post" sub menu
+    And User look title "Tạo mới post Projects"
+    When Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên Post" table line
 
-CP-10 Verify that create new Post with Member is successful & "Lưu lại" button
+CP-10 Verify that create new Post with News is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create post News page
     Enter information when create post
@@ -151,7 +150,7 @@ CP-10 Verify that create new Post with Member is successful & "Lưu lại" butto
     And User look title "Danh sách post"
     When Click on the "Xóa" button in the "Tên Post" table line
 
-CP-11 Verify that create new Post with Member is successful & "Lưu và tạo mới" button
+CP-11 Verify that create new Post with News is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create post News page
     Enter information when create post
@@ -159,10 +158,8 @@ CP-11 Verify that create new Post with Member is successful & "Lưu và tạo m�
     Enter information when create post
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    And User look title "Danh sách nghỉ phép"
-    When Click "Thiết lập" menu
-    And Click "Post" sub menu
-    And Click list Post_Type with "News"
+    And User look title "Tạo mới post Projects"
+    When Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên Post" table line
 
 # # # ========================================Verify refresh page========================================
@@ -261,7 +258,7 @@ EP-06 Verify that error message display when Edit Post with "Name" is already ta
     Then User look message "common.Post.name is already taken" popup
 
 # # ========================================EDIT SUCCESSFULLY========================================
-EP-07 Verify that create new Post with Project is successful & "Lưu lại" button
+EP-07 Verify that Edit Post with Project is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     Enter information when edit post
@@ -271,7 +268,7 @@ EP-07 Verify that create new Post with Project is successful & "Lưu lại" butt
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách post"
 
-EP-08 Verify that create new Post with Project is successful & "Lưu và tạo mới" button
+EP-08 Verify that Edit Post with Project is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     Enter information when edit post
@@ -279,9 +276,9 @@ EP-08 Verify that create new Post with Project is successful & "Lưu và tạo m
     Enter information when edit post
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
-    And User look title "Danh sách nghỉ phép"
+    And User look title "Tạo mới post Projects"
 
-EP-09 Verify that create new Post with Member is successful & "Lưu lại" button
+EP-09 Verify that Edit Post with News is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to edit post News page
     Enter information when edit post
@@ -291,7 +288,7 @@ EP-09 Verify that create new Post with Member is successful & "Lưu lại" butto
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách post"
 
-EP-10 Verify that create new Post with Member is successful & "Lưu và tạo mới" button
+EP-10 Verify that Edit Post with News is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to edit post News page
     Enter information when edit post
@@ -299,4 +296,4 @@ EP-10 Verify that create new Post with Member is successful & "Lưu và tạo m�
     Enter information when edit post
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
-    And User look title "Danh sách nghỉ phép"
+    And User look title "Tạo mới post Projects"

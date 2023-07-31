@@ -162,7 +162,7 @@ Go to ${name} post ${type} page
     And Click "Post" sub menu
     IF  '${type}' == 'Projects'
       Wait Until Element Spin
-    ELSE IF  '${name}' == 'News'
+    ELSE IF  '${type}' == 'News'
       Click list Post_Type with "${type}"
     END
     IF  '${name}' == 'create'
