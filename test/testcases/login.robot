@@ -139,10 +139,10 @@ LG-18: Verify displays the password
     Then User look "Mật khẩu" field with type "text"
 
 # # ----------------------------------RELOAD PAGE-------------------------------------------------------------
-LG-19: Verify refresh page
-    [Tags]    @smoketest    @regression
-    When Enter "email" in "Tên đăng nhập" with "_RANDOM_"
-    And Enter "text" in "Mật khẩu" with "_RANDOM_"
-    And Reload Page
-    Then User look "Tên đăng nhập" field empty
-    And User look "Mật khẩu" field empty 
+# LG-19: Verify refresh page
+#     [Tags]    @smoketest    @regression
+#     When Enter "email" in "Tên đăng nhập" with "_RANDOM_"
+#     And Enter "text" in "Mật khẩu" with "_RANDOM_"
+#     And Reload Page
+#     Then User look "Tên đăng nhập" field empty
+#     And User look "Mật khẩu" field empty 

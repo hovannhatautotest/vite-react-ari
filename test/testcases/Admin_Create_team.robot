@@ -109,7 +109,7 @@ CRT-12 Verify that create new team is successful when create team with another m
     When Go to page create team
     And Enter "text" in "Tên Nhóm" with "_RANDOM_"
     And Enter "text" in textarea "Mô tả" with "_RANDOM_"
-    And Click select "Quản lý" with "Hoàng Anh"
+    And Click select "Quản lý" with "Nguyễn Ngọc Đức"
     And Click "Lưu lại" button
     Then User look message "Tạo thành công" popup
     And User look title "Nhóm"
@@ -258,14 +258,14 @@ EDT-08 Verify that user can edit team's name successfully & "Lưu và tạo mớ
 
 EDT-09 Verify that user can edit team successfully when change manager has team & "Lưu lại" button
     Go to page edit team
-    And Click select "Quản lý" with "Hoàng Anh"
+    And Click select "Quản lý" with "Nguyễn Ngọc Đức"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Nhóm"
 
 EDT-10 Verify that user can edit team successfully when change manager has team & "Lưu và tạo mới" button
     Go to page edit team
-    And Click select "Quản lý" with "Hoàng Anh"
+    And Click select "Quản lý" with "Nguyễn Ngọc Đức"
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Thêm mới nhóm"

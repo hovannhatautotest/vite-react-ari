@@ -45,10 +45,10 @@ ALM-07 Check the ability to filter the leave list by approval status with "Rejec
 
 ALM-08 Check the ability to fillter the leave list by leave date
     Login to admin
-    When Fillter the leave list by leave date with start date: 25/07/2023 and end date: 29/07/2023
+    When Fillter the leave list by leave date with start date: 25/07/2023 and end date: 01/08/2023
     Then Show list of "created" leave date
 
 ALM-09 Check the ability to fillter the leave list by approvated date
     Login to admin
-    When Fillter the leave list by approvated date with start date: 25/07/2023 and end date: 29/07/2023
+    When Fillter the leave list by approvated date with start date: 25/07/2023 and end date: 01/08/2023
     Then Show list of "created" leave date

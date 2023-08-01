@@ -114,7 +114,7 @@ EDU-15 Verify that the validation text in the "Ngày nghỉ" field when enter th
 #     [Tags]    @smoketest    @regression
 #     # TEST CASE FAILED
 #     Go to page edit user with the "Staff" role
-#     And Enter "email" in "Email" with "19t1051013@husc.edu.vn"
+#     And Enter "email" in "Email" with "staff@gmail.com"
 #     And Enter "leave date valid" in "Ngày nghỉ" with "_RANDOM_"
 #     And Click "Lưu lại" button
 #     Then User look message "Email đã được sử dụng" popup
@@ -123,31 +123,31 @@ EDU-15 Verify that the validation text in the "Ngày nghỉ" field when enter th
 #     [Tags]    @smoketest    @regression
 #     # TEST CASE FAILED
 #     Go to page edit user with the "Staff" role
-#     And Enter "email" in "Email" with "19t1051013@husc.edu.vn"
+#     And Enter "email" in "Email" with "staff@gmail.com"
 #     And Enter "leave date valid" in "Ngày nghỉ" with "_RANDOM_"
 #     And Click "Lưu và tạo mới" button
 #     Then User look message "Email đã được sử dụng" popup
 
 EDU-18 Verify that error message display when edit user with team has been deleted & "Lưu lại" button
     [Tags]    @smoketest    @regression
-    Go to page edit user with the "Manager" role
+    Go to page list user with the "Manager" role
+    And Select the user "Team has been deleted" to edit
     And Enter "leave date valid" in "Ngày nghỉ" with "_RANDOM_"
     And Click "Lưu lại" button
     Then User look message "Internal server error" popup
 
 EDU-19 Verify that error message display when edit user with team has been deleted & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
-    Go to page edit user with the "Manager" role
+    Go to page list user with the "Manager" role
+    And Select the user "Team has been deleted" to edit
     And Enter "leave date valid" in "Ngày nghỉ" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
     Then User look message "Internal server error" popup
 
 EDU-20 Verify that the error message displayed when editing a user with an existing Manager still has other leave requests that need approval & "Lưu lại" button
     [Tags]    @smoketest    @regression
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click list Role with "Staff"
-    And Select the user with "Còn những yêu cầu nghỉ cần duyệt" to edit
+    Go to page list user with the "Staff" role
+    And Select the user "Còn những yêu cầu nghỉ cần duyệt" to edit
     And Click select Quản lý with "Hồ Văn Nhật"
     And Enter "leave date valid" in "Ngày nghỉ" with "_RANDOM_"
     And Click "Lưu lại" button
@@ -155,17 +155,15 @@ EDU-20 Verify that the error message displayed when editing a user with an exist
 
 EDU-21 Verify that the error message displayed when editing a user with an existing Manager still has other leave requests that need approval & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click list Role with "Staff"
-    And Select the user with "Còn những yêu cầu nghỉ cần duyệt" to edit
+    Go to page list user with the "Staff" role
+    And Select the user "Còn những yêu cầu nghỉ cần duyệt" to edit
     And Click select Quản lý with "Hồ Văn Nhật"
     And Enter "leave date valid" in "Ngày nghỉ" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
     Then User look message "Còn những yêu cầu nghỉ cần duyệt" popup
 
 # #--------------------------------EDIT USER SUCCESSFULLY------------------------------------------
-EDU-22 Verify that Admin can edit successfully when change name
+EDU-22 Verify that Admin can edit user successfully when change name
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter "text" in "Họ và tên" with "_RANDOM_"
@@ -174,7 +172,7 @@ EDU-22 Verify that Admin can edit successfully when change name
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-23 Verify that Admin can edit successfully when change Email
+EDU-23 Verify that Admin can edit user successfully when change Email
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter "email" in "Email" with "_RANDOM_"
@@ -183,7 +181,7 @@ EDU-23 Verify that Admin can edit successfully when change Email
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-24 Verify that Admin can edit successfully when change Phone Number
+EDU-24 Verify that Admin can edit user successfully when change Phone Number
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
@@ -192,7 +190,7 @@ EDU-24 Verify that Admin can edit successfully when change Phone Number
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-25 Verify that Admin can edit successfully when change Date Of Birth
+EDU-25 Verify that Admin can edit user successfully when change Date Of Birth
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter date in "Ngày sinh" with "_RANDOM_"
@@ -201,7 +199,7 @@ EDU-25 Verify that Admin can edit successfully when change Date Of Birth
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-26 Verify that Admin can edit successfully when change Position
+EDU-26 Verify that Admin can edit user successfully when change Position
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Click select "Vị trí" with "Developer"
@@ -210,7 +208,7 @@ EDU-26 Verify that Admin can edit successfully when change Position
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-27 Verify that Admin can edit successfully when change Start Date
+EDU-27 Verify that Admin can edit user successfully when change Start Date
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter date in "Ngày đầu đi làm" with "_RANDOM"
@@ -219,7 +217,7 @@ EDU-27 Verify that Admin can edit successfully when change Start Date
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-28 Verify that Admin can edit successfully & "Lưu và tạo mới" button
+EDU-28 Verify that Admin can edit user successfully & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter "text" in "Họ và tên" with "_RANDOM_"

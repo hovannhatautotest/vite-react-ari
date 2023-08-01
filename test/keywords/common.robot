@@ -8,7 +8,7 @@ Library            BuiltIn
 *** Variables ***
 
 ${BROWSER}          chromium
-${HEADLESS}         ${False}
+${HEADLESS}         ${True}
 ${BROWSER_TIMEOUT}  60 seconds
 ${SHOULD_TIMEOUT}   0.1 seconds
 
@@ -118,11 +118,11 @@ Go to ${name} code page
     
 Select ${name} need to edit
   ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+  ${elementCount}        Get Length            ${elements}
+  ${index}=         Evaluate              ${elementCount}-1
   IF  '${name}' == 'Post'
     Click    ${elements}[2]
-  ELSE IF  '${name}' == 'user'
-    Click    ${elements}[1]
-  ELSE IF  '${name}' != 'post'
+  ELSE IF  '${name}' != 'Post'
     Click    ${elements}[0]
   END
   Wait Until Element Spin 
@@ -195,7 +195,7 @@ Enter invalid information to create user
   And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
   And Enter "phone" in "Số điện thoại" with "_RANDOM_"
   And Enter date in "Ngày sinh" with "_RANDOM_"
-  And Click select "Vị trí" with "Tester"
+  And Click select "Vị trí" with "Developer"
   And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
   And Enter "words" in textarea "Mô tả" with "_RANDOM_"
 
@@ -776,15 +776,17 @@ Get_Element_Attribute with "${page}"
 
 # #############--------------EDIT USER----------------#########################
 # Chọn user cần chỉnh sửa
-Select the ${text} with "${name}" to edit
+Select the ${text} "${name}" to edit
     [Arguments]    
     Wait Until Element Spin
     ${elements}            Get Elements            xpath=//button[@title="Sửa"]
-    ${elementCount}    Get Length    ${elements}
-    IF  '${name}'=='valid'
-        ${randomIndex}=    Evaluate    ${elementCount}-2        #Chon User thứ 2
-    ELSE IF  '${name}'=='Còn những yêu cầu nghỉ cần duyệt'
-        ${randomIndex}=    Evaluate    ${elementCount}-1        #Chọn User thứ 3
+    ${elementCount}        Get Length              ${elements}
+    IF  '${name}' == 'Team has been deleted'
+        ${randomIndex}=    Evaluate    ${elementCount}-2
+    ELSE IF  '${name}' == 'Còn những yêu cầu nghỉ cần duyệt'
+        ${randomIndex}=    Evaluate    ${elementCount}-3
+    ELSE IF  '${name}'=='valid'
+        ${randomIndex}=    Evaluate    ${elementCount}-${elementCount}
     END
     Click    ${elements}[${randomIndex}]
     Wait Until Element Spin
@@ -922,9 +924,9 @@ Click "${profile}" to ${name}
 # #############--------------ADMIN LEAVE MANAGEMENT----------------#########################
 Select the leave date status as ${status}
     Filter the list of holidays with the status of "${status}"
-    ${elements}=        Get Elements         //*[contains(@class, "ant-table-row")]
+    ${elements}=        Get Elements         //span[text()='Hoàng Diệu']
     IF     '${status}'=='Pending'
-      Click   ${elements}[1]    left    2
+      Click   ${elements}[0]    left    2
     ELSE IF     '${status}'=='Approved'
       Click   ${elements}[0]    left    2
     ELSE IF     '${status}'=='Rejected'
@@ -934,7 +936,7 @@ Select the leave date status as ${status}
 
 Select the leave date status as ${status} when not managing that staff
     Filter the list of holidays with the status of "${status}"
-    ${elements}=        Get Elements         //*[contains(@class, "ant-table-row")]
+    ${elements}=        Get Elements         //span[text()='Nguyễn Ngọc Đức']
     Click   ${elements}[0]    left    2
     Wait Until Element Spin
 
@@ -1092,7 +1094,7 @@ Press "${enter}" Key
     Press Keys                ${element}                        ${enter}
 
 Enter information when ${name} post
-    And Enter date in "Created At" with "_RANDOM_"
+    And Enter date in "Created At" with "01-10-2023"
     And Select file in "Thumbnail Url" with "sieunhando.jpg"
     And Enter "text" in "Name" with "_RANDOM_"
     And Enter "text" in "Slug" with "_RANDOM_"

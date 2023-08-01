@@ -115,7 +115,7 @@ CRP-07 Verify that error message display when create new Post with "Name" is alr
     And Press "Enter" Key
     Then User look message "common.Post.name is already taken" popup
 
-# # ========================================CREATE SUCCESSFULLY========================================
+# ========================================CREATE SUCCESSFULLY========================================
 CRP-08 Verify that create new Post with Project is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create post Projects page
@@ -187,27 +187,27 @@ CRP-14 Verify that the list of Post with News can be viewed successfully
     When Go to list post News page
     Then Show list of "post"
 
-# CRP-15 Verify that Admin can search an existing Post when entering correct keyword to search box
-#     [Tags]    @smoketest    @regression
-#     When Go to list post Projects page
-#     And Search "text" in "Tìm kiếm" with "Automation Testing"
-#     Then Show list of "post"
+CRP-15 Verify that Admin can search an existing Post when entering correct keyword to search box
+    [Tags]    @smoketest    @regression
+    When Go to list post Projects page
+    And Search "text" in "Tìm kiếm" with "Automation Testing"
+    Then Show list of "post"
 
-# CRP-16 Verify that Admin can search an existing Post when entering incorrect keyword to search box
-#     [Tags]    @smoketest    @regression
-#     When Go to list post Projects page
-#     And Search "text" in "Tìm kiếm" with "_RANDOM_"
-#     Then No post are shown
+CRP-16 Verify that Admin can search an existing Post when entering incorrect keyword to search box
+    [Tags]    @smoketest    @regression
+    When Go to list post Projects page
+    And Search "text" in "Tìm kiếm" with "_RANDOM_"
+    Then No post are shown
 
-# CRP-17 Verify that Admin can view the next/previous when click on corresponding button in pagination navigate
-#     [Tags]    @smoketest    @regression
-#     When Go to list post Projects page
-#     And Click ">" to "next" page
-#     Log To Console    Danh sách post trang 2
-#     Then Show list of "post"
-#     And Click "<" to "prev" page
-#     Log To Console    Danh sách post trang 1
-#     Then Show list of "post"
+CRP-17 Verify that Admin can view the next/previous when click on corresponding button in pagination navigate
+    [Tags]    @smoketest    @regression
+    When Go to list post Projects page
+    And Click ">" to "next" page
+    Log To Console    Danh sách post trang 2
+    Then Show list of "post"
+    And Click "<" to "prev" page
+    Log To Console    Danh sách post trang 1
+    Then Show list of "post"
 
 ##============================EDIT POST=====================================================================
 EDP-01 Verify that it is possible to navigate to the page for Edit Name Post Type
