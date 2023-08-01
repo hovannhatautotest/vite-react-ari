@@ -150,6 +150,7 @@ CRT-15 Verify that create new team is successful when create team with leave des
     Then User look message "Tạo thành công" popup
     And User look title "Thêm mới nhóm"
     And User look all field empty when create team
+    And Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên Nhóm" table line
     Then User look message "Xóa thành công" popup
 
@@ -280,7 +281,7 @@ EDT-11 Verify that user can edit team successfully when change manager has no te
 EDT-12 Verify that user can edit team successfully when change manager has no team & "Lưu và tạo mới" button
     Go to page edit team
     And Click select "Quản lý" with "Hồ Văn Nhật"
-    And Click "Lưu lại" button
+    And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Thêm mới nhóm"
     And User look all field empty when edit team

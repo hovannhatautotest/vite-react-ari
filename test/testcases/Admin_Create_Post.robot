@@ -159,7 +159,7 @@ CRP-11 Verify that create new Post with News is successful & "Lưu và tạo m�
     Enter information when create post
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    And User look title "Tạo mới post Projects"
+    And User look title "Tạo mới post News"
     And User look all field empty when create post
     When Click "Huỷ bỏ" button
     And Click on the "Xóa" button in the "Tên Post" table line
@@ -299,5 +299,5 @@ EDP-10 Verify that Edit Post with News is successful & "Lưu và tạo mới" bu
     Enter information when edit post
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
-    And User look title "Tạo mới post Projects"
+    And User look title "Tạo mới post News"
     And User look all field empty when edit post

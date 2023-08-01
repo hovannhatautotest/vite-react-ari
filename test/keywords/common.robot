@@ -8,7 +8,7 @@ Library            BuiltIn
 *** Variables ***
 
 ${BROWSER}          chromium
-${HEADLESS}         ${False}
+${HEADLESS}         ${True}
 ${BROWSER_TIMEOUT}  60 seconds
 ${SHOULD_TIMEOUT}   0.1 seconds
 
@@ -91,12 +91,17 @@ Go to page ${name} team
     Wait Until Element Spin
     Sleep    ${SHOULD_TIMEOUT}
 
-Go to profile page
-    Login to admin
-    Hover to avatar
-    Click "Thông tin cá nhân" to profile
-    Wait Until Element Spin
-    Sleep    ${SHOULD_TIMEOUT}
+Go to profile page with ${account}
+  IF  '${account}' == 'Admin'
+    Login to Admin
+  ELSE IF  '${account}' == 'Manager'
+    Login to Manager
+  ELSE IF  '${account}' == 'Staff'
+    Login to Staff
+  END
+  Hover to avatar
+  Click "Thông tin cá nhân" to profile
+  Sleep    2
 
 Go to ${name} code page
     Login to Admin
@@ -115,6 +120,8 @@ Select ${name} need to edit
   ${elements}            Get Elements            xpath=//button[@title="Sửa"]
   IF  '${name}' == 'Post'
     Click    ${elements}[2]
+  ELSE IF  '${name}' == 'user'
+    Click    ${elements}[1]
   ELSE IF  '${name}' != 'post'
     Click    ${elements}[0]
   END
