@@ -113,7 +113,7 @@ CRD-12 Verify that error message display when create new Code with "Mã" is alre
     Then User look message "Tên đã tồn tại" popup
 
 # ===================================CREATE SUCCESSFULLY===================================
-CRD-11 Verify that create new Data with Partner is successful & "Lưu lại" button
+CRD-13 Verify that create new Data with Partner is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create data Partner page
     And Enter information when create data partner
@@ -122,7 +122,7 @@ CRD-11 Verify that create new Data with Partner is successful & "Lưu lại" but
     And User look title "Danh sách Dữ liệu"
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-12 Verify that create new Data with Partner is successful & "Lưu và tạo mới" button
+CRD-14 Verify that create new Data with Partner is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create data Partner page
     And Enter information when create data partner
@@ -133,7 +133,7 @@ CRD-12 Verify that create new Data with Partner is successful & "Lưu và tạo 
     And Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-13 Verify that create new Data with Member is successful & "Lưu lại" button
+CRD-15 Verify that create new Data with Member is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create data Member page
     And Enter information when create data with Member
@@ -144,7 +144,7 @@ CRD-13 Verify that create new Data with Member is successful & "Lưu lại" butt
     And User look title "Danh sách Dữ liệu"
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-14 Verify that create new Data with Member is successful & "Lưu và tạo mới" button
+CRD-16 Verify that create new Data with Member is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create data Member page
     And Enter information when create data with Member
@@ -157,7 +157,7 @@ CRD-14 Verify that create new Data with Member is successful & "Lưu và tạo m
     When Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-15 Verify that create new Data with Value is successful & "Lưu lại" button
+CRD-17 Verify that create new Data with Value is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create data Value page
     And Enter information when create data with Value
@@ -168,7 +168,7 @@ CRD-15 Verify that create new Data with Value is successful & "Lưu lại" butto
     And User look title "Danh sách Dữ liệu"
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-16 Verify that create new Data with Value is successful & "Lưu và tạo mới" button
+CRD-18 Verify that create new Data with Value is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create data Value page
     And Enter information when create data with Value
@@ -181,7 +181,7 @@ CRD-16 Verify that create new Data with Value is successful & "Lưu và tạo m�
     When Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-17 Verify that create new Data with Services is successful & "Lưu lại" button
+CRD-19 Verify that create new Data with Services is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create data Services page
     And Enter information when create data with Services
@@ -192,7 +192,7 @@ CRD-17 Verify that create new Data with Services is successful & "Lưu lại" bu
     And User look title "Danh sách Dữ liệu"
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-18 Verify that create new Data with Services is successful & "Lưu và tạo mới" button
+CRD-20 Verify that create new Data with Services is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create data Services page
     And Enter information when create data with Services
@@ -205,7 +205,7 @@ CRD-18 Verify that create new Data with Services is successful & "Lưu và tạo
     And Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-19 Verify that create new Data with Mission is successful & "Lưu lại" button
+CRD-21 Verify that create new Data with Mission is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create data Mission page
     And Enter information when create data with Mission
@@ -216,7 +216,7 @@ CRD-19 Verify that create new Data with Mission is successful & "Lưu lại" but
     And User look title "Danh sách Dữ liệu"
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
-CRD-20 Verify that create new Data with Mission is successful & "Lưu và tạo mới" button
+CRD-22 Verify that create new Data with Mission is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create data Mission page
     And Enter information when create data with Mission
@@ -230,7 +230,7 @@ CRD-20 Verify that create new Data with Mission is successful & "Lưu và tạo 
     When Click on the "Xóa" button in the "Tên dữ liệu" table line
 
 # -----------------------------Verify refresh page--------------------------------------
-# CRD-21 Verify entered data not showing when Refresh with F5 key
+# CRD-23 Verify entered data not showing when Refresh with F5 key
 #     [Tags]    @smoketest    @regression
 #     When Go to create data Partner page
 #     And Enter information when create data
@@ -242,30 +242,55 @@ CRD-20 Verify that create new Data with Mission is successful & "Lưu và tạo 
 #     And User look "Description" field empty
 
 # -----------------------------View list of Data--------------------------------------
-CRD-22 Verify that the list of Data Partner can be viewed successfully
+CRD-24 Verify that the list of Data Partner can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list data Partner page
     Then Show list of "data"
 
-CRD-23 Verify that the list of Data Member can be viewed successfully
+CRD-25 Verify that the list of Data Member can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list data Member page
     Then Show list of "data"
 
-CRD-24 Verify that the list of Data Value can be viewed successfully
+CRD-26 Verify that the list of Data Value can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list data Value page
     Then Show list of "data"
 
-CRD-25 Verify that the list of Data Services can be viewed successfully
+CRD-27 Verify that the list of Data Services can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list data Services page
     Then Show list of "data"
 
-CRD-26 Verify that the list of Data Mission can be viewed successfully
+CRD-28 Verify that the list of Data Mission can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list data Mission page
     Then Show list of "data"
+
+# CRD-29 Verify that Admin can search an existing Data when entering correct keyword to search box
+#     Login to Admin
+#     When Click "Thiết lập" menu
+#     And Click "Dữ liệu" sub menu
+#     And Search "text" in "Tìm kiếm" with "Partner_01"
+#     Then Show list of "data"
+
+# CRD-30 Verify that Admin can search an existing Data when entering incorrect keyword to search box
+#     Login to Admin
+#     When Click "Thiết lập" menu
+#     And Click "Dữ liệu" sub menu
+#     And Search "text" in "Tìm kiếm" with "_RANDOM_"
+#     Then No data are shown
+
+# CRD-31 Verify that Next page and Previous page
+#     Login to admin
+#     When Click "Thiết lập" menu
+#     And Click "Dữ liệu" sub menu
+#     And Click ">" to "next" page
+#     Log To Console    Danh sách data trang 2
+#     Then Show list of "codes"
+#     And Click "<" to "prev" page
+#     Log To Console    Danh sách data trang 1
+#     Then Show list of "codes" 
 
 ##=======================VERIFY EDIT DATA================================##
 # =============================Navigate to Edit Data page===================================

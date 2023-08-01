@@ -8,7 +8,7 @@ Library            BuiltIn
 *** Variables ***
 
 ${BROWSER}          chromium
-${HEADLESS}         ${True}
+${HEADLESS}         ${False}
 ${BROWSER_TIMEOUT}  60 seconds
 ${SHOULD_TIMEOUT}   0.1 seconds
 
@@ -82,7 +82,7 @@ Go to page ${name} user with the "${role}" role
 Go to page ${name} team
     Login to Admin
     When Click "Thiết lập" menu
-    And Click "Nhóm" sub menu to "vn/team"
+    And Click "Nhóm" sub menu
     IF  '${name}' == 'create'
       Click "Tạo mới" button
     ELSE IF  '${name}' == 'edit'

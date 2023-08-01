@@ -174,7 +174,7 @@ CRU-20 Verify that validation text in "Ngày sinh" field when blank "Ngày sinh"
 CRU-21 Verify that validation text in "Vị trí" field when blank "Vị trí" field
     [Tags]          @smoketest         @regression
     Go to page create user with the "Staff" role
-    When Click select "Vị trí" with "Tester"
+    When Click select "Vị trí" with "Developer"
     And Delele select "Vị trí" field
     Then Required message "Vị trí" displayed under "Xin vui lòng chọn vị trí" field
 
@@ -194,7 +194,7 @@ CRU-23 Verify that Create user unsuccessfully because email is already taken & "
     And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
     And Enter date in "Ngày sinh" with "_RANDOM_"
-    And Click select "Vị trí" with "Tester"
+    And Click select "Vị trí" with "Developer"
     And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Click "Lưu lại" button
@@ -208,7 +208,7 @@ CRU-24 Verify that Create user unsuccessfully because email is already taken & "
     And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
     And Enter date in "Ngày sinh" with "_RANDOM_"
-    And Click select "Vị trí" with "Tester"
+    And Click select "Vị trí" with "Developer"
     And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
     And Enter "words" in textarea "Mô tả" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
