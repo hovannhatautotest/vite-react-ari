@@ -165,7 +165,7 @@ EDU-21 Verify that the error message displayed when editing a user with an exist
     Then User look message "Còn những yêu cầu nghỉ cần duyệt" popup
 
 # #--------------------------------EDIT USER SUCCESSFULLY------------------------------------------
-EDU-22 Verify that account edit successfully when change name
+EDU-22 Verify that Admin can edit successfully when change name
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter "text" in "Họ và tên" with "_RANDOM_"
@@ -174,7 +174,7 @@ EDU-22 Verify that account edit successfully when change name
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-23 Verify that account edit successfully when change Email
+EDU-23 Verify that Admin can edit successfully when change Email
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter "email" in "Email" with "_RANDOM_"
@@ -183,7 +183,7 @@ EDU-23 Verify that account edit successfully when change Email
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-24 Verify that account edit successfully when change Phone Number
+EDU-24 Verify that Admin can edit successfully when change Phone Number
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
@@ -192,7 +192,7 @@ EDU-24 Verify that account edit successfully when change Phone Number
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-25 Verify that account edit successfully when change Date Of Birth
+EDU-25 Verify that Admin can edit successfully when change Date Of Birth
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter date in "Ngày sinh" with "_RANDOM_"
@@ -201,7 +201,7 @@ EDU-25 Verify that account edit successfully when change Date Of Birth
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-26 Verify that account edit successfully when change Position
+EDU-26 Verify that Admin can edit successfully when change Position
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Click select "Vị trí" with "Developer"
@@ -210,7 +210,7 @@ EDU-26 Verify that account edit successfully when change Position
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-27 Verify that account edit successfully when change Start Date
+EDU-27 Verify that Admin can edit successfully when change Start Date
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter date in "Ngày đầu đi làm" with "_RANDOM"
@@ -219,12 +219,12 @@ EDU-27 Verify that account edit successfully when change Start Date
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách Người dùng"
 
-EDU-28 Verify that account edit successfully & "Lưu và tạo mới" button
+EDU-28 Verify that Admin can edit successfully & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     Go to page edit user with the "Staff" role
     And Enter "text" in "Họ và tên" with "_RANDOM_"
     And Enter "leave date valid" in "Ngày nghỉ" with "_RANDOM_"
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
-    And User look title "Danh sách nghỉ phép"
-
+    And User look title "Tạo mới người dùng Staff"
+    And User look all field empty when edit user

@@ -1027,15 +1027,47 @@ User look title form "${text}"
     Wait Until Element Is Visible    ${element}
     Element Text Should Be    ${element}    ${text}
 
+User look all field empty when ${name} code
+    And User look "Tên mã" field empty
+    And User look "Mã" field empty
+    And User look textarea "Mô tả" field empty
+
 ##=========================CREATE DATA===============================================
 Select language with "${name}"
     ${element}    Set Variable    //div[text()='${name}']   
     Click    ${element}
 
-Enter information when ${name} data
-    And Enter "order number" in "Order" with "_RANDOM_"
+Enter information when ${name} data partner
     And Enter "text" in "Name" with "_RANDOM_"
+    And Enter "order number" in "Order" with "_RANDOM_"
+    And Select file in "Ảnh" with "sieunhando.jpg"
+
+Enter information when ${type} data with ${name}
+    And Enter "order number" in "Order" with "_RANDOM_"
+    And Select file in "Ảnh" with "sieunhando.jpg"
+    And Enter "text" in "Name" with "_RANDOM_"
+    IF  '${name}' == 'Member'
+      Enter "text" in "Position" with "_RANDOM_"
+    END
     And Enter "text" in textarea "Description" with "_RANDOM_"
+    IF  '${name}' == 'Member'
+      Enter "text" in editor "Content" with "_RANDOM_"
+    END
+
+User look all field empty when ${name} data ${type}
+  User look "Name" field empty
+  User look "Order" field empty   
+  IF  '${type}' == 'Member'
+    User look "Position" field empty
+    User look textarea "Description" field empty
+    User look editor "Content" field empty
+  ELSE IF  '${type}' == 'Value'
+    User look textarea "Description" field empty
+  ELSE IF  '${type}' == 'Services'
+    User look textarea "Description" field empty
+  ELSE IF  '${type}' == 'Mission'
+    User look textarea "Description" field empty
+  END
 
 ###========================CREATE POST====================================================
 Click on the "${text}" button in "${name}" at Post Type
@@ -1054,7 +1086,38 @@ Press "${enter}" Key
 
 Enter information when ${name} post
     And Enter date in "Created At" with "_RANDOM_"
+    And Select file in "Thumbnail Url" with "sieunhando.jpg"
     And Enter "text" in "Name" with "_RANDOM_"
     And Enter "text" in "Slug" with "_RANDOM_"
     And Enter "text" in textarea "Description" with "_RANDOM_"
     And Enter "text" in editor "Content" with "_RANDOM_"
+
+User look date in "${name}" field empty
+  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-picker-input")]/input
+  Element Text Should Be    ${element}    ${EMPTY}
+
+User look editor "${name}" field empty
+  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ce-paragraph")]
+  Element Text Should Be    ${element}    ${EMPTY}
+
+User look all field empty when ${name} post
+  User look date in "Created At" field empty
+  User look "Name" field empty
+  User look "Slug" field empty
+  User look textarea "Description" field empty
+  User look editor "Content" field empty
+
+User look all field empty when ${name} team
+  User look "Tên Nhóm" field empty
+  User look textarea "Mô tả" field empty
+  User look select "Quản lý" field empty
+
+User look all field empty when ${name} user
+  User look "Họ và tên" field empty
+  User look "Email" field empty
+  User look "Mật khẩu" field empty
+  User look "Nhập lại mật khẩu" field empty
+  User look "Số điện thoại" field empty
+  User look date in "Ngày sinh" field empty
+  User look select "Vị trí" field empty
+  User look date in "Ngày đầu đi làm" field empty

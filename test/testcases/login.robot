@@ -145,4 +145,4 @@ LG-19: Verify refresh page
     And Enter "text" in "Mật khẩu" with "_RANDOM_"
     And Reload Page
     Then User look "Tên đăng nhập" field empty
-    And User look "Mật khẩu" field empty
+    And User look "Mật khẩu" field empty 

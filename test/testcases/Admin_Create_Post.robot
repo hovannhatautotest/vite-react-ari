@@ -7,7 +7,7 @@ Test Teardown       Tear Down
 *** Test Cases ***
 
 ## ============================Navigate Edit Post Type page======================================================
-EPT_01 Verify that it is possible to navigate to the page for Edit Name Post Type
+EDPT_01 Verify that it is possible to navigate to the page for Edit Name Post Type
     Login to Admin
     When Click "Thiết lập" menu
     And Click "Post" sub menu
@@ -15,40 +15,40 @@ EPT_01 Verify that it is possible to navigate to the page for Edit Name Post Typ
     Then User look title "pages.PostType/Edit"
 
 ##===========================Validation text=====================================================================
-EPT_02 Verify that validation text when Edit Name Post Type with blank "Name" field & "Lưu lại" button
+EDPT_02 Verify that validation text when Edit Name Post Type with blank "Name" field & "Lưu lại" button
     When Go to edit name post type
     And Enter "text" in "Name" with "${EMPTY}"
     And Click "Lưu lại" button
     Then Required message "Name" displayed under "Xin vui lòng nhập name" field
 
-EPT_03 Verify that validation text when Edit Name Post Type with blank "Name" field & "Lưu và tạo mới" button
+EDPT_03 Verify that validation text when Edit Name Post Type with blank "Name" field & "Lưu và tạo mới" button
     When Go to edit name post type
     And Enter "text" in "Name" with "${EMPTY}"
     And Click "Lưu và tạo mới" button
     Then Required message "Name" displayed under "Xin vui lòng nhập name" field
 
-EPT_04 Verify that validation text when Edit Name Post Type with blank "Name" field & Press Enter Key
+EDPT_04 Verify that validation text when Edit Name Post Type with blank "Name" field & Press Enter Key
     When Go to edit name post type
     And Enter "text" in "Name" with "${EMPTY}"
     And Press "Enter" Key
     Then Required message "Name" displayed under "Xin vui lòng nhập name" field
 
 ##==============================Edit Name Post Type Successfully=========================================
-EPT_05 Verify that Edit Name Post Type successfully when change name & "Lưu lại" button
+EDPT_05 Verify that Edit Name Post Type successfully when change name & "Lưu lại" button
     When Go to edit name post type
     And Enter "text" in "Name" with "Projects"
     And Click "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách post"
 
-EPT_06 Verify that Edit Name Post Type successfully when change name & Press Enter key
+EDPT_06 Verify that Edit Name Post Type successfully when change name & Press Enter key
     When Go to edit name post type
     And Enter "text" in "Name" with "Projects"
     And Press "Enter" Key
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách post"
 
-EPT_07 Verify that Edit Name Post Type successfully when change name & "Lưu và tạo mới" button
+EDPT_07 Verify that Edit Name Post Type successfully when change name & "Lưu và tạo mới" button
     When Go to edit name post type
     And Enter "text" in "Name" with "Projects"
     And Click "Lưu và tạo mới" button
@@ -56,7 +56,7 @@ EPT_07 Verify that Edit Name Post Type successfully when change name & "Lưu và
     And User look title "Danh sách nghỉ phép"
 
 ## ---------------------Navigate to Create Post page-------------------------------------------------------
-CP-01 Verify that it is possible to navigate to the page for creating a new Post with Projects
+CRP-01 Verify that it is possible to navigate to the page for creating a new Post with Projects
     [Tags]    @smoketest    @regression
     Login to Admin
     When Click "Thiết lập" menu
@@ -65,7 +65,7 @@ CP-01 Verify that it is possible to navigate to the page for creating a new Post
     Then User look title form "Tạo mới post Projects"
     And User look title "Tạo mới post Projects"
 
-CP-02 Verify that it is possible to navigate to the page for creating a new Post with News
+CRP-02 Verify that it is possible to navigate to the page for creating a new Post with News
     [Tags]    @smoketest    @regression
     Login to Admin
     When Click "Thiết lập" menu
@@ -76,14 +76,14 @@ CP-02 Verify that it is possible to navigate to the page for creating a new Post
     And User look title "Tạo mới post News"
 
 #===================================VALIDATION TEXT-------------------------------------------------
-CP-03 Verify that validation text when create new Post with blank "Name" field
+CRP-03 Verify that validation text when create new Post with blank "Name" field
     [Tags]    @smoketest    @regression
     When Go to create post Projects page
     And Enter "text" in "Name" with ""
     And Enter "text" in "Slug" with ""
     Then Required message "Name" displayed under "Xin vui lòng nhập name" field
 
-CP-04 Verify that validation text when create new Post with blank "Slug" field
+CRP-04 Verify that validation text when create new Post with blank "Slug" field
     [Tags]    @smoketest    @regression
     When Go to create post Projects page
     And Enter "text" in "Slug" with ""
@@ -91,7 +91,7 @@ CP-04 Verify that validation text when create new Post with blank "Slug" field
     Then Required message "Slug" displayed under "Xin vui lòng nhập slug" field
 
 # # ========================================ERROR MESSAGE========================================
-CP-05 Verify that error message display when create new Post with "Name" is already taken with "Lưu lại" button
+CRP-05 Verify that error message display when create new Post with "Name" is already taken with "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create post Projects page
     And Enter "text" in "Name" with "Automation Testing"
@@ -99,7 +99,7 @@ CP-05 Verify that error message display when create new Post with "Name" is alre
     And Click "Lưu lại" button
     Then User look message "common.Post.name is already taken" popup
 
-CP-06 Verify that error message display when create new Post with "Name" is already taken with "Lưu và tạo mới" button
+CRP-06 Verify that error message display when create new Post with "Name" is already taken with "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create post Projects page
     And Enter "text" in "Name" with "Automation Testing"
@@ -107,7 +107,7 @@ CP-06 Verify that error message display when create new Post with "Name" is alre
     And Click "Lưu và tạo mới" button
     Then User look message "common.Post.name is already taken" popup
 
-CP-07 Verify that error message display when create new Post with "Name" is already taken with Press Key Enter
+CRP-07 Verify that error message display when create new Post with "Name" is already taken with Press Key Enter
     [Tags]    @smoketest    @regression
     When Go to create post Projects page
     And Enter "text" in "Name" with "Automation Testing"
@@ -116,7 +116,7 @@ CP-07 Verify that error message display when create new Post with "Name" is alre
     Then User look message "common.Post.name is already taken" popup
 
 # # ========================================CREATE SUCCESSFULLY========================================
-CP-08 Verify that create new Post with Project is successful & "Lưu lại" button
+CRP-08 Verify that create new Post with Project is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create post Projects page
     Enter information when create post
@@ -125,9 +125,9 @@ CP-08 Verify that create new Post with Project is successful & "Lưu lại" butt
     And Click "Lưu lại" button
     Then User look message "Tạo thành công" popup
     And User look title "Danh sách post"
-    When Click on the "Xóa" button in the "Tên Post" table line
+    And Click on the "Xóa" button in the "Tên Post" table line
 
-CP-09 Verify that create new Post with Project is successful & "Lưu và tạo mới" button
+CRP-09 Verify that create new Post with Project is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create post Projects page
     Enter information when create post
@@ -136,10 +136,11 @@ CP-09 Verify that create new Post with Project is successful & "Lưu và tạo m
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
     And User look title "Tạo mới post Projects"
+    And User look all field empty when create post
     When Click "Huỷ bỏ" button
-    When Click on the "Xóa" button in the "Tên Post" table line
+    And Click on the "Xóa" button in the "Tên Post" table line
 
-CP-10 Verify that create new Post with News is successful & "Lưu lại" button
+CRP-10 Verify that create new Post with News is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to create post News page
     Enter information when create post
@@ -148,9 +149,9 @@ CP-10 Verify that create new Post with News is successful & "Lưu lại" button
     And Click "Lưu lại" button
     Then User look message "Tạo thành công" popup
     And User look title "Danh sách post"
-    When Click on the "Xóa" button in the "Tên Post" table line
+    And Click on the "Xóa" button in the "Tên Post" table line
 
-CP-11 Verify that create new Post with News is successful & "Lưu và tạo mới" button
+CRP-11 Verify that create new Post with News is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to create post News page
     Enter information when create post
@@ -159,11 +160,12 @@ CP-11 Verify that create new Post with News is successful & "Lưu và tạo mớ
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
     And User look title "Tạo mới post Projects"
+    And User look all field empty when create post
     When Click "Huỷ bỏ" button
-    When Click on the "Xóa" button in the "Tên Post" table line
+    And Click on the "Xóa" button in the "Tên Post" table line
 
 # # # ========================================Verify refresh page========================================
-# # # CP-12 Verify entered data not showing when Refresh with F5 key
+# # # CRP-12 Verify entered data not showing when Refresh with F5 key
 # # #     [Tags]    @smoketest    @regression
 # # #     When Go to create post Projects page
 # # #     And Enter information when create post
@@ -175,29 +177,29 @@ CP-11 Verify that create new Post with News is successful & "Lưu và tạo mớ
 # # #     And User look "Content" field empty
 
 # # # ========================================View list of Post========================================
-CP-13 Verify that the list of Post with Projects can be viewed successfully
+CRP-13 Verify that the list of Post with Projects can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list post Projects page
     Then Show list of "post"
 
-CP-14 Verify that the list of Post with News can be viewed successfully
+CRP-14 Verify that the list of Post with News can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list post News page
     Then Show list of "post"
 
-# CP-15 Verify that Admin can search an existing Post when entering correct keyword to search box
+# CRP-15 Verify that Admin can search an existing Post when entering correct keyword to search box
 #     [Tags]    @smoketest    @regression
 #     When Go to list post Projects page
 #     And Search "text" in "Tìm kiếm" with "Automation Testing"
 #     Then Show list of "post"
 
-# CP-16 Verify that Admin can search an existing Post when entering incorrect keyword to search box
+# CRP-16 Verify that Admin can search an existing Post when entering incorrect keyword to search box
 #     [Tags]    @smoketest    @regression
 #     When Go to list post Projects page
 #     And Search "text" in "Tìm kiếm" with "_RANDOM_"
 #     Then No post are shown
 
-# CP-17 Verify that Admin can view the next/previous when click on corresponding button in pagination navigate
+# CRP-17 Verify that Admin can view the next/previous when click on corresponding button in pagination navigate
 #     [Tags]    @smoketest    @regression
 #     When Go to list post Projects page
 #     And Click ">" to "next" page
@@ -208,7 +210,7 @@ CP-14 Verify that the list of Post with News can be viewed successfully
 #     Then Show list of "post"
 
 ##============================EDIT POST=====================================================================
-EP-01 Verify that it is possible to navigate to the page for Edit Name Post Type
+EDP-01 Verify that it is possible to navigate to the page for Edit Name Post Type
     [Tags]    @smoketest    @regression
     Login to admin
     And Click "Thiết lập" menu
@@ -218,14 +220,14 @@ EP-01 Verify that it is possible to navigate to the page for Edit Name Post Type
     And User look title form "pages.Post/Edit"
 
 # #===================================VALIDATION TEXT-------------------------------------------------
-EP-02 Verify that validation text when Edit Post with blank "Name" field
+EDP-02 Verify that validation text when Edit Post with blank "Name" field
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     And Enter "text" in "Name" with ""
     And Enter "text" in "Slug" with ""
     Then Required message "Name" displayed under "Xin vui lòng nhập name" field
 
-EP-03 Verify that validation text when Edit Post with blank "Slug" field
+EDP-03 Verify that validation text when Edit Post with blank "Slug" field
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     And Enter "text" in "Slug" with ""
@@ -233,7 +235,7 @@ EP-03 Verify that validation text when Edit Post with blank "Slug" field
     Then Required message "Slug" displayed under "Xin vui lòng nhập slug" field
 
 # # ========================================ERROR MESSAGE========================================
-EP-04 Verify that error message display when Edit Post with "Name" is already taken with "Lưu lại" button
+EDP-04 Verify that error message display when Edit Post with "Name" is already taken with "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     And Enter "text" in "Name" with "Automation Testing"
@@ -241,7 +243,7 @@ EP-04 Verify that error message display when Edit Post with "Name" is already ta
     And Click "Lưu lại" button
     Then User look message "common.Post.name is already taken" popup
 
-EP-05 Verify that error message display when Edit Post with "Name" is already taken with "Lưu và tạo mới" button
+EDP-05 Verify that error message display when Edit Post with "Name" is already taken with "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     And Enter "text" in "Name" with "Automation Testing"
@@ -249,7 +251,7 @@ EP-05 Verify that error message display when Edit Post with "Name" is already ta
     And Click "Lưu và tạo mới" button
     Then User look message "common.Post.name is already taken" popup
 
-EP-06 Verify that error message display when Edit Post with "Name" is already taken with Press Key Enter
+EDP-06 Verify that error message display when Edit Post with "Name" is already taken with Press Key Enter
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     And Enter "text" in "Name" with "Automation Testing"
@@ -257,8 +259,8 @@ EP-06 Verify that error message display when Edit Post with "Name" is already ta
     And Press "Enter" Key
     Then User look message "common.Post.name is already taken" popup
 
-# # ========================================EDIT SUCCESSFULLY========================================
-EP-07 Verify that Edit Post with Project is successful & "Lưu lại" button
+# # ========================================EDIT POST SUCCESSFULLY========================================
+EDP-07 Verify that Edit Post with Project is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     Enter information when edit post
@@ -268,7 +270,7 @@ EP-07 Verify that Edit Post with Project is successful & "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách post"
 
-EP-08 Verify that Edit Post with Project is successful & "Lưu và tạo mới" button
+EDP-08 Verify that Edit Post with Project is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to edit post Projects page
     Enter information when edit post
@@ -277,8 +279,9 @@ EP-08 Verify that Edit Post with Project is successful & "Lưu và tạo mới" 
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Tạo mới post Projects"
+    And User look all field empty when edit post
 
-EP-09 Verify that Edit Post with News is successful & "Lưu lại" button
+EDP-09 Verify that Edit Post with News is successful & "Lưu lại" button
     [Tags]    @smoketest    @regression
     When Go to edit post News page
     Enter information when edit post
@@ -288,7 +291,7 @@ EP-09 Verify that Edit Post with News is successful & "Lưu lại" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Danh sách post"
 
-EP-10 Verify that Edit Post with News is successful & "Lưu và tạo mới" button
+EDP-10 Verify that Edit Post with News is successful & "Lưu và tạo mới" button
     [Tags]    @smoketest    @regression
     When Go to edit post News page
     Enter information when edit post
@@ -297,3 +300,4 @@ EP-10 Verify that Edit Post with News is successful & "Lưu và tạo mới" but
     And Click "Lưu và tạo mới" button
     Then User look message "Cập nhật thành công" popup
     And User look title "Tạo mới post Projects"
+    And User look all field empty when edit post

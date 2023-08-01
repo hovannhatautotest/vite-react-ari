@@ -200,7 +200,7 @@ CRU-23 Verify that Create user unsuccessfully because email is already taken & "
     And Click "Lưu lại" button
     Then User look message "Email đã được sử dụng" popup
 
-CRU-24 Verify that Create user unsuccessfully because email is already taken & "lưu lại" button
+CRU-24 Verify that Create user unsuccessfully because email is already taken & "lưu và tạo mới" button
     Go to page create user with the "Staff" role
     When Enter "text" in "Họ và tên" with "_RANDOM_"
     And Enter "email" in "Email" with "staff@gmail.com"
@@ -229,8 +229,9 @@ CRU-26 Verify that Create user successfully when select "Vai trò" with "Staff" 
     When Enter invalid information to create user
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    And User look title "Danh sách nghỉ phép"
-    When Click "Người Dùng" menu
+    And User look title "Tạo mới người dùng Staff"
+    And User look all field empty when create user
+    When Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Email" table line
     Then User look message "Xóa thành công" popup
 
@@ -248,9 +249,9 @@ CRU-28 Verify that Create user successfully when select "Vai trò" with "Manager
     When Enter invalid information to create user
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    And User look title "Danh sách nghỉ phép"
-    When Click "Người Dùng" menu
-    And Click list Role with "Manager"
+    And User look title "Tạo mới người dùng Manager"
+    And User look all field empty when create user
+    When Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Email" table line
     Then User look message "Xóa thành công" popup
 
@@ -268,9 +269,9 @@ CRU-30 Verify that Create user successfully when select "Vai trò" with "Supper 
     When Enter invalid information to create user
     And Click "Lưu và tạo mới" button
     Then User look message "Tạo thành công" popup
-    And User look title "Danh sách nghỉ phép"
-    When Click "Người Dùng" menu
-    And Click list Role with "Supper Admin"
+    And User look title "Tạo mới người dùng Supper Admin"
+    And User look all field empty when create user
+    When Click "Huỷ bỏ" button
     When Click on the "Xóa" button in the "Email" table line
     Then User look message "Xóa thành công" popup
 
@@ -302,7 +303,7 @@ CRU-33 Verify that Delete user unsuccessfully because user still managing other 
 #     When Enter invalid information to create user
 #     And Click select "Vai trò" with "Supper Admin"
 #     And Reload Page
-#     The page is refreshed with empty fields
+#     Then User look all field empty when create user
 
 #-------------------------------------VIEW LIST OF USER--------------------------------------------------------------------------------------
 CRU-35 Verify that user can view the list of Staff successfully
