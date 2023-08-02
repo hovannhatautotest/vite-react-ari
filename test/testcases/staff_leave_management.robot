@@ -168,7 +168,7 @@ STA-14 Verify that error message display when create new leave management with t
     When Click "Huỷ bỏ" button
     And Click on the "Xóa" button in the "Họ và tên" table line
 
-## ============================VIEW LIST STAFF LEAVE MANAGEMENT===========================================
+## ============================VIEW LIST STAFF LEAVE MANAGEMENT==========================================
 STA-15 Verify that staff can view the list of created leave date successfully
     Login to Staff
     Then Show list of "created" leave date
@@ -187,3 +187,21 @@ STA-18 Verify that staff can view the list of rejected leave date successfully
     Login to Staff
     When Filter the list of holidays with the status of "Rejected"
     Then Show list of "rejected" leave date
+
+STA_19 Verify can double click on a leave request pending approval to display the leave details when managing that staff
+    Login to Staff
+    When Select the leave date status as Pending
+    Then User look title "Chi tiết ngày nghỉ"
+    And User can view the details of the holiday Pending
+
+STA_20 Check the ability to double-click on an approved leave list to display the details
+    Login to Staff
+    When Select the leave date status as Approved
+    Then User look title "Chi tiết ngày nghỉ"
+    And User can view the details of the holiday Approved
+
+STA_21 Check the ability to double-click on a rejected leave list to display the details
+    Login to Staff
+    When Select the leave date status as Rejected
+    Then User look title "Chi tiết ngày nghỉ"
+    And User can view the details of the holiday Rejected
