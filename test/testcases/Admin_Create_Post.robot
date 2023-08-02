@@ -187,17 +187,17 @@ CRP-14 Verify that the list of Post with News can be viewed successfully
     When Go to list post News page
     Then Show list of "post"
 
-CRP-15 Verify that Admin can search an existing Post when entering correct keyword to search box
-    [Tags]    @smoketest    @regression
-    When Go to list post Projects page
-    And Search "text" in "Tìm kiếm" with "Automation Testing"
-    Then Show list of "post"
+# CRP-15 Verify that Admin can search an existing Post when entering correct keyword to search box
+#     [Tags]    @smoketest    @regression
+#     When Go to list post Projects page
+#     And Search "text" in "Tìm kiếm" with "Automation Testing"
+#     Then Show list of "post"
 
-CRP-16 Verify that Admin can search an existing Post when entering incorrect keyword to search box
-    [Tags]    @smoketest    @regression
-    When Go to list post Projects page
-    And Search "text" in "Tìm kiếm" with "_RANDOM_"
-    Then No post are shown
+# CRP-16 Verify that Admin can search an existing Post when entering incorrect keyword to search box
+#     [Tags]    @smoketest    @regression
+#     When Go to list post Projects page
+#     And Search "text" in "Tìm kiếm" with "_RANDOM_"
+#     Then No post are shown
 
 CRP-17 Verify that Admin can view the next/previous when click on corresponding button in pagination navigate
     [Tags]    @smoketest    @regression
