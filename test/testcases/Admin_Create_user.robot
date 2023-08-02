@@ -6,366 +6,194 @@ Test Teardown       Tear Down
 
 *** Test Cases ***
 
-# # ---------------------NAVIGATE CREATE USER PAGE-------------------------------------------------------
-CRU-01 Verify that the page can be navigated to create a new user with the Staff role
+# # ============================================NAVIGATE CREATE USER PAGE=====================================================
+CRU_01 Verify that the page can be navigated to create a new user with the Staff role
     [Tags]    @smoketest    @regression
     Login to Admin
-    And Click "Người Dùng" menu
-    And Click list Role with "Staff"
-    And Click "Tạo mới" button
-    Then User look title "Tạo mới người dùng Staff"
-    And User look title "Tạo mới người dùng Staff"
+    And Click "Quản lý người dùng" menu
+    And Click "Thêm quản trị viên" button
+    Then User look title "Quản Lý Người Dùng"
+    And User look contains title is "Thêm người dùng"
 
-CRU-02 Verify that the page can be navigated to create a new user with the Manager role
-    [Tags]    @smoketest    @regression
-    Login to Admin
-    And Click "Người Dùng" menu
-    And Click list Role with "Manager"
-    And Click "Tạo mới" button
-    Then User look title "Tạo mới người dùng Manager"
-    And User look title "Tạo mới người dùng Manager"
-
-CRU-03 Verify that the page can be navigated to create a new user with the Supper Admin role
-    [Tags]    @smoketest    @regression
-    Login to Admin
-    And Click "Người Dùng" menu
-    And Click list Role with "Supper Admin"
-    And Click "Tạo mới" button
-    Then User look title "Tạo mới người dùng Supper Admin"
-    And User look title "Tạo mới người dùng Supper Admin"
-
-# # ---------------------VALIDATION TEXT-------------------------------------------------
-CRU-04 Verify that validation text when blank all fields & "Lưu lại" button
+# # =====================================================VALIDATION TEXT=====================================================
+CRU_02 Verify that validation text when blank all fields & "Lưu lại" button
     [Tags]    @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Click "Lưu lại" button
+    When Go to page create user
+    And Click "Lưu" button
     Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
     And Required message "Email" displayed under "Xin vui lòng nhập email" field
-    And Required message "Mật khẩu" displayed under "Xin vui lòng nhập mật khẩu" field
-    And Required message "Nhập lại mật khẩu" displayed under "Xin vui lòng nhập nhập lại mật khẩu" field
     And Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
-    And Required message "Ngày sinh" displayed under "Xin vui lòng chọn ngày sinh" field
-    And Required message "Vị trí" displayed under "Xin vui lòng chọn vị trí" field
-    And Required message "Ngày đầu đi làm" displayed under "Xin vui lòng chọn ngày đầu đi làm" field
 
-CRU-05 Verify that validation text when blank all fields & "Lưu và tạo mới" button
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Click "Lưu và tạo mới" button
+CRU_03 Verify that validation text of "Họ và tên" field display when create new user with "Họ và tên" field empty
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "text" in "Họ và tên" with ""
+    And Enter "email" in "Email" with ""
     Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
-    And Required message "Email" displayed under "Xin vui lòng nhập email" field
-    And Required message "Mật khẩu" displayed under "Xin vui lòng nhập mật khẩu" field
-    And Required message "Nhập lại mật khẩu" displayed under "Xin vui lòng nhập nhập lại mật khẩu" field
-    And Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
-    And Required message "Ngày sinh" displayed under "Xin vui lòng chọn ngày sinh" field
-    And Required message "Vị trí" displayed under "Xin vui lòng chọn vị trí" field
-    And Required message "Ngày đầu đi làm" displayed under "Xin vui lòng chọn ngày đầu đi làm" field
 
-CRU-06 Verify that validation text of "Họ và tên" field display when blank "Họ và tên" field
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Họ và tên" with "${EMPTY}"
-    And Enter "email" in "Email" with "${EMPTY}"
-    Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
-    
-CRU-07 Verify that validation text of "Email" field display when blank "Email" field
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "email" in "Email" with "${EMPTY}"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
+CRU_04 Verify that validation text of "Họ và tên" field display when enter invalid "Họ và tên" field
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "number" in "Họ và tên" with "_RANDOM_"
+    And Enter "email" in "Email" with ""
+    Then Required message "Họ và tên" displayed under "Xin vui lòng chỉ nhập chữ!" field
+
+CRU_05 Verify that validation text of "Email" field display when create new user with "Email" field empty
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "text" in "Email" with ""
+    And Enter "text" in "Họ và tên" with ""
     Then Required message "Email" displayed under "Xin vui lòng nhập email" field
 
-CRU-08 Verify that validation text in "Email" field when enter invalid email format and less than 6 characters long
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Email" with "text"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Email" field displayed under "Xin vui lòng nhập địa chỉ email hợp lệ!"
-    And Required message "Email" field displayed under "Xin vui lòng nhập tối thiểu 6 ký tự!"
+CRU_06 Verify that the Email field's validation text is displayed when create new user with invalid email format and less than 6 characters long.
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "text" in "Email" with "12345"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Email" field displayed under "Vui lòng nhập địa chỉ email hợp lệ!"
+    And Required message "Email" field displayed under "Xin vui lòng nhập tối thiểu 6 kí tự!"
 
-CRU-09 Verify that validation text in "Email" field when enter invalid email format and greater than 6 characters long
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Email" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Email" field displayed under "Xin vui lòng nhập địa chỉ email hợp lệ!"
+CRU_07 Verify that the Email field's validation text is displayed when create new user with invalid email format and less than 6 characters long.
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "text" in "Email" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Email" displayed under "Vui lòng nhập địa chỉ email hợp lệ!" field
 
-CRU-10 Verify that validation text in "Mật khẩu" field when blank "Mật khẩu" field
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Mật khẩu" with "${EMPTY}"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Mật khẩu" displayed under "Xin vui lòng nhập mật khẩu" field
-    
-CRU-11 Verify that validation text in "Mật khẩu" field When enter password less than 6 characters
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Mật khẩu" with "12345"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Mật khẩu" field displayed under "Xin vui lòng nhập tối thiểu 6 ký tự!"
-    And Required message "Mật khẩu" field displayed under "Xin vui lòng nhập tối thiểu 6 ký tự số!"
-
-CRU-12 Verify that validation text in "Mật khẩu" field When enter password not enough security
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Mật khẩu" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Mật khẩu" displayed under "Mật khẩu yêu cầu có 8 ký tự trở lên, có ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 kí tự đặc biệt" field
-
-CRU-13 Verify that validation text in "Nhập lại mật khẩu" field when blank "Nhập lại mật khẩu" field
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Nhập lại mật khẩu" with "${EMPTY}"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Nhập lại mật khẩu" displayed under "Xin vui lòng nhập nhập lại mật khẩu" field
-
-CRU-14 Verify that validation text in "Nhập lại mật khẩu" field when enter retype_password less than 8 characters
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Nhập lại mật khẩu" with "Nhat123"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Nhập lại mật khẩu" field displayed under "Hai mật khẩu bạn nhập không nhất quán!"
-    And Required message "Nhập lại mật khẩu" field displayed under "Xin vui lòng nhập tối thiểu 8 ký tự số!"
-
-CRU-15 Verify that validation text in "Nhập lại mật khẩu" field when enter retype_password greater than 8 characters
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Nhập lại mật khẩu" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Nhập lại mật khẩu" field displayed under "Hai mật khẩu bạn nhập không nhất quán!"
-    And Required message "Nhập lại mật khẩu" field displayed under "Mật khẩu yêu cầu có 8 ký tự trở lên, có ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 kí tự đặc biệt"
-
-CRU-16 Verify that validation text in "Nhập lại mật khẩu" field when enter retype_password does not match
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Mật khẩu" with "Nhat@01101999"
-    When Enter "text" in "Nhập lại mật khẩu" with "Hovannhat@01101999"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Nhập lại mật khẩu" displayed under "Hai mật khẩu bạn nhập không nhất quán!" field
-
-CRU-17 Verify that validation text in "Số điện thoại" field when blank "Số điện thoại" field
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "phone" in "Số điện thoại" with "${EMPTY}"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
+CRU_08 Verify that validation text of "Số điện thoại" field display when create new user with "Số điện thoại" field empty
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "text" in "Số điện thoại" with ""
+    And Enter "text" in "Họ và tên" with ""
     Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
 
-CRU-18 Verify that validation text in "Số điện thoại" field When enter invalid phone number format
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Số điện thoại" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
+CRU_09 Verify that validation text of "Số điện thoại" field display when create new user with "Số điện thoại" field invalid format
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "text" in "Số điện thoại" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with ""
     Then Required message "Số điện thoại" displayed under "Xin vui lòng chỉ nhập số" field
 
-CRU-19 Verify that validation text in "Số điện thoại" field When enter phone number greater than 12 characters
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter "number" in "Số điện thoại" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa phải có 12 ký tự số!" field
+CRU_10 Verify that validation text of "Số điện thoại" field display when create new user with "Số điện thoại" field more than 12 numbers characters
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "phone_invalid" in "Số điện thoại" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa 12 kí tự số!" field
 
-CRU-20 Verify that validation text in "Ngày sinh" field when blank "Ngày sinh" field
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter date in "Ngày sinh" with "${EMPTY}"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Ngày sinh" displayed under "Xin vui lòng chọn ngày sinh" field
-
-CRU-21 Verify that validation text in "Vị trí" field when blank "Vị trí" field
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Click select "Vị trí" with "Developer"
-    And Delele select "Vị trí" field
-    Then Required message "Vị trí" displayed under "Xin vui lòng chọn vị trí" field
-
-CRU-22 Verify that validation text in "Ngày đầu đi làm" field when blank "Ngày đầu đi làm" field
-    [Tags]          @smoketest         @regression
-    Go to page create user with the "Staff" role
-    When Enter date in "Ngày đầu đi làm" with "${EMPTY}"
-    And Enter "text" in "Họ và tên" with "${EMPTY}"
-    Then Required message "Ngày đầu đi làm" displayed under "Xin vui lòng chọn ngày đầu đi làm" field
-
-##--------------------------------------ERROR MESSAGE--------------------------------------------------------
-CRU-23 Verify that Create user unsuccessfully because email is already taken & "lưu lại" button
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Họ và tên" with "_RANDOM_"
-    And Enter "email" in "Email" with "staff@gmail.com"
-    And Enter "text" in "Mật khẩu" with "Nhat@01101999"
-    And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
+# ##=====================================================ERROR MESSAGE=====================================================
+CRU_11 Verify that error message display when create new user with Email has already been registered.
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "fullname" in "Họ và tên" with "_RANDOM_"
+    And Enter "email" in "Email" with "admin_balan@getnada.com"
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
-    And Enter date in "Ngày sinh" with "_RANDOM_"
-    And Click select "Vị trí" with "Developer"
-    And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
-    And Enter "words" in textarea "Mô tả" with "_RANDOM_"
-    And Click "Lưu lại" button
-    Then User look message "Email đã được sử dụng" popup
+    And Click "Lưu" button
+    Then User look message "Email đã được đăng ký trước đó." popup
 
-CRU-24 Verify that Create user unsuccessfully because email is already taken & "lưu và tạo mới" button
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Họ và tên" with "_RANDOM_"
-    And Enter "email" in "Email" with "staff@gmail.com"
-    And Enter "text" in "Mật khẩu" with "Nhat@01101999"
-    And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
+CRU_12 Verify that error message display when create new user with The phone number has already been registered.
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "fullname" in "Họ và tên" with "_RANDOM_"
+    And Enter "email" in "Email" with "_RANDOM_"
+    And Enter "phone" in "Số điện thoại" with "0941225407"
+    And Click "Lưu" button
+    Then User look message "Số điện thoại đã được đăng ký trước đó." popup
+
+# ##=====================================================CREATE USER SUCCESSFULLY=====================================================
+CRU_13 Verify that create new user is successful when Enter valid information
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "fullname" in "Họ và tên" with "_RANDOM_"
+    And Enter "email" in "Email" with "_RANDOM_"
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
-    And Enter date in "Ngày sinh" with "_RANDOM_"
-    And Click select "Vị trí" with "Developer"
-    And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
-    And Enter "words" in textarea "Mô tả" with "_RANDOM_"
-    And Click "Lưu và tạo mới" button
-    Then User look message "Email đã được sử dụng" popup
+    And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
+    And Click "Lưu" button
+    Then User look message "Tạo người dùng mới thành công." popup
+    And User look title "Quản Lý Người Dùng"
 
-##--------------------------------------VERIFY CREATE USER SUCCESSFULLY---------------------------
-CRU-25 Verify that Create user successfully when select "Vai trò" with "Staff" & "Lưu lại" button
-    Go to page create user with the "Staff" role
-    When Enter invalid information to create user
-    And Click "Lưu lại" button
-    Then User look message "Tạo thành công" popup
-    And User look title "Danh sách Người dùng"
-    When Click on the "Xóa" button in the "Email" table line
-    Then User look message "Xóa thành công" popup
+# ###-----------------------------------------RELOAD PAGE---------------------------------------------------##
+CRU_14 Verify entered data not showing when Refresh with F5 key
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "fullname" in "Họ và tên" with "_RANDOM_"
+    And Enter "email" in "Email" with "_RANDOM_"
+    And Enter "phone" in "Số điện thoại" with "_RANDOM_"
+    And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
+    And Reload
+    Then User look "Họ và tên" field empty
+    And User look "Email" field empty
+    And User look "Số điện thoại" field empty
+    And User look textarea "Ghi chú" field empty
 
-CRU-26 Verify that Create user successfully when select "Vai trò" with "Staff" & "Lưu và tạo mới" button
-    Go to page create user with the "Staff" role
-    When Enter invalid information to create user
-    And Click "Lưu và tạo mới" button
-    Then User look message "Tạo thành công" popup
-    And User look title "Tạo mới người dùng Staff"
-    And User look all field empty when create user
-    When Click "Huỷ bỏ" button
-    When Click on the "Xóa" button in the "Email" table line
-    Then User look message "Xóa thành công" popup
-
-CRU-27 Verify that Create user successfully when select "Vai trò" with "Manager" & "Lưu lại" button
-    Go to page create user with the "Manager" role
-    When Enter invalid information to create user
-    And Click "Lưu lại" button
-    Then User look message "Tạo thành công" popup
-    And User look title "Danh sách Người dùng"
-    When Click on the "Xóa" button in the "Email" table line
-    Then User look message "Xóa thành công" popup
-
-CRU-28 Verify that Create user successfully when select "Vai trò" with "Manager" & "Lưu và tạo mới" button
-    Go to page create user with the "Manager" role
-    When Enter invalid information to create user
-    And Click "Lưu và tạo mới" button
-    Then User look message "Tạo thành công" popup
-    And User look title "Tạo mới người dùng Manager"
-    And User look all field empty when create user
-    When Click "Huỷ bỏ" button
-    When Click on the "Xóa" button in the "Email" table line
-    Then User look message "Xóa thành công" popup
-
-CRU-29 Verify that Create user successfully when select "Vai trò" with "Supper Admin" & "Lưu lại" button
-    Go to page create user with the "Supper Admin" role
-    When Enter invalid information to create user
-    And Click "Lưu lại" button
-    Then User look message "Tạo thành công" popup
-    And User look title "Danh sách Người dùng"
-    When Click on the "Xóa" button in the "Email" table line
-    Then User look message "Xóa thành công" popup
-
-CRU-30 Verify that Create user successfully when select "Vai trò" with "Supper Admin" & "Lưu và tạo mới" button
-    Go to page create user with the "Supper Admin" role
-    When Enter invalid information to create user
-    And Click "Lưu và tạo mới" button
-    Then User look message "Tạo thành công" popup
-    And User look title "Tạo mới người dùng Supper Admin"
-    And User look all field empty when create user
-    When Click "Huỷ bỏ" button
-    When Click on the "Xóa" button in the "Email" table line
-    Then User look message "Xóa thành công" popup
-
-## -------------------DISPLAY PASSWORD AND RETYPE PASSWORD--------------------------------------------------------------
-CRU-31 Verify that can see "Mật khẩu" và "Nhập lại mật khẩu" field are displayed as characters
-    Go to page create user with the "Staff" role
-    When Enter "text" in "Mật khẩu" with "_RANDOM_"
-    And Enter "text" in "Nhập lại mật khẩu" with "_RANDOM_"
-    And Click "Eye" icon to show "Mật khẩu" field and "Nhập lại mật khẩu" field
-    Then User look "Mật khẩu" field with type "text"
-    And User look "Nhập lại mật khẩu" field with type "text"
-
-## ------------------------------------------------------ERROR MESSGAE WHEN DELETE USER-------------------------------------------------------
-CRU-32 Verify that Delete user unsuccessfully because user has submitted a request for leave that needs to be approved
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click "Xóa" user has submitted a request for leave that needs to be approved
-    Then User look message "Còn những yêu cầu nghỉ cần duyệt" popup
-
-CRU-33 Verify that Delete user unsuccessfully because user still managing other people
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click "Xóa" user still managing other people
-    Then User look message "common.user.Still managing other people" popup
-
-###-----------------------------------------RELOAD PAGE---------------------------------------------------##
-# CRU-34 Verify entered data not showing when Refresh with F5 key
-#     Go to page create user with the "Staff" role
-#     When Enter invalid information to create user
-#     And Click select "Vai trò" with "Supper Admin"
-#     And Reload Page
-#     Then User look all field empty when create user
-
-#-------------------------------------VIEW LIST OF USER--------------------------------------------------------------------------------------
-CRU-35 Verify that user can view the list of Staff successfully
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click list Role with "Staff"
+# #-------------------------------------VIEW LIST OF USER--------------------------------------------------------------------------------------
+CRU_15 Verify that the list of all users can be viewed successfully
+    When Login to admin
+    And Click "Quản lý người dùng" menu
     Then Show list of "users"
 
-CRU-36 Verify that user can view the list of Manager successfully
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click list Role with "Manager"
+CRU_16 Verify that Admin can search user successfully when entering valid keyword to search box with "Mã người dùng"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
+    And Search "text" in "Tìm kiếm" with "${SEARCH_NAME_CODE}"
     Then Show list of "users"
 
-CRU-37 Verify that user can view the list of Supper Admin successfully
-    Login to admin
-    And Click "Người Dùng" menu
-    And Click list Role with "Supper Admin"
+CRU_17 Verify that Admin can search user successfully when entering valid keyword to search box with "Họ và tên"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
+    And Search "text" in "Tìm kiếm" with "${SEARCH_FULLNAME}"
     Then Show list of "users"
 
-CRU-38 Verify that Admin can search successfully when entering correct keyword to search box with "Họ và tên"
-    Login to admin
-    And Click "Người Dùng" menu
-    And Search "text" in "Tìm kiếm" with "${username_valid}"
+CRU_18 Verify that Admin can search user successfully when entering valid keyword to search box with "Email"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
+    And Search "email" in "Tìm kiếm" with "${SEARCH_EMAIL}"
     Then Show list of "users"
 
-CRU-39 Verify that Admin can search successfully when entering correct keyword to search box with "Email"
-    Login to admin
-    And Click "Người Dùng" menu
-    And Search "email" in "Tìm kiếm" with "${email_valid}"
+CRU_19 Verify that Admin can search user successfully when entering valid keyword to search box with "Số điện thoại"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
+    And Search "phone" in "Tìm kiếm" with "${SEARCH_PHONE}"
     Then Show list of "users"
 
-CRU-40 Verify that Admin can search successfully when entering correct keyword to search box with "Phone"
-    Login to admin
-    And Click "Người Dùng" menu
-    And Search "phone" in "Tìm kiếm" with "${phone_number_valid}"
+CRU_20 Verify that Admin can search user successfully when entering valid keyword to search box with "Vai trò"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
+    And Search "text" in "Tìm kiếm" with "${SEARCH_ROLE}"
     Then Show list of "users"
 
-CRU-41 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Họ và tên"
-    Login to admin
-    And Click "Người Dùng" menu
-    And Search "text" in "Tìm kiếm" with "_RANDOM_"
+CRU_21 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Mã người dùng"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
+    And Search "name code" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU-42 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Email"
-    Login to admin
-    And Click "Người Dùng" menu
+CRU_22 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Họ và tên"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
+    And Search "fullname" in "Tìm kiếm" with "_RANDOM_"
+    Then No users are shown
+
+CRU_23 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Email"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
     And Search "email" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU-43 Verify that Admin can search unsuccessfully when entering incorrect keyword to search box with "Phone number"
-    Login to admin
-    And Click "Người Dùng" menu
+CRU_24 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Số điện thoại"
+    When Login to admin
+    And Click "Quản lý người dùng" menu
     And Search "phone" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-# CRU-44 Verify that Next page and Previous page
-#     Login to admin
-#     And Click "Người Dùng" menu
-#     And Click ">" to "next" page
-#     Log To Console    Danh sách user trang 2
-#     Then Show list of "users"
-#     And Click "<" to "prev" page
-#     Log To Console    Danh sách user trang 1
-#     Then Show list of "users" 
+CRU_25 Verify that Next page and Previous page, Next 10 page and Previous 10 page
+    Login to admin
+    And Click "Quản lý người dùng" menu
+    And Click ">" to "next" page
+    Then Show list of "users"
+    And Click "<" to "prev" page
+    Then Show list of "users"
+    And Click ">>" to "next_10" page
+    Then Show list of "users"
+    And Click "<<" to "prev_10" page
+    Then Show list of "users"

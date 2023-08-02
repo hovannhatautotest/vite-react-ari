@@ -1,280 +1,97 @@
-import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
-import { Avatar } from '@core/avatar';
-import { UserRoleFacade, UserFacade, CodeFacade, User, GlobalFacade, UserTeamFacade, ManagerFacade } from '@store';
-import { routerLinks, lang } from '@utils';
-import { Button } from '@core/button';
 import { Form } from '@core/form';
+import { UserRoleFacade, UserFacade, User } from '@store';
+import { language, languages, routerLinks } from '@utils';
 
 const Page = () => {
+  const { t } = useTranslation();
+  const { result, get } = UserRoleFacade();
   const userFacade = UserFacade();
-  const param = JSON.parse(userFacade.queryParams || '{}');
-  const { setBreadcrumbs } = GlobalFacade();
-  const { id } = useParams();
+  const { data, isLoading, queryParams, status } = userFacade;
+  const navigate = useNavigate();
   const isReload = useRef(false);
+  const param = JSON.parse(queryParams || '{}');
+  const { id } = useParams();
+  const lang = languages.indexOf(location.pathname.split('/')[1]) > -1 ? location.pathname.split('/')[1] : language;
+
   useEffect(() => {
-    if (id) userFacade.getById({ id });
-    else userFacade.set({ data: undefined });
-    setBreadcrumbs([
-      { title: 'titles.User', link: '' },
-      { title: id ? 'titles.User/Edit' : 'titles.User/Add', link: '' },
-    ]);
+    if (!result?.data) get({});
+
+    userFacade.set({ data: undefined });
+
     return () => {
       isReload.current && userFacade.get(param);
     };
   }, [id]);
 
-  const navigate = useNavigate();
-  const isBack = useRef(true);
   useEffect(() => {
-    switch (userFacade.status) {
+    switch (status) {
       case 'post.fulfilled':
-        navigate(`/${lang}${routerLinks('User')}/${userFacade.data?.id}/edit`);
-        break;
-      case 'put.fulfilled':
-        if (Object.keys(param).length > 0) isReload.current = true;
-
-        if (isBack.current) handleBack();
-        else {
-          isBack.current = true;
-          navigate(`/${lang}${routerLinks('User/Add')}`);
-        }
+        navigate(`/${lang}${routerLinks('User/List')}`);
         break;
     }
-  }, [userFacade.status]);
+  }, [status]);
 
   const handleBack = () => navigate(`/${lang}${routerLinks('User/List')}?${new URLSearchParams(param).toString()}`);
   const handleSubmit = (values: User) => {
-    if (id) userFacade.put({ ...values, id });
-    else userFacade.post(values);
+    userFacade.post(values);
   };
 
-  const { t } = useTranslation();
   return (
-    <div className={'max-w-4xl mx-auto bg-white p-4 shadow rounded-xl'}>
-      <Form
-        values={{ ...userFacade.data }}
-        className="intro-x"
-        columns={[
-          {
-            title: 'user.Fullname',
-            name: 'name',
-            formItem: {
-              col: 6,
-              rules: [{ type: 'required' }],
-            },
-          },
-          {
-            title: 'Email',
-            name: 'email',
-            formItem: {
-              col: 6,
-              rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-            },
-          },
-          {
-            title: 'columns.auth.login.password',
-            name: 'password',
-            formItem: {
-              col: 6,
-              type: 'password',
-              condition: (value: string, form, index: number, values: any) => !values?.id,
-              rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-            },
-          },
-          {
-            title: 'columns.auth.register.retypedPassword',
-            name: 'retypedPassword',
-            formItem: {
-              placeholder: 'columns.auth.register.retypedPassword',
-              col: 6,
-              type: 'password',
-              condition: (value: string, form, index: number, values) => !values?.id,
-              rules: [
-                { type: 'required' },
-                {
-                  type: 'custom',
-                  validator: ({ getFieldValue }) => ({
-                    validator(rule, value: string) {
-                      if (!value || getFieldValue('password') === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(t('components.form.ruleConfirmPassword'));
-                    },
-                  }),
-                },
-              ],
-            },
-          },
-          {
-            title: 'Số điện thoại',
-            name: 'phoneNumber',
-            formItem: {
-              col: 6,
-              rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
-            },
-          },
-          {
-            title: 'user.Date of birth',
-            name: 'dob',
-            formItem: {
-              col: 6,
-              type: 'date',
-              rules: [{ type: 'required' }],
-            },
-          },
-          {
-            title: 'user.Position',
-            name: 'positionCode',
-            formItem: {
-              col: 6,
-              type: 'select',
-              rules: [{ type: 'required' }],
-              convert: (data) =>
-                data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
-              get: {
-                facade: CodeFacade,
-                params: (fullTextSearch: string) => ({
-                  fullTextSearch,
-                  filter: { type: 'POS' },
-                  extend: {},
-                }),
-                format: (item) => ({
-                  label: item.name,
-                  value: item.code,
-                }),
-              },
-            },
-          },
-          {
-            title: 'user.Start Date',
-            name: 'startDate',
-            formItem: {
-              col: 6,
-              type: 'date',
-              rules: [{ type: 'required' }],
-            },
-          },
-          {
-            title: 'user.Role',
-            name: 'roleCode',
-            formItem: {
-              col: 6,
-              type: 'select',
-              rules: [{ type: 'required' }],
-              showSearch: false,
-              get: {
-                facade: UserRoleFacade,
-                format: (item) => ({
-                  label: item.name,
-                  value: item.code,
-                }),
-              },
-            },
-          },
-          {
-            title: 'user.Team',
-            name: 'teams',
-            formItem: {
-              col: 6,
-              type: 'select',
-              mode: 'multiple',
-              get: {
-                facade: UserTeamFacade,
-                format: (item: any) => ({
-                  label: item.name,
-                  value: item.id,
-                }),
-                params: (fullTextSearch: string, getFieldValue: any) => ({
-                  fullTextSearch,
-                  extend: { id: getFieldValue('teamId') || undefined },
-                }),
-              },
-            },
-          },
-          {
-            title: 'team.Manager',
-            name: 'managerId',
-            formItem: {
-              col: 6,
-              type: 'select',
-              get: {
-                facade: ManagerFacade,
-                format: (item: any) => ({
-                  label: <Avatar size={5} src={item?.avatar} text={item.name} />,
-                  value: item.id,
-                }),
-                params: (fullTextSearch: string, getFieldValue: any) => ({
-                  fullTextSearch,
-                  filter: { roleCode: 'manager' },
-                  skip: { id: getFieldValue('id') || undefined },
-                }),
-              },
-            },
-          },
-          {
-            name: 'dateLeave',
-            title: 'dayoff.Leave Date',
-            formItem: {
-              condition: (value) => value !== undefined,
-              type: 'number',
-              col: 6,
-              mask: {
-                mask: '9{1,2}[.V{0,1}]',
-                definitions: {
-                  V: {
-                    validator: '[05]',
-                  },
+    <Fragment>
+      <div className=''>
+        <div className={'text-xl text-teal-900 font-bold block pl-5 pt-5 bg-white rounded-t-2xl'}>{t('titles.Userinformation')}</div>
+        {!!result?.data && (
+          <Form
+            values={{ ...data }}
+            className="intro-x form-responsive"
+            columns={[
+              {
+                title: 'user.Fullname',
+                name: 'name',
+                formItem: {
+                  tabIndex: 1,
+                  col: 6,
+                  type: 'name',
+                  rules: [{ type: 'required' }],
                 },
               },
-              rules: [
-                { type: 'required' },
-                {
-                  type: 'custom',
-                  validator: () => ({
-                    validator(rule, value: string) {
-                      if (parseFloat(value) < 17) return Promise.resolve();
-                      else return Promise.reject(t('user.Leave date cannot exceed', { day: 17 }));
-                    },
-                  }),
+              {
+                title: 'Email',
+                name: 'email',
+                formItem: {
+                  tabIndex: 1,
+                  col: 6,
+                  rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
                 },
-              ],
-            },
-          },
-          {
-            title: 'user.Description',
-            name: 'description',
-            formItem: {
-              col: 8,
-              type: 'textarea',
-            },
-          },
-          {
-            name: 'avatar',
-            title: 'user.Upload avatar',
-            formItem: {
-              col: 4,
-              type: 'upload',
-            },
-          },
-        ]}
-        extendButton={(form) => (
-          <Button
-            text={t('components.button.Save and Add new')}
-            className={'md:min-w-[12rem] w-full justify-center out-line'}
-            onClick={() => {
-              form.submit();
-              isBack.current = false;
-            }}
+              },
+              {
+                title: 'user.Phone Number',
+                name: 'phoneNumber',
+                formItem: {
+                  col: 6,
+                  rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
+                },
+              },
+              {
+                title: 'user.Note',
+                name: 'note',
+                formItem: {
+                  col: 12,
+                  type: 'textarea',
+                },
+              },
+            ]}
+            handSubmit={handleSubmit}
+            disableSubmit={isLoading}
+            handCancel={handleBack}
           />
         )}
-        handSubmit={handleSubmit}
-        disableSubmit={userFacade.isLoading}
-        handCancel={handleBack}
-      />
-    </div>
+      </div>
+    </Fragment>
   );
 };
 export default Page;

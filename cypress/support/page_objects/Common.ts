@@ -1,18 +1,6 @@
 export default class Common {
   state: any = {};
   elements = {
-    // iconEye: () => cy.get('.absolute'),
-    iconEye: (text: string, number: number) => cy.get('#Layer_1.absolute').eq(number),
-    textDashboard: (text: string) => cy.get('#name-application').contains(text),
-    textTitle: () => cy.title(),
-    textForgotPasswordButton: (text: string) => cy.get('.text-blue-600').contains(text),
-    textTitleForgotPassword: (text: string) => cy.get('.ant-modal-title').contains(text),
-    reloadPage: () => cy.reload(),
-    clearInputByName: (text: string) => cy.get('.ant-select-clear'),
-    // forItemEye: (name: string) => cy.get('#Layer_1')
-    // forItemByName: (name: string) => cy.contains('.ant-form-item-label > label', name).parent().parent(),
-    // inputByName: (name: string) => this.elements.forItemByName(name).find('input'),
-    //---------------------------------------------------------------------------------------------
     textButton: (text: string) => cy.get(`button[title="${text}"]`).should('not.be.disabled'),
     textMenu: (text: string) => cy.get('li.menu').contains(text),
     textSubMenu: (text: string) => cy.get('a.sub-menu').contains(text),
@@ -60,18 +48,6 @@ export default class Common {
     this.elements.textButton(text).click();
     this.clickSubmitPopover();
   };
-  //------------------------------------------------------------------------
-  validDashboard = (text: string) => this.elements.textDashboard(text).should('have.text', text);
-  validTextMenu = (text: string) => this.elements.textMenu(text).should('have.text', text);
-  validtextTitle = (text: string) => this.elements.textTitle().should('include', text);
-  ClickForgotPassword = (text: string) => this.elements.textForgotPasswordButton(text).click();
-  validTitleForgotPassword = (text: string) => this.elements.textTitleForgotPassword(text).should('have.text', text);
-  ClickEyeIcon = (text: string, number: number) => this.elements.iconEye(text, number).click();
-  DisplayPassword = (name: string) => this.elements.inputByName(name).should('have.attr', 'type', 'text');
-  ReloadPage = () => this.elements.reloadPage();
-  emptyInputByName = (name: string) => this.elements.inputByName(name).should('be.empty');
-  ClickClearInputByName = (text: string) => this.elements.clearInputByName(text).click();
-  //-------------------------------------------------------------------------
   clickTextMenu = (text: string) => this.elements.textMenu(text).click();
   clickTextSubMenu = (text: string, url: string) => {
     this.spin();

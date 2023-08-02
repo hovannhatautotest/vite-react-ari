@@ -1,20 +1,30 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { API, routerLinks } from '@utils';
+
+import { User } from '../global';
 import { Message } from '@core/message';
-import { useAppDispatch, useTypedSelector, Action, Slice, State, User } from '@store';
+import { API, routerLinks } from '@utils';
 import { PaginationQuery } from '@models';
+import { Action, Slice, State, useAppDispatch, useTypedSelector } from '@store';
 
 const name = 'User';
 export const action = {
   ...new Action<User>(name),
   post: createAsyncThunk(name + '/post', async (values: User) => {
-    // if (values.avatar) values.avatar = values.avatar[0].url;
-    const { data, message } = await API.post<User>(routerLinks(name, 'api'), values);
+    const addressDto = { city: null, country: null, district: null, postCode: null, street: 'dien bien phu' };
+    const subOrgId = null;
+    const orgId = null;
+    const roleId = 1;
+    const { data, message } = await API.post<User>(`${routerLinks(name, 'api')}/register`, {
+      ...values,
+      addressDto,
+      subOrgId,
+      orgId,
+      roleId,
+    });
     if (message) Message.success({ text: message });
     return data;
   }),
   put: createAsyncThunk(name + '/put', async ({ id, ...values }: User) => {
-    // if (values.avatar) values.avatar = values.avatar[0].url;
     const { data, message } = await API.put<User>(`${routerLinks(name, 'api')}/${id}`, values);
     if (message) Message.success({ text: message });
     return data;

@@ -2,202 +2,42 @@
 Library             Browser
 Library             FakerLibrary        locale=en_IN
 Library             String
-Library            OperatingSystem
-Library            BuiltIn
 
 *** Variables ***
-
 ${BROWSER}          chromium
-${HEADLESS}         ${True}
+${HEADLESS}         ${False}
 ${BROWSER_TIMEOUT}  60 seconds
 ${SHOULD_TIMEOUT}   0.1 seconds
 
-${URL_DEFAULT}      http://v2.ari.com.vn/
+${SEARCH_NAME_CODE}    USR0047
+${SEARCH_FULLNAME}     Hồ Văn Nhật
+${SEARCH_EMAIL}        admin_balan@getnada.com
+${SEARCH_PHONE}        0941225407
+${SEARCH_ROLE}         Quản trị viên
+
+# ${URL_DEFAULT}      http://stag.balance.ari.com.vn/#/      # Web internet
+${URL_DEFAULT}      http://localhost:5173/  
 ${STATE}            Evaluate  json.loads('''{}''')  json
-
-${username_valid}    Hoàng Diệu
-${email_valid}    staff@gmail.com
-${phone_number_valid}    0941225407    
-
-${class_rejected}    w-5 h-5 fill-red-500
-${class_approved}    w-5 h-5 fill-green-500
 
 *** Keywords ***
 
-Login to admin
-  Enter "email" in "Tên đăng nhập" with "hovannhat@admin.com"
-  Enter "text" in "Mật khẩu" with "Nhat@01101999"
+Login to Admin
+  Enter "email" in "Tên đăng nhập" with "admin_balan@getnada.com"
+  Enter "text" in "Mật khẩu" with "Ari123456#"
   Click "Đăng nhập" button
-  User look message "Thành công" popup
+  User look message "Đăng nhập thành công" popup
 
-Login to Manager
-  Enter "email" in "Tên đăng nhập" with "manager@gmail.com"
-  Enter "text" in "Mật khẩu" with "Tester@123"
+Login to Store
+  Enter "email" in "Tên đăng nhập" with "chstag11111@getnada.com"
+  Enter "text" in "Mật khẩu" with "Ari123456#"
   Click "Đăng nhập" button
-  User look message "Thành công" popup
+  User look message "Đăng nhập thành công" popup
 
-Login to Staff
-  Enter "email" in "Tên đăng nhập" with "staff@gmail.com"
-  Enter "text" in "Mật khẩu" with "Tester@123"
+Login to Supplier
+  Enter "email" in "Tên đăng nhập" with "nccstag11111@getnada.com"
+  Enter "text" in "Mật khẩu" with "Ari123456#"
   Click "Đăng nhập" button
-  User look message "Thành công" popup
-
-Login to admin version english
-  When Change language with "Tiếng Anh"
-  And Enter "email" in "Username" with "hovannhat@admin.com"
-  And Enter "text" in "Password" with "Nhat@01101999"
-  And Click "Log In" button
-  User look message "Success" popup
-
-Login to Manager version english
-  When Change language with "Tiếng Anh"
-  And Enter "email" in "Username" with "manager@gmail.com"
-  And Enter "text" in "Password" with "Tester@123"
-  And Click "Log In" button
-  User look message "Success" popup
-
-Login to Staff version english
-  When Change language with "Tiếng Anh"
-  And Enter "email" in "Username" with "staff@gmail.com"
-  And Enter "text" in "Password" with "Tester@123"
-  And Click "Log In" button
-  User look message "Success" popup
-
-Go to page ${name} user with the "${role}" role
-  Login to admin
-  When Click "Người Dùng" menu
-  IF  '${role}' == 'Staff'
-    Wait Until Element Spin
-  ELSE IF  '${role}' != 'Staff'
-    Click list Role with "${role}"
-  END
-  IF  '${name}' == 'create'
-    Click "Tạo mới" button
-  ELSE IF  '${name}' == 'edit'
-    Select user need to edit
-  END
-  Wait Until Element Spin
-  Sleep    ${SHOULD_TIMEOUT}   
-
-Go to page ${name} team
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Nhóm" sub menu
-    IF  '${name}' == 'create'
-      Click "Tạo mới" button
-    ELSE IF  '${name}' == 'edit'
-      Select team need to edit
-    END
-    Wait Until Element Spin
-    Sleep    ${SHOULD_TIMEOUT}
-
-Go to profile page with ${account}
-  IF  '${account}' == 'Admin'
-    Login to Admin
-  ELSE IF  '${account}' == 'Manager'
-    Login to Manager
-  ELSE IF  '${account}' == 'Staff'
-    Login to Staff
-  END
-  Hover to avatar
-  Click "Thông tin cá nhân" to profile
-  Sleep    2
-
-Go to ${name} code page
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Mã" sub menu
-    IF  '${name}' == 'create'
-      Click "Thêm mới" button
-    ELSE IF  '${name}' == 'edit'
-      Select Code need to edit
-      Sleep    2
-    END   
-    Wait Until Element Spin
-    Sleep    ${SHOULD_TIMEOUT}
-    
-Select ${name} need to edit
-  ${elements}            Get Elements            xpath=//button[@title="Sửa"]
-  ${elementCount}        Get Length            ${elements}
-  ${index}=         Evaluate              ${elementCount}-1
-  IF  '${name}' == 'Post'
-    Click    ${elements}[2]
-  ELSE IF  '${name}' != 'Post'
-    Click    ${elements}[0]
-  END
-  Wait Until Element Spin 
-
-Go to page edit code    # Đến trang edit code khi code đó đang có user sử dụng
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Mã" sub menu
-    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
-    Click    ${elements}[1]  
-    Sleep    2
-
-Go to ${name} data ${type} page
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Dữ liệu" sub menu
-    IF  '${type}' == 'Partner'
-      Wait Until Element Spin
-    ELSE IF  '${type}' != 'Partner'
-      Click list Data_Type with "${type}"
-    END
-    IF  '${name}' == 'create'
-      Click "Tạo mới" button
-      Wait Until Element Spin
-      Sleep    ${SHOULD_TIMEOUT}
-    ELSE IF  '${name}' == 'edit'
-      Select Data need to edit
-      Sleep    2
-    ELSE IF  '${name}' == 'list'
-      Wait Until Element Spin
-      Sleep    ${SHOULD_TIMEOUT}
-    END
-
-Go to edit name post type
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Post" sub menu
-    And Click on the "Sửa" button in "Projects" at Post Type
-    Sleep    2
-
-Go to ${name} post ${type} page
-    Login to Admin
-    When Click "Thiết lập" menu
-    And Click "Post" sub menu
-    IF  '${type}' == 'Projects'
-      Wait Until Element Spin
-    ELSE IF  '${type}' == 'News'
-      Click list Post_Type with "${type}"
-    END
-    IF  '${name}' == 'create'
-      Click "Tạo mới" button
-    ELSE IF  '${name}' == 'edit'
-      Select Post need to edit
-    ELSE IF  '${name}' == 'list'
-      Wait Until Element Spin
-    END
-    Wait Until Element Spin
-    Sleep    ${SHOULD_TIMEOUT}
-
-Go to create leave date page
-    Login to Staff
-    When Click "Tạo mới" button
-    Wait Until Element Spin
-    Sleep    ${SHOULD_TIMEOUT}
-
-Enter invalid information to create user
-  When Enter "text" in "Họ và tên" with "_RANDOM_"
-  And Enter "email" in "Email" with "_RANDOM_"
-  And Enter "text" in "Mật khẩu" with "Nhat@01101999"
-  And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
-  And Enter "phone" in "Số điện thoại" with "_RANDOM_"
-  And Enter date in "Ngày sinh" with "_RANDOM_"
-  And Click select "Vị trí" with "Developer"
-  And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
-  And Enter "words" in textarea "Mô tả" with "_RANDOM_"
+  User look message "Đăng nhập thành công" popup
 
 #### Setup e Teardown
 Setup
@@ -274,21 +114,18 @@ Get Random Text
   IF  ${cntS} > 0
     ${new_text}=            Set Variable                      ${STATE["${containsS[0]}"]}
     ${symbol}=              Set Variable                      _@${containsS[0]}@_
+  ELSE IF  ${cnt} > 0 and '${type}' == 'fullname'
+    ${new_text}=            FakerLibrary.Name
   ELSE IF  ${cnt} > 0 and '${type}' == 'test name'
     ${random}=              FakerLibrary.Sentence             nb_words=3
     ${words}=               Split String                      ${TEST NAME}                  ${SPACE}
     ${new_text}=            Set Variable                      ${words[0]} ${random}
-  ELSE IF  ${cnt} > 0 and '${type}' == 'number'
+  ELSE IF  ${cnt} > 0 and '${type}' == 'name code'
+    ${random}=              FakerLibrary.Random Int           min=00000             max=99999
+    ${name}=               Set Variable                      USR
+    ${new_text}=            Set Variable                      ${name}${random}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'phone_invalid'
     ${new_text}=            FakerLibrary.Random Int           min=1000000000000             max=9999999999999
-    ${new_text}=            Convert To String                 ${new_text}
-  ELSE IF  ${cnt} > 0 and '${type}' == 'order number'
-    ${new_text}=            FakerLibrary.Random Int           min=0             max=999999999
-    ${new_text}=            Convert To String                 ${new_text}
-  ELSE IF  ${cnt} > 0 and '${type}' == 'leave date valid'
-    ${new_text}=            FakerLibrary.Random Int           min=0             max=16
-    ${new_text}=            Convert To String                 ${new_text}
-  ELSE IF  ${cnt} > 0 and '${type}' == 'leave date invalid'
-    ${new_text}=            FakerLibrary.Random Int           min=17             max=99
     ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'percentage'
     ${new_text}=            FakerLibrary.Random Int           max=100
@@ -299,6 +136,12 @@ Get Random Text
     ${new_text}=            FakerLibrary.Email
   ELSE IF  ${cnt} > 0 and '${type}' == 'phone'
     ${new_text}=            FakerLibrary.Random Int           min=55555555                  max=999999999999
+    ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'number'
+    ${new_text}=            FakerLibrary.Random Int           min=55555555                  max=999999999999
+    ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'otp'
+    ${new_text}=            FakerLibrary.Random Int           min=100000                  max=999999
     ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'color'
     ${new_text}=            FakerLibrary.Safe Hex Color
@@ -374,23 +217,7 @@ Click select "${name}" with "${text}"
   IF  ${cnt} > 0
     Set Global Variable     ${STATE["${name}"]}               ${text}
   END
-
-# Chọn quản lý
-Click select ${manager} with "${text}"
-  ${text}=                  Get Random Text                   Text                          ${text}
-  ${element}=               Get Element Form Item By Name     ${manager}                       //*[contains(@class, "ant-select-show-arrow")]
-  Wait Until Element Is Visible    ${element}
-  Click                     ${element}
-  ${element}=               Get Element Form Item By Name     ${manager}                       //*[contains(@class, "ant-select-selection-search-input")]
-  Fill Text                                                   ${element}                    ${text}
-  Wait Until Element Is Visible     xpath=//span[contains(text(),'${text}')]
-  Click                     xpath=//span[contains(text(),'${text}')]
-  ${cnt}=                   Get Length                        ${text}
-  IF  ${cnt} > 0
-    Set Global Variable     ${STATE["${manager}"]}               ${text}
-  END
-
-# Nhập giá trị vào trường edit trên form.
+  # Nhập giá trị vào trường edit trên form.
 Enter "${type}" in editor "${name}" with "${text}"
   ${text}=                  Get Random Text                   ${type}                       ${text}
   ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ce-paragraph")]
@@ -477,6 +304,7 @@ Click on the previously created "${name}" tree to edit
 ###  -----  Element  -----  ###
 # Nhấp vào nút có nội dung là "${text}".
 Click "${text}" button
+  # Click                     xpath=//button[@id='submit-btn' and text()='${text}']
   Click                     xpath=//button[@title = "${text}"]
   Click Confirm To Action
   Scroll By                 ${None}
@@ -493,7 +321,7 @@ Select on the "${text}" item line
 
 # Nhấp vào menu có nội dung là "${text}".
 Click "${text}" menu
-  Click                     xpath=//li[span[contains(text(), "${text}")]]
+  Click                     xpath=//span[contains(text(),'${text}')]
   Wait Until Element Spin
 
 # Nhấp vào submenu có nội dung là "${text}" và điều hướng đến "${url}".
@@ -555,6 +383,9 @@ User look title "${title}"
     Title Should Be    ${title}
 
 # #############--------------LOGIN----------------#########################
+Check Welcome Message Text Is "${welcome}"
+  Element Text Should Be   //h1[contains(text(),'${welcome}')]    ${welcome}
+
 # Kiểm tra xem thông báo lỗi có hiển thị đúng vị trí mong đợi không (hiển thị 2 validation text).
 Required message "${name}" field displayed under "${text}"
   ${element}=               Get Element Form Item By Name     ${name}                //*[contains(@class, "ant-picker-input")]/input
@@ -563,25 +394,26 @@ Required message "${name}" field displayed under "${text}"
 
 # Kiểm tra Menu khi đăng nhập thành công
 User look menu "${text}"
-  Element Text Should Be    xpath=//li[span[contains(text(), "${text}")]]    ${text}
+  Element Text Should Be    xpath=//span[contains(text(),'${text}')]    ${text}
  
 # Click vào link "Quên mật khẩu?"
 Click "${name}" link
-  ${element}=    Set Variable    //button[contains(@class, 'text-blue-600')]    
-  Click   ${element}
+  # Click    //a[contains(text(),'${name}')]   
+  Click        //button[text()='${name}']
 
 # Kiểm tra Tiêu đề khi nhấn vào link "Quên mật khẩu?"
-User look title form Forgot Password "${title}"
-  Element Text Should Be    xpath=//h3[contains(text(),'${title}')]      ${title}
+User look contains title is "${title}"
+  Element Text Should Be    xpath=//h1[contains(text(),'${title}')]      ${title}
 
 # Form "Quên mật khẩu" biến mất
 "${forgotpassword}" form disappears
     Wait Until Element Is Not Exist    //h3[contains(text(),'${forgotpassword}')]
 
 # Click icon "Eye" để hiện thị mật khẩu
-Click "Eye" icon to display password
-    ${element}=    Set Variable    xpath=//*[contains(@class, 'absolute') and @id='Layer_1']
-    Click    ${element}
+Click "Eye" icon to display password 
+  # Click    xpath=//*[contains(@class, 'text-lg')]
+  ${element}    Get Elements    //*[contains(@class, 'absolute')]
+  Click    ${element}[0]
 
 # Kiểm tra mật khẩu có hiển thị hay không khi click icon "eye"
 User look "${name}" field with type "${type}"
@@ -607,50 +439,38 @@ Change language with "${text}"
     Click    //span[contains(@class, "ant-select-selection-item")]
     Click    //*[contains(@class, "ant-select-item-option-content") and text()="${text}"]
 
-# #############--------------CREATE USER----------------#########################
-# Click sub menu "Danh sách" trong menu "Người Dùng"
-Click "${list}" submenu in "Người Dùng" menu
-    ${element}=        Set Variable        xpath=(//span[text()='${list}'])[2]
-    Click     ${element}
+##=============================CREATE USER==================================================
+# Đến trang tạo mới người dùng
+Go to page create user
+  Login to Admin
+  And Click "Quản lý người dùng" menu
+  And Click "Thêm quản trị viên" button
 
-# XÓA USER KHI USER ĐÓ CÒN NHỮNG YÊU CẦU NGHỈ PHÉP CẦN PHÊ DUYỆT (Có 3 user Staff, chọn User thứ 2 để xóa)
-Click "${delete}" user has submitted a request for leave that needs to be approved
-    Click list Role with "Staff"
+# Hiển thị danh sách
+Show list of "${name}"
+    Log To Console    ****************List of ${name}****************
     Wait Until Element Spin
-    ${elements}=        Get Elements        xpath=//button[@title="${delete}"]
-    ${elementCount}    Get Length            ${elements}
-    ${randomIndex}=    Evaluate              ${elementCount}-1
-    Click     ${elements}[${randomIndex}]
-    Click Confirm To Action
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")] 
+    ${count}=           Set Variable        2
+    ${stt}=             Set Variable        1
+    IF  '${name}' == 'users'
+        FOR  ${i}  IN  @{elements}
+            ${user_code}    Get Text    //tbody/tr[${count}]/td[1]
+            ${fullname}     Get Text    //tbody/tr[${count}]/td[2]
+            ${email}        Get Text    //tbody/tr[${count}]/td[3]
+            ${phone}        Get Text    //tbody/tr[${count}]/td[4]
+            ${role}         Get Text    //tbody/tr[${count}]/td[5]
+            Log To Console    ${stt}. Mã người dùng: ${user_code} | Họ và tên: ${fullname} | Email: ${email} | Số điện thoại: ${phone} | Vai trò: ${role}         
+            Log To Console    ============================================================================================================================================
+            ${count}=    Evaluate    ${count} + 1
+            ${stt}=    Evaluate    ${stt} + 1
+        END
+    END
+    ${total}=    Evaluate    ${count} - 2
+    Log To Console    Tổng số lượng ${name} là: ${total}
 
-# XÓA USER KHI USER ĐÓ ĐANG QUẢN LÝ MỘT USER KHÁC (Có 3 user Manager, chọn User thứ 2 để xóa)
-Click "${delete}" user still managing other people
-    Click list Role with "Manager"    
-    Wait Until Element Spin
-    ${elements}=        Get Elements        xpath=//button[@title="${delete}"]
-    ${elementCount}    Get Length            ${elements}
-    ${randomIndex}=    Evaluate              ${elementCount}-1
-    Click     ${elements}[${randomIndex}]
-    Click Confirm To Action
-
-# Click vào icon "Eye" để hiển thị mật khẩu và nhập lại mật khẩu
-Click "Eye" icon to show "Mật khẩu" field and "Nhập lại mật khẩu" field
-    ${element}=    Get Elements    xpath=//*[contains(@class, 'absolute') and @id='Layer_1']
-    Click    ${element}[0]
-    Click    ${element}[1]
-
-# Chon danh sách user ứng với vai trò tương ứng
-Click list ${name} with "${text}"
-    ${element}=    Set Variable    xpath=//div[contains(@class, 'truncate') and text()='${text}']
-    Wait Until Element Is Visible    ${element}
-    Click    ${element}
-    Wait Until Element Spin
-    Wait Until Element Spin
-
-# Nhập từ khóa cần tìm kiếm
+# Tìm kiếm với từ khóa tương ứng
 Search "${type}" in "${name}" with "${text}"
-    Wait Until Element Spin
-    Wait Until Element Spin
     ${text}=                  Get Random Text                   ${type}                       ${text}
     ${element}=               Set Variable        //input[@placeholder="${name}"]
     Clear Text                ${element}
@@ -659,100 +479,10 @@ Search "${type}" in "${name}" with "${text}"
     IF  ${cnt} > 0
         Set Global Variable     ${STATE["${name}"]}               ${text}
     END
-    Sleep    4
-
-# Tăng số lượng user được hiển thị lên 40 user
-Increase the number of users displayed in the list
-    ${element}=        Set Variable    xpath=//span[@class="ant-select-selection-item" and @title="9"]
-    Click        ${element}
-    ${number}=        Set Variable    //div[@class="ant-select-item-option-content" and text()="45"]
-    Wait Until Element Is Visible    ${number}
-    Click    ${number}
-
-The page is refreshed with empty fields
-    Then User look "Họ và tên" field empty
-    And User look "Email" field empty
-    And User look "Mật khẩu" field empty
-    And User look "Nhập lại mật khẩu" field empty
-    And User look "Số điện thoại" field empty
-
-# Hiển thị danh sách
-Show list of "${name}"
     Wait Until Element Spin
-    Wait Until Element Spin
-    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
-    ${count}=    Set Variable    2
-    ${stt}=    Set Variable    1
-    
-    IF  '${name}' == 'users'
-        FOR    ${item}    IN    @{elements}
-          ${fullname}=        Get Text    //tbody/tr[${count}]/td[1]/div[1]/span[1]
-          ${position}=        Get Text    //tbody/tr[${count}]/td[2]
-          ${role}=            Get Text    //tbody/tr[${count}]/td[3]
-          ${manager}=         Get Text    //tbody/tr[${count}]/td[4]
-          ${team}=            Get Text    //tbody/tr[${count}]/td[5]
-          ${Email}=           Get Text    //tbody/tr[${count}]/td[6]
-          ${phone_number}=    Get Text    //tbody/tr[${count}]/td[7]
-          
-          IF  '${manager}' == '${EMPTY}'
-            ${manager}=    Set Variable    Không có quản lý
-          END
-            
-          IF  '${team}' == '${EMPTY}'
-            ${team}=    Set Variable    Không có nhóm
-          END
-          
-          Log To Console        ${stt}. ${fullname} | ${position} | ${role} | ${manager} | ${team} | ${Email} | ${phone_number} |
-          Log To Console        ========================================================================================================
-          ${count}=    Evaluate    ${count} + 1
-          ${stt}=    Evaluate    ${stt} + 1
-        END
-    
-    ELSE IF  '${name}' == 'teams'
-        FOR    ${item}    IN    @{elements}
-          ${team_name}=        Get Text        //tbody[1]/tr[${count}]/td[1]
-          ${manager}=          Get Text        //tbody/tr[${count}]/td[2]/div[1]/span[1]
-          Log To Console        ${stt}. ${team_name} || ${manager}
-          Log To Console        =======================================
-          ${count}=    Evaluate    ${count} + 1
-          ${stt}=    Evaluate    ${stt} + 1
-        END
-    
-    ELSE IF  '${name}' == 'codes'
-      FOR    ${item}    IN    @{elements}
-        ${code}=             Get Text        //tbody[1]/tr[${count}]/td[1]
-        ${name_code}=        Get Text        //tbody[1]/tr[${count}]/td[2]
-        ${Description}=      Get Text        //tbody[1]/tr[${count}]/td[3]  
-        Log To Console        ${stt}. Mã: ${code} || Tên mã: ${name_code} || Mô tả: ${Description}
-        Log To Console        ===================================================================================
-        ${count}=    Evaluate    ${count} + 1
-        ${stt}=    Evaluate    ${stt} + 1
-      END
-    
-    ELSE IF  '${name}' == 'data'
-      FOR    ${item}    IN    @{elements}
-        ${name_data}=        Get Text        //tbody[1]/tr[${count}]/td[1]
-        ${order}=            Get Text        //tbody[1]/tr[${count}]/td[2]
-        Log To Console        ${stt}. Tên dữ liệu: ${name_data} || Order: ${order}
-        Log To Console        ===================================================================================
-        ${count}=    Evaluate    ${count} + 1
-        ${stt}=    Evaluate    ${stt} + 1
-      END
-    
-    ELSE IF  '${name}' == 'post'
-      FOR    ${item}    IN    @{elements}
-        ${name_post}=       Get Text        //tbody[1]/tr[${count}]/td[1]
-        ${slug}=            Get Text        //tbody[1]/tr[${count}]/td[2]
-        Log To Console        ${stt}. Tên Post: ${name_post} || Slug: ${slug}
-        Log To Console        ===================================================================================
-        ${count}=    Evaluate    ${count} + 1
-        ${stt}=    Evaluate    ${stt} + 1
-      END
-    END
-    ${total}=    Evaluate    ${count} - 2
-    Log To Console    Tổng số lượng ${name} là: ${total}
+    Sleep    1
 
-# Không có user nào được hiển thị khi nhập từ khóa tìm kiếm không hợp lệ
+# Từ khóa không hợp lệ
 No ${name} are shown
     Wait Until Element Spin
     ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
@@ -766,362 +496,3 @@ Click "${icon}" to "${next}" page
     Wait Until Element Is Visible    ${element}
     Click    ${element}
     Wait Until Element Spin
-
-# Kiểm tra class của đối tượng sau khi nhấn nút next page hoặc previous page
-Get_Element_Attribute with "${page}"
-    ${element}    Set Variable    //button[@aria-label="${page}"]
-    Wait Until Element Is Visible    ${element}
-    ${attribute}    Get Attribute    ${element}    class
-    [Return]    ${attribute}
-
-# #############--------------EDIT USER----------------#########################
-# Chọn user cần chỉnh sửa
-Select the ${text} "${name}" to edit
-    [Arguments]    
-    Wait Until Element Spin
-    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
-    ${elementCount}        Get Length              ${elements}
-    IF  '${name}' == 'Team has been deleted'
-        ${randomIndex}=    Evaluate    ${elementCount}-2
-    ELSE IF  '${name}' == 'Còn những yêu cầu nghỉ cần duyệt'
-        ${randomIndex}=    Evaluate    ${elementCount}-3
-    ELSE IF  '${name}'=='valid'
-        ${randomIndex}=    Evaluate    ${elementCount}-${elementCount}
-    END
-    Click    ${elements}[${randomIndex}]
-    Wait Until Element Spin
-    Wait Until Element Spin
-
-# Xóa thông tin hiện tại của trường: Ngày sinh hoặc Ngày đầu đi làm
-Delete information "${name}"
-    IF  '${name}' == 'Ngày sinh'
-        ${num}=    Evaluate    0
-    ELSE IF  '${name}' != 'Ngày sinh'
-        ${num}=    Evaluate    1
-    END
-    And Enter date in "${name}" with ""
-    ${elements}=               Get Elements        //span[@class='ant-picker-clear']
-    Click    ${elements}[${num}]
-    And Enter date in "${name}" with ""     
-
-# Xóa thông tin hiện tại của trường: Vị trí hoặc Vai trò
-Delele select "${name}" field
-    IF  '${name}' == 'Vị trí'
-        ${num}=    Evaluate    0
-    ELSE IF  '${name}' == 'Thời gian'
-        ${num}=    Evaluate    0
-    ELSE IF  '${name}' == 'Vai trò'
-        ${num}=    Evaluate    1
-    END
-    ${elements}=               Get Elements        //span[@class='ant-select-clear'] 
-    Click    ${elements}[${num}]
-
-Delele select at "Quản lý" field
-    ${elements}=               Get Element        //span[@class='ant-select-clear'] 
-    Click    ${elements}
-
-# #############--------------STAFF LEAVE MANAGEMENT----------------#########################
-# Nhập ngày bắt đầu nghỉ hoặc ngày kết thúc nghỉ
-Enter leave date in "${field}" with "${text}"            # NHẬP NGÀY NGHỈ BẮT ĐẦU VÀ KẾT THÚC
-  ${text}=                  Get Random Text                   date                          ${text}
-  ${element}               Set Variable            xpath=//input[@placeholder="${field}"]
-  Click                     ${element}
-  Clear Text                ${element}
-  Fill Text                 ${element}                        ${text}
-
-# Lấy chuỗi text "Ngày phép còn lại"
-Get_Leave_date with "${date}"
-    ${element}=        Set Variable     //div[contains(text(), '${date}')]
-    Wait Until Element Is Visible    ${element}
-    ${text}    Get Text    ${element}
-    [Return]    ${text}
-
-User look "${name}" field should be empty
-    ${element}        Set Variable       xpath=//span[text()='${name}']
-    Wait Until Element Is Visible                    ${element}
-    Element Text Should Be        ${element}        ${name}
-
-User look leave date empty with "${field}"        #CREATE STAFF LEAVE MANAGEMENT
-    ${element}               Set Variable            xpath=//input[@placeholder="${field}"]
-    Wait Until Element Is Visible            ${element}
-    Element Text Should Be                   ${element}            ${EMPTY}
-
-User look all field should be empty        #STAFF_LEAVE MANAGER
-    And User look "Chọn loại phép" field should be empty
-    And User look "Chọn thời gian" field should be empty
-    And User look leave date empty with "Ngày bắt đầu"
-    And User look leave date empty with "Ngày kết thúc"
-    And User look textarea "Lý do" field empty
-
-# Hiển thị danh sách ngày nghỉ đã tạo
-Show list of "${name}" leave date
-    Wait Until Element Spin
-    ${elements}=          Get Elements        xpath=//*[contains(@class, "ant-table-row")]
-    ${user_count}=        Set Variable        2
-    ${stt}=    Set Variable    1
-    FOR    ${item}    IN    @{elements}
-      ${username}=              Get Text        //tbody/tr[${user_count}]/td[2]/div[1]/span[1]
-      
-      ${element_manager}=       Get Elements    //tbody/tr[${user_count}]/td[3]/div[1]/span[1]
-      ${manager}                Get Text        ${element_manager}[0]     
-      
-      ${element_type}=          Get Elements    //tbody/tr[${user_count}]/td[4]
-      ${type}=                  Get Text        ${element_type}[0]
-
-      ${element_time}=          Get Elements    //tbody/tr[${user_count}]/td[5]
-      ${time}=                  Get Text        ${element_time}[0]
-
-      ${element_leave_date}=    Get Elements    //tbody/tr[${user_count}]/td[6]
-      ${leave_date}=            Get Text        ${element_leave_date}[0]
-      
-      ${approvated_date}=       Get Text        //tbody/tr[${user_count}]/td[8]
-      ${approvated_by}=         Get Text        //tbody/tr[${user_count}]/td[9]
-    
-      IF  '${approvated_date}' == ''
-        ${status}=    Set Variable    Đang chờ phê duyệt
-      END
-      
-      IF     '${name}'=='approved'
-        ${status}=    Set Variable    Đã phê duyệt
-      ELSE IF    '${name}'=='rejected'
-        ${status}=    Set Variable    Từ chối phê duyệt
-      ELSE IF    '${name}'=='pending'
-        ${status}=    Set Variable    Đang chờ phê duyệt
-      ELSE IF    '${name}'=='created'
-        ${status}=    Set Variable    ${EMPTY}
-      END
-
-      Log To Console        ${stt}. Họ và tên: ${username} | Quản lý: ${manager} | Loại phép: ${type} | Thời gian: ${time} | Ngày nghỉ: ${leave_date} | Trạng thái: ${status} | Ngày phê duyệt: ${approvated_date} | Người phê duyệt: ${approvated_by}
-      Log To Console        ================================================================================================================================================================================================================================================================
-      ${user_count}=    Evaluate    ${user_count} + 1
-      ${stt}=    Evaluate    ${stt} + 1
-    END
-    ${total}=    Evaluate    ${user_count} - 2
-    IF     '${name}'=='created'
-      Log To Console    Total number of holidays ${name}: ${total}
-    ELSE IF    '${name}'=='approved'
-      Log To Console    Total number of ${name} holidays: ${total}
-    ELSE IF    '${name}'=='rejected'
-      Log To Console    Total number of days off ${name} approval: ${total}
-    ELSE IF    '${name}'=='pending'
-      Log To Console    Total number of days off ${name} approval: ${total}
-    END
-
-# #############--------------PROFILE----------------#########################
-Hover to avatar
-    Mouse Move Relative To        xpath=//header/div[1]/div[2]/section[1]/div[1]        0
-
-Click "${profile}" to ${name}
-    ${element}=        Set Variable        //div[text() = '${profile}']
-    Wait Until Element Is Visible          ${element}
-    Click    ${element}
-
-# #############--------------ADMIN LEAVE MANAGEMENT----------------#########################
-Select the leave date status as ${status}
-    Filter the list of holidays with the status of "${status}"
-    ${elements}=        Get Elements         //span[text()='Hoàng Diệu']
-    IF     '${status}'=='Pending'
-      Click   ${elements}[0]    left    2
-    ELSE IF     '${status}'=='Approved'
-      Click   ${elements}[0]    left    2
-    ELSE IF     '${status}'=='Rejected'
-      Click   ${elements}[0]    left    2
-    END
-    Wait Until Element Spin
-
-Select the leave date status as ${status} when not managing that staff
-    Filter the list of holidays with the status of "${status}"
-    ${elements}=        Get Elements         //span[text()='Nguyễn Ngọc Đức']
-    Click   ${elements}[0]    left    2
-    Wait Until Element Spin
-
-Filter the list of holidays with the status of "${status}"
-    Click    //thead/tr[1]/th[7]/div[1]/span[2]/*[1]
-    Click    //span[contains(text(),'${status}')]
-    Click "Tìm kiếm" button
-
-User can view the details of the holiday ${name}
-    Log To Console    Chi tiết ngày nghỉ
-    
-    ${code}    Get Text    //tbody/tr[1]/td[1]
-    Log To Console    Mã: ${code}
-    Log To Console    ==================================
-
-    ${fullname}    Get Text    //tbody/tr[2]/td[1]//div[1]/span[1]
-    Log To Console    Họ và tên: ${fullname}
-    Log To Console    ==================================
-
-    ${manager}    Get Text    //tbody/tr[3]/td[1]//div[1]/span[1]
-    Log To Console    Quản lý: ${manager}
-    Log To Console    ==================================
-
-    ${type}    Get Text    //tbody/tr[4]/td[1]
-    Log To Console    Loại phép: ${type}
-    Log To Console    ==================================
-
-    ${time}    Get Text    //tbody/tr[5]/td[1]
-    Log To Console    Thời gian: ${time}
-    Log To Console    ==================================
-
-    ${leave_date}    Get Text    //tbody/tr[6]/td[1]
-    Log To Console    Ngày nghỉ: ${leave_date}
-    Log To Console    ==================================
-
-    ${reason}    Get Text    //tbody/tr[7]/td[1]
-    Log To Console    Lý do: ${reason}
-    Log To Console    ==================================
-    
-    IF  '${name}' == 'Pending'
-        Log To Console    ==========================================
-    ELSE IF  '${name}' == 'Approved'
-        Verify status
-    ELSE IF  '${name}' == 'Rejected'
-        Verify status
-        ${reason_rejected}    Get Text    //tbody/tr[11]/td[1]
-        Log To Console    Lý do từ chối: ${reason_rejected}
-    END
-
-Verify status
-    ${class_attribute}    Get Attribute    //tbody/tr[8]/td[1]/*[1]    class
-    IF  '${class_attribute}' == '${class_approved}'
-        ${status}=    Set Variable    Đã phê duyệt
-    ELSE IF  '${class_attribute}' == '${class_rejected}'
-            ${status}=    Set Variable    Từ chối phê duyệt
-    END
-    Log To Console    Trạng thái: ${status}
-    Log To Console    ==================================
-        
-    ${approvated_at}    Get Text    //tbody/tr[9]/td[1]
-    Log To Console    Ngày phê duyệt: ${approvated_at}
-    Log To Console    ==================================
-
-    ${approvated_by}    Get Text    //tbody/tr[10]/td[1]//div[1]/span[1]
-    Log To Console    Phê duyệt bởi: ${approvated_by}
-    Log To Console    ==================================
-
-Fillter the leave list by leave date with start date: ${start_date} and end date: ${end_date}
-    ${element}    Get Element    //thead/tr[1]/th[6]/div[1]/span[2]/*[1]
-    Click    ${element}
-    And Enter leave date in "Ngày bắt đầu" with "${start_date}"
-    And Enter leave date in "Ngày kết thúc" with "${end_date}"
-    Press Keys    xpath=//input[@placeholder="Ngày kết thúc"]    Enter
-    And Click "Tìm kiếm" button
-    Wait Until Element Spin
-    Wait Until Element Spin
-
-Fillter the leave list by approvated date with start date: ${start_date} and end date: ${end_date}
-    ${element}    Get Element    //thead/tr[1]/th[8]/div[1]/span[2]/*[1]
-    Click    ${element}
-    And Enter leave date in "Ngày bắt đầu" with "${start_date}"
-    And Enter leave date in "Ngày kết thúc" with "${end_date}"
-    Press Keys    xpath=//input[@placeholder="Ngày kết thúc"]    Enter
-    And Click "Tìm kiếm" button
-    Wait Until Element Spin
-    Wait Until Element Spin
-
-##====================MANAGER LEAVE MANAGEMENT======================================
-User look button "${button}"
-    ${element}    Set Variable    xpath=//button[@title = "${button}"]
-    ${text}       Get Text        ${element}
-    Element Text Should Be    ${element}    ${text}    
-
-##=========================CREATE CODE===============================================
-User look title form "${text}"
-    ${element}    Set Variable    //h1[@class="text-xl font-bold hidden sm:block" and //h1[text() = "${text}"]]
-    Wait Until Element Is Visible    ${element}
-    Element Text Should Be    ${element}    ${text}
-
-User look all field empty when ${name} code
-    And User look "Tên mã" field empty
-    And User look "Mã" field empty
-    And User look textarea "Mô tả" field empty
-
-##=========================CREATE DATA===============================================
-Select language with "${name}"
-    ${element}    Set Variable    //div[text()='${name}']   
-    Click    ${element}
-
-Enter information when ${name} data partner
-    And Enter "text" in "Name" with "_RANDOM_"
-    And Enter "order number" in "Order" with "_RANDOM_"
-    And Select file in "Ảnh" with "sieunhando.jpg"
-
-Enter information when ${type} data with ${name}
-    And Enter "order number" in "Order" with "_RANDOM_"
-    And Select file in "Ảnh" with "sieunhando.jpg"
-    And Enter "text" in "Name" with "_RANDOM_"
-    IF  '${name}' == 'Member'
-      Enter "text" in "Position" with "_RANDOM_"
-    END
-    And Enter "text" in textarea "Description" with "_RANDOM_"
-    IF  '${name}' == 'Member'
-      Enter "text" in editor "Content" with "_RANDOM_"
-    END
-
-User look all field empty when ${name} data ${type}
-  User look "Name" field empty
-  User look "Order" field empty   
-  IF  '${type}' == 'Member'
-    User look "Position" field empty
-    User look textarea "Description" field empty
-    User look editor "Content" field empty
-  ELSE IF  '${type}' == 'Value'
-    User look textarea "Description" field empty
-  ELSE IF  '${type}' == 'Services'
-    User look textarea "Description" field empty
-  ELSE IF  '${type}' == 'Mission'
-    User look textarea "Description" field empty
-  END
-
-###========================CREATE POST====================================================
-Click on the "${text}" button in "${name}" at Post Type
-  Wait Until Element Spin
-  ${element}=               Get Elements           //button[@title = "${text}"]
-  IF  '${name}' == 'Projects'
-      Click                     ${element}[0]
-  ELSE IF  '${name}' == 'News'
-      Click                     ${element}[1]
-  END
-  Click Confirm To Action
-
-Press "${enter}" Key
-    ${element}=               Get Element Form Item By Name     Name                       //input[contains(@class, "ant-input")]
-    Press Keys                ${element}                        ${enter}
-
-Enter information when ${name} post
-    And Enter date in "Created At" with "01-10-2023"
-    And Select file in "Thumbnail Url" with "sieunhando.jpg"
-    And Enter "text" in "Name" with "_RANDOM_"
-    And Enter "text" in "Slug" with "_RANDOM_"
-    And Enter "text" in textarea "Description" with "_RANDOM_"
-    And Enter "text" in editor "Content" with "_RANDOM_"
-
-User look date in "${name}" field empty
-  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-picker-input")]/input
-  Element Text Should Be    ${element}    ${EMPTY}
-
-User look editor "${name}" field empty
-  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ce-paragraph")]
-  Element Text Should Be    ${element}    ${EMPTY}
-
-User look all field empty when ${name} post
-  User look date in "Created At" field empty
-  User look "Name" field empty
-  User look "Slug" field empty
-  User look textarea "Description" field empty
-  User look editor "Content" field empty
-
-User look all field empty when ${name} team
-  User look "Tên Nhóm" field empty
-  User look textarea "Mô tả" field empty
-  User look select "Quản lý" field empty
-
-User look all field empty when ${name} user
-  User look "Họ và tên" field empty
-  User look "Email" field empty
-  User look "Mật khẩu" field empty
-  User look "Nhập lại mật khẩu" field empty
-  User look "Số điện thoại" field empty
-  User look date in "Ngày sinh" field empty
-  User look select "Vị trí" field empty
-  User look date in "Ngày đầu đi làm" field empty

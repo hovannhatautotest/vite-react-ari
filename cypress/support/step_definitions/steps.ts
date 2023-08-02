@@ -25,16 +25,9 @@ Given('User go to login page', () => {
   //     cy.writeFile('cypress/fixtures/example.json', data);
   //   }
   // });
-  cy.visit('/vn/auth/login').wait(3000);
+  cy.visit('/vn/auth/login');
 });
 When('Click "{}" button', common.clickTextButton);
-When('Login to admin', () => {
-  cy.visit('/vn/auth/login').wait(3000);
-  common.typeInputByName('email', 'Tên đăng nhập', 'admin@admin.com');
-  common.typeInputByName('text', 'Mật khẩu', 'Password1!');
-  common.clickTextButton('Đăng nhập');
-  common.verifyMessageSwal2('Thành công');
-});
 When('Click "{}" menu', common.clickTextMenu);
 When('Click "{}" sub menu to "{}"', common.clickTextSubMenu);
 When('Click "{}" tab button', common.clickTextTabBtn);
@@ -54,18 +47,6 @@ When('Click switch "{}" to be activated', common.clickSwitchByName);
 When('Click radio "{}" in line "{}"', common.clickRadioByName);
 When('Click select "{}" with "{}"', common.clickSelectByName);
 Then('Required message "{}" displayed under "{}" field', common.verifyErrorByName);
-//---------------------------------------------------------------------------------------
-Then('User look dashboard "{}"', common.validDashboard);
-Then('User look menu "{}" option', common.validTextMenu);
-Then('User look title "{}"', common.validtextTitle);
-Then('Click "{}" link', common.ClickForgotPassword);
-Then('Click Eye icon with "{}" and eq "{}"', common.ClickEyeIcon);
-Then('User look title "{}" with form Forgot Password', common.validTitleForgotPassword);
-Then('User look password as text in "{}"', common.DisplayPassword);
-Then('Reload page', common.ReloadPage);
-Then('User look empty in "{}"', common.emptyInputByName);
-When('Clear "{}"', common.ClickClearInputByName);
-//---------------------------------------------------------------------------------------
 
 When('Click assign list "{}"', common.clickCheckboxWrapper);
 When('Click tree select "{}" with "{}"', common.clickTreeSelectByName);

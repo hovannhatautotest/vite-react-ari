@@ -2,7 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
 import { Spin } from 'antd';
-import { keyUser, routerLinks, language, languages } from '@utils';
+import { keyUser, language, languages, routerLinks } from '@utils';
 import { useTranslation } from 'react-i18next';
 import { GlobalFacade } from '@store';
 
@@ -12,14 +12,28 @@ const pages = [
     isPublic: true,
     child: [
       {
+        path: '/',
+        component: routerLinks('Dashboard'),
+      },
+      {
         path: routerLinks('Login'),
         component: React.lazy(() => import('@pages/login')),
         title: 'Login',
       },
       {
-        path: routerLinks('ResetPassword'),
-        component: React.lazy(() => import('@pages/reset-password')),
-        title: 'Reset Password',
+        path: routerLinks('ForgetPassword'),
+        component: React.lazy(() => import('@pages/forget-password')),
+        title: 'Quên Mật Khẩu',
+      },
+      {
+        path: routerLinks('VerifyForotPassword'),
+        component: React.lazy(() => import('@pages/forget-password/otp')),
+        title: 'Quên Mật Khẩu',
+      },
+      {
+        path: routerLinks('SetPassword'),
+        component: React.lazy(() => import('@pages/forget-password/otp/set-password')),
+        title: 'Đặt Lại Mật Khẩu',
       },
     ],
   },
@@ -29,7 +43,7 @@ const pages = [
     child: [
       {
         path: '/',
-        component: routerLinks('DayOff/List'),
+        component: routerLinks('Dashboard'),
       },
       {
         path: routerLinks('MyProfile'),
@@ -37,43 +51,13 @@ const pages = [
         title: 'MyProfile',
       },
       {
-        path: routerLinks('Code'),
-        component: React.lazy(() => import('@pages/code')),
-        title: 'Code',
-      },
-      {
-        path: routerLinks('Code/Add'),
-        component: React.lazy(() => import('@pages/code/add')),
-        title: 'Code/Add',
-      },
-      {
-        path: routerLinks('Code') + '/:id/edit',
-        component: React.lazy(() => import('@pages/code/add')),
-        title: 'Code/Edit',
-      },
-      {
-        path: routerLinks('Data'),
-        component: React.lazy(() => import('@pages/data')),
-        title: 'Data',
-      },
-      {
-        path: routerLinks('Data/Add'),
-        component: React.lazy(() => import('@pages/data/add')),
-        title: 'Data/Add',
-      },
-      {
-        path: routerLinks('Data') + '/:id/edit',
-        component: React.lazy(() => import('@pages/data/add')),
-        title: 'Data/Edit',
-      },
-      {
-        path: routerLinks('Page'),
-        component: React.lazy(() => import('@pages/page')),
-        title: 'Page',
+        path: routerLinks('Dashboard'),
+        component: React.lazy(() => import('@pages/dashboard')),
+        title: 'Dashboard',
       },
       {
         path: routerLinks('User/List'),
-        component: React.lazy(() => import('@pages/user')),
+        component: React.lazy(() => import('@pages/user/index')),
         title: 'User/List',
       },
       {
@@ -82,44 +66,84 @@ const pages = [
         title: 'User/Add',
       },
       {
-        path: routerLinks('User') + '/:id/edit',
-        component: React.lazy(() => import('@pages/user/add')),
+        path: routerLinks('User/Edit') + '/:id',
+        component: React.lazy(() => import('@pages/user/edit')),
         title: 'User/Edit',
       },
       {
-        path: routerLinks('Team'),
-        component: React.lazy(() => import('@pages/team')),
-        title: 'Team',
+        path: routerLinks('Store'),
+        component: React.lazy(() => import('@pages/store')),
+        title: 'Store',
       },
       {
-        path: routerLinks('Team/Add'),
-        component: React.lazy(() => import('@pages/team/add')),
-        title: 'Team/Add',
+        path: routerLinks('store-managerment/create'),
+        component: React.lazy(() => import('@pages/store/add')),
+        title: 'store-managerment/create',
       },
       {
-        path: routerLinks('Team') + '/:id',
-        component: React.lazy(() => import('@pages/team/add')),
-        title: 'Team/Edit',
+        path: routerLinks('store-managerment/edit') + '/:id',
+        component: React.lazy(() => import('@pages/store/edit')),
+        title: 'store-managerment/edit',
       },
       {
-        path: routerLinks('DayOff') + '/:id',
-        component: React.lazy(() => import('@pages/dayoff/add')),
-        title: 'DayOff/Edit',
+        path: routerLinks('store-managerment/branch-management/create') + '/:id',
+        component: React.lazy(() => import('@pages/store/branch//add')),
+        title: 'store-managerment/branch-management/create',
       },
       {
-        path: routerLinks('DayOff/List'),
-        component: React.lazy(() => import('@pages/dayoff')),
-        title: 'DayOff/List',
+        path: routerLinks('store-managerment/branch-management/edit') + '/:id',
+        component: React.lazy(() => import('@pages/store/branch/edit')),
+        title: 'store-managerment/branch-management/edit',
       },
       {
-        path: routerLinks('DayOff/Add'),
-        component: React.lazy(() => import('@pages/dayoff/add')),
-        title: 'DayOff/Add',
+        path: routerLinks('Supplier'),
+        component: React.lazy(() => import('@pages/supplier')),
+        title: 'Supplier',
       },
       {
-        path: routerLinks('DayOff/Detail') + '/:id',
-        component: React.lazy(() => import('@pages/dayoff/detail')),
-        title: 'DayOff/Detail',
+        path: routerLinks('Supplier/Add'),
+        component: React.lazy(() => import('@pages/supplier/add')),
+        title: 'Supplier/Add',
+      },
+      {
+        path: routerLinks('Supplier/Edit') + '/:id',
+        component: React.lazy(() => import('@pages/supplier/edit')),
+        title: 'Supplier/Edit',
+      },
+      {
+        path: routerLinks('Contract-View') + '/:id',
+        component: React.lazy(() => import('@pages/supplier/supllier-contract/supplierContract')),
+        title: 'Contract-View',
+      },
+      {
+        path: routerLinks('Discount-Detail') + '/:id',
+        component: React.lazy(() => import('@pages/supplier/discountDetail/discountDetail')),
+        title: 'Discount-Detail',
+      },
+      {
+        path: routerLinks('Merchandise-Managerment/Product/Detail') + '/:id',
+        component: React.lazy(() => import('@pages/supplier/productDetail/index')),
+        title: 'Merchandise-Managerment/Product/Detail',
+      },
+      {
+        path: routerLinks('MerchandiseManagermentCategory'),
+        component: React.lazy(() => import('@pages/merchandise-managerment/category/index')),
+        title: 'MerchandiseManagermentCategory',
+      },
+      {
+        path: routerLinks('Tax'),
+        component: React.lazy(() => import('@pages/merchandise-managerment/tax/index')),
+        title: 'Merchandise-Managerment/Tax',
+      },
+      {
+        path: routerLinks('revenue-management/store'),
+        component: React.lazy(() => import('@pages/revenue-management/store/index')),
+        title: 'Store-Revenue',
+      },
+      {
+        path: routerLinks('revenue-management/supplier'),
+        component: React.lazy(() => import('@pages/revenue-management/supplier/index')),
+        title: 'Supplier-Revenue',
       },
     ], // 💬 generate link to here
   },
@@ -155,7 +179,7 @@ const Page = ({
 
   useEffect(() => {
     document.title = t('pages.' + title || '');
-    globalFacade.set({ title });
+    globalFacade.set({ title, formatDate: globalFacade.formatDate });
   }, [title]);
   return <Comp />;
 };

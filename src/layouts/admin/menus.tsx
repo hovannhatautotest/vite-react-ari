@@ -2,56 +2,43 @@ import React from 'react';
 
 import { keyRole } from '@utils';
 import './index.less';
-import { Cog, User, Coffee } from '@svgs';
+import { Cart, Buffer, Store, User, Shopping, Revenue } from '@svgs';
 
-const Layout = [
+const Layout = () => [
   {
-    icon: <User className="h-8 w-8" />,
-    name: 'User',
+    icon: <Buffer className="icon-menu" />,
+    name: 'Dashboard',
+  },
+  {
+    icon: <Shopping className="icon-menu" />,
+    name: 'Merchandise-managerment',
     child: [
       {
-        name: 'User/List',
-        permission: keyRole.P_USER_LISTED,
-      },
-      {
-        name: 'User/Add',
-        permission: keyRole.P_DATA_LISTED,
+        name: 'Tax',
       },
     ],
   },
   {
-    icon: <Coffee className="h-8 w-8" />,
-    name: 'DayOff',
-    child: [
-      {
-        name: 'DayOff/List',
-        permission: keyRole.P_DAYOFF_LISTED,
-      },
-      {
-        name: 'DayOff/Add',
-        permission: keyRole.P_DAYOFF_CREATE,
-      },
-    ],
+    icon: <User className="icon-menu" />,
+    name: 'User/List',
   },
   {
-    icon: <Cog className="h-8 w-8" />,
-    name: 'Setting',
+    icon: <Cart className="icon-menu " />,
+    name: 'Supplier',
+  },
+  {
+    icon: <Store className="icon-menu" />,
+    name: 'Store',
+  },
+  {
+    icon: <Revenue className="icon-menu" />,
+    name: 'revenue-management',
     child: [
       {
-        name: 'Code',
-        permission: keyRole.P_CODE_LISTED,
+        name: 'revenue-management/store',
       },
       {
-        name: 'Data',
-        permission: keyRole.P_DATA_LISTED,
-      },
-      {
-        name: 'Page',
-        permission: keyRole.P_PAGE_LISTED,
-      },
-      {
-        name: 'Team',
-        permission: keyRole.P_USER_TEAM_LISTED,
+        name: 'revenue-management/supplier',
       },
     ],
   },

@@ -209,7 +209,7 @@ export const Avatar = ({
       {!text || (src && src.indexOf('/defaultAvatar.png') === -1) ? (
         <div className={classNames({ '-ml-2': index > 0 })}>
           <img
-            className={classNames('rounded-xl object-center', 'h-' + size, 'w-' + size, {
+            className={classNames('rounded-full object-center', 'h-' + size, 'w-' + size, {
               'object-contain': !showName,
               'object-cover': showName,
             })}
@@ -280,7 +280,7 @@ export const Avatar = ({
   }
 };
 type Type = {
-  src?: string;
+  src: string ;
   text?: string | { [selector: string]: string }[];
   onClick?: MouseEventHandler<HTMLDivElement>;
   size?: number;

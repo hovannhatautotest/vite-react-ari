@@ -22,8 +22,8 @@ export default defineConfig({
       return config;
     },
     baseUrl: 'http://localhost:5173/',
-    viewportHeight: 720,
-    viewportWidth: 1280,
+    viewportHeight: 1024,
+    viewportWidth: 1440,
     defaultCommandTimeout: 30000,
     specPattern: 'cypress/e2e/**/*.feature',
   },

@@ -1,5 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Form as AntForm, Checkbox, Radio, Switch, Slider, DatePicker as DateAntDesign, FormInstance } from 'antd';
+import {
+  Form as AntForm,
+  Checkbox,
+  Radio,
+  Switch,
+  Slider,
+  DatePicker as DateAntDesign,
+  FormInstance,
+  ConfigProvider,
+} from 'antd';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
@@ -13,6 +22,8 @@ import { Upload } from '../upload';
 import { Button } from '../button';
 import { Editor } from '../editor';
 import { DraggableLayout } from '../draggable/layout';
+import 'dayjs/locale/vi';
+import locale from 'antd/locale/vi_VN';
 
 export const Form = ({
   className,
@@ -170,8 +181,15 @@ export const Form = ({
                 ? (formatDate || '') + (formItem.showTime ? ' HH:mm' : '')
                 : formatDate || ''
             }
-            onChange={(date: any) => formItem.onChange && formItem.onChange(date, form, reRender)}
-            disabledDate={(current: any) => (formItem.disabledDate ? formItem.disabledDate(current, form) : false)}
+            onChange={(date: any) => {
+              formItem.onChange && formItem.onChange(date, form, reRender);
+            }}
+            // disabledDate={(current: any) => (formItem.disabledDate ? formItem.disabledDate(current, form) : false)}
+            disabledDate={(current) => {
+              const now = dayjs();
+              const currentDate = dayjs(current);
+              return now.isBefore(currentDate, 'date');
+            }}
             showTime={!!formItem.showTime}
             picker={formItem.picker || 'date'}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -179,6 +197,34 @@ export const Form = ({
             name={item.name}
             placeholder={t(formItem.placeholder || '') || t('components.form.Select Date') || ''}
           />
+        );
+      case 'month_year':
+        return (
+          // <ConfigProvider locale={locale}>
+          <DatePicker
+            tabIndex={formItem.tabIndex || index}
+            format={
+              !formItem.picker || formItem.picker === 'month'
+                ? ('MM/YYYY' || '') + (formItem.showTime ? ' HH:mm' : '')
+                : 'MM/YYYY' || ''
+            }
+            onChange={(date: any) => {
+              formItem.onChange && formItem.onChange(date, form, reRender);
+            }}
+            // disabledDate={(current: any) => (formItem.disabledDate ? formItem.disabledDate(current, form) : false)}
+            disabledDate={(current) => {
+              const now = dayjs();
+              const currentMonth = dayjs(current);
+              return now.isBefore(currentMonth, 'month');
+            }}
+            showTime={!!formItem.showTime}
+            picker={formItem.picker || 'month'}
+            disabled={!!formItem.disabled && formItem.disabled(values, form)}
+            form={form}
+            // name={item.name}
+            placeholder={t(formItem.placeholder || '') || t('placeholder.Choose a time') || ''}
+          />
+          // </ConfigProvider>
         );
       case 'date_range':
         return (
@@ -288,6 +334,22 @@ export const Form = ({
             defaultChecked={!!values && values[item.name || ''] === 1}
           />
         );
+      case 'number':
+        return (
+          <input
+            type="number"
+            tabIndex={formItem.tabIndex || index}
+            disabled={!!formItem.disabled && formItem.disabled(values, form)}
+            className={classNames('w-full h-10 text-gray-600 bg-white px-4 ant-input border rounded-xl', {
+              'bg-gray-100 text-gray-400': !!formItem.disabled && formItem.disabled(values, form),
+            })}
+            placeholder={
+              t(formItem.placeholder || '') || t('components.form.Enter') + ' ' + t(item.title)!.toLowerCase()
+            }
+            onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+            onChange={(e) => formItem.onChange && formItem.onChange(e.target.value, form, reRender)}
+          />
+        );
       default:
         // @ts-ignore
         return (
@@ -328,6 +390,7 @@ export const Form = ({
                   case 'number':
                   case 'hidden':
                   case 'password':
+                  case 'name':
                   case 'textarea':
                     rules.push({
                       required: true,
@@ -466,6 +529,20 @@ export const Form = ({
                   },
                 }));
                 break;
+              case 'textarea':
+                rules.push(() => ({
+                  validator(_: any, value: any) {
+                    if (value?.trim().length > 500) {
+                      return Promise.reject(
+                        t(rule.message || 'components.form.ruleTextarea', {
+                          max: 500,
+                        }),
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                }));
+                break;
               case 'custom':
                 rules.push(rule.validator);
                 break;
@@ -584,8 +661,8 @@ export const Form = ({
         }
       }}
     >
-      <div className={'group-input'}>
-        <div className={'grid gap-x-5 grid-cols-12'}>
+      <div className={'group-input group-input-profile p-5 bg-white '}>
+        <div className={'grid gap-x-5 grid-cols-12 group-input'}>
           {_columns.map(
             (column: any, index: number) =>
               (!column?.formItem?.condition ||
@@ -593,7 +670,7 @@ export const Form = ({
                 <div
                   className={classNames(
                     column?.formItem?.classItem,
-                    'col-span-12' +
+                    'col-span-12 col-store' +
                       (' sm:col-span-' +
                         (column?.formItem?.colTablet
                           ? column?.formItem?.colTablet
@@ -613,27 +690,37 @@ export const Form = ({
         {extendForm && extendForm(values)}
       </div>
 
-      <div className={classNames('flex sticky bottom-0 bg-white w-full justify-end')}>
-        <div className={'flex gap-2'}>
-          {handCancel && (
-            <Button
-              text={t(textCancel)}
-              className={'md:min-w-[12rem] w-full justify-center out-line'}
-              onClick={handCancel}
-            />
-          )}
-          {extendButton && extendButton(form)}
-          {handSubmit && (
-            <Button
-              text={t(textSubmit)}
-              id={idSubmit}
-              onClick={() => form && form.submit()}
-              disabled={disableSubmit}
-              className={'md:min-w-[12rem] w-full justify-center'}
-              type={'submit'}
-            />
-          )}
-        </div>
+      <div
+        className={classNames('gap-2 flex sm:block', {
+          'justify-center': !extendButton && !handCancel,
+          '!mt-5 items-center w-full flex-col-reverse sm:flex-row sm:inline-flex justify-between':
+            handCancel && handSubmit,
+          //'md:inline-flex w-full justify-between md:float-right': handCancel,
+          'md:inline-flex w-full justify-between relative': handSubmit,
+          'sm:w-auto sm:inline-flex !justify-end text-center items-center sm:flex-row flex-col mt-5':
+            handSubmit && extendButton,
+          '!w-full sm:inline-flex text-center justify-between items-center sm:flex-row flex-col-reverse mt-5':
+            handCancel || extendButton,
+        })}
+      >
+        {handCancel && (
+          <Button
+            text={t(textCancel)}
+            className={'sm:min-w-[8rem] justify-center out-line !border-black w-3/5 sm:w-auto'}
+            onClick={handCancel}
+          />
+        )}
+        {extendButton && extendButton(form)}
+        {handSubmit && (
+          <Button
+            text={t(textSubmit)}
+            id={idSubmit}
+            onClick={() => form && form.submit()}
+            disabled={disableSubmit}
+            className={'min-w-[8rem] justify-center w-3/5 sm:w-auto '}
+            type={'submit'}
+          />
+        )}
       </div>
     </AntForm>
   );
