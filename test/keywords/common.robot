@@ -846,17 +846,12 @@ User look leave date empty with "${field}"        #CREATE STAFF LEAVE MANAGEMENT
     Wait Until Element Is Visible            ${element}
     Element Text Should Be                   ${element}            ${EMPTY}
 
-User look empty textarea with "${name}"
-    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
-    Wait Until Element Is Visible        ${element}
-    Element Text Should Be    ${element}    ${EMPTY}
-
 User look all field should be empty        #STAFF_LEAVE MANAGER
     And User look "Chọn loại phép" field should be empty
     And User look "Chọn thời gian" field should be empty
     And User look leave date empty with "Ngày bắt đầu"
     And User look leave date empty with "Ngày kết thúc"
-    And User look empty textarea with "Lý do"
+    And User look textarea "Lý do" field empty
 
 # Hiển thị danh sách ngày nghỉ đã tạo
 Show list of "${name}" leave date
