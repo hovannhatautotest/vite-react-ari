@@ -157,8 +157,8 @@ PRO-20 Verify that Admin can update successfully when change Date Of Birth
 PRO-21 Verify that Admin can update successfully when change password
     [Tags]    @smoketest    @regression
     Go to profile page with Admin
-    When Enter "text" in "Mật khẩu" with "Nhat@01101999"
-    And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
+    When Enter "text" in "Mật khẩu" with "Password1!"
+    And Enter "text" in "Nhập lại mật khẩu" with "Password1!"
     And Click "Lưu lại" button
     Then User look message "Thành công" popup
 
@@ -178,3 +178,76 @@ PRO-23 Verify that Admin can log out successfully
     When Hover to avatar
     And Click "Đăng xuất" to logout
     Then User look title "Đăng nhập"
+
+*** Keywords ***
+
+Login to Manager
+  Enter "email" in "Tên đăng nhập" with "manager@gmail.com"
+  Enter "text" in "Mật khẩu" with "Tester@123"
+  Click "Đăng nhập" button
+  User look message "Thành công" popup
+
+Login to Staff
+  Enter "email" in "Tên đăng nhập" with "staff@gmail.com"
+  Enter "text" in "Mật khẩu" with "Tester@123"
+  Click "Đăng nhập" button
+  User look message "Thành công" popup
+
+Go to profile page with ${account}
+  IF  '${account}' == 'Admin'
+    Login to Admin
+  ELSE IF  '${account}' == 'Manager'
+    Login to Manager
+  ELSE IF  '${account}' == 'Staff'
+    Login to Staff
+  END
+  Hover to avatar
+  Click "Thông tin cá nhân" to profile
+  Sleep    2
+
+Required message "${name}" field displayed under "${text}"
+  ${element}=               Get Element Form Item By Name     ${name}                //*[contains(@class, "ant-picker-input")]/input
+  Wait Until Element Is Visible        //div[contains(text(),'${text}')]
+  Element Text Should Be    //div[contains(text(),'${text}')]                        ${text}
+
+# Xóa thông tin hiện tại của trường: Ngày sinh hoặc Ngày đầu đi làm
+Delete information "${name}"
+    IF  '${name}' == 'Ngày sinh'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' != 'Ngày sinh'
+        ${num}=    Evaluate    1
+    END
+    And Enter date in "${name}" with ""
+    ${elements}=               Get Elements        //span[@class='ant-picker-clear']
+    Click    ${elements}[${num}]
+    And Enter date in "${name}" with ""     
+
+# Xóa thông tin hiện tại của trường: Vị trí hoặc Vai trò
+Delele select "${name}" field
+    IF  '${name}' == 'Vị trí'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' == 'Thời gian'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' == 'Vai trò'
+        ${num}=    Evaluate    1
+    END
+    ${elements}=               Get Elements        //span[@class='ant-select-clear'] 
+    Click    ${elements}[${num}]
+
+Click "Eye" icon to show "Mật khẩu" field and "Nhập lại mật khẩu" field
+    ${element}=    Get Elements    xpath=//*[contains(@class, 'absolute') and @id='Layer_1']
+    Click    ${element}[0]
+    Click    ${element}[1]
+
+User look "${name}" field with type "${type}"
+    ${element}=        Get Element Form Item By Name        ${name}        //input[contains(@class, "ant-input")]
+    ${password_field_type}        Get Attribute        ${element}        type
+    Should Be Equal As Strings        ${password_field_type}            ${type}
+
+Hover to avatar
+    Mouse Move Relative To        xpath=//header/div[1]/div[2]/section[1]/div[1]        0
+
+Click "${profile}" to ${name}
+    ${element}=        Set Variable        //div[text() = '${profile}']
+    Wait Until Element Is Visible          ${element}
+    Click    ${element}

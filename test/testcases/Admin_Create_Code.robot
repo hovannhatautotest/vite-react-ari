@@ -276,3 +276,93 @@ EDC-13 Verify that the code can be successfully edited when changing "Mô tả" 
     Then User look message "Cập nhật thành công" popup
     And User look title "Thêm mới mã Position"
     And User look all field empty when edit code
+
+*** Keywords ***
+Select ${name} need to edit
+  ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+  ${elementCount}        Get Length            ${elements}
+  Click    ${elements}[0]
+  Wait Until Element Spin 
+
+Go to ${name} code page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Mã" sub menu
+    IF  '${name}' == 'create'
+      Click "Thêm mới" button
+    ELSE IF  '${name}' == 'edit'
+      Select Code need to edit
+      Sleep    2
+    END   
+    Wait Until Element Spin
+    Sleep    ${SHOULD_TIMEOUT}
+
+Go to page edit code    # Đến trang edit code khi code đó đang có user sử dụng
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Mã" sub menu
+    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+    Click    ${elements}[1]  
+    Sleep    2
+
+User look "${name}" field empty
+    ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look textarea "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look all field empty when ${name} code
+    And User look "Tên mã" field empty
+    And User look "Mã" field empty
+    And User look textarea "Mô tả" field empty
+
+Show list of "${name}"
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
+    ${count}=    Set Variable    2
+    ${stt}=    Set Variable    1
+    Log To Console    =======================List Of ${name}=================================================
+    FOR    ${item}    IN    @{elements}
+        ${code}=             Get Text        //tbody[1]/tr[${count}]/td[1]
+        ${name_code}=        Get Text        //tbody[1]/tr[${count}]/td[2]
+        ${Description}=      Get Text        //tbody[1]/tr[${count}]/td[3]  
+        Log To Console        ${stt}. Mã: ${code} || Tên mã: ${name_code} || Mô tả: ${Description}
+        Log To Console        ===================================================================================
+        ${count}=    Evaluate    ${count} + 1
+        ${stt}=    Evaluate    ${stt} + 1
+    END
+    ${total}=    Evaluate    ${count} - 2
+    Log To Console    Tổng số lượng ${name} là: ${total}
+
+Search "${type}" in "${name}" with "${text}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${text}=                  Get Random Text                   ${type}                       ${text}
+    ${element}=               Set Variable        //input[@placeholder="${name}"]
+    Clear Text                ${element}
+    Fill Text                 ${element}                        ${text}                       True
+    ${cnt}=                   Get Length                        ${text}
+    IF  ${cnt} > 0
+        Set Global Variable     ${STATE["${name}"]}               ${text}
+    END
+    Sleep    2
+
+No ${name} are shown
+    Wait Until Element Spin
+    ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
+    Wait Until Element Is Visible    ${element}
+    ${text}=    Get Text    ${element}
+    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm kiếm
+
+User look title form "${text}"
+    ${element}    Set Variable    //h1[@class="text-xl font-bold hidden sm:block" and //h1[text() = "${text}"]]
+    Wait Until Element Is Visible    ${element}
+    Element Text Should Be    ${element}    ${text}
+
+Click "${icon}" to "${next}" page
+    ${element}=    Set Variable    //button[@aria-label="${next}"]
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Wait Until Element Spin

@@ -285,3 +285,87 @@ EDT-12 Verify that user can edit team successfully when change manager has no te
     Then User look message "Cập nhật thành công" popup
     And User look title "Thêm mới nhóm"
     And User look all field empty when edit team
+
+*** Keywords ***
+
+Select ${name} need to edit
+  ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+  ${elementCount}        Get Length            ${elements}
+  Click    ${elements}[0]
+  Wait Until Element Spin
+
+Delele select at "Quản lý" field
+    ${elements}=               Get Element        //span[@class='ant-select-clear'] 
+    Click    ${elements}
+
+Go to page ${name} team
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Nhóm" sub menu
+    IF  '${name}' == 'create'
+      Click "Tạo mới" button
+    ELSE IF  '${name}' == 'edit'
+      Select team need to edit
+    END
+    Wait Until Element Spin
+    Sleep    ${SHOULD_TIMEOUT}
+
+User look "${name}" field empty
+    ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look textarea "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look select "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look all field empty when ${name} team
+  User look "Tên Nhóm" field empty
+  User look textarea "Mô tả" field empty
+  User look select "Quản lý" field empty
+
+Show list of "${name}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
+    ${count}=    Set Variable    2
+    ${stt}=    Set Variable    1
+    Log To Console    =======================List Of ${name}=================================================
+    FOR    ${item}    IN    @{elements}
+        ${team_name}=        Get Text        //tbody[1]/tr[${count}]/td[1]
+        ${manager}=          Get Text        //tbody/tr[${count}]/td[2]/div[1]/span[1]
+        Log To Console        ${stt}. ${team_name} || ${manager}
+        Log To Console        =======================================================
+        ${count}=    Evaluate    ${count} + 1
+        ${stt}=    Evaluate      ${stt} + 1
+    END
+    ${total}=    Evaluate    ${count} - 2
+    Log To Console    Tổng số lượng ${name} là: ${total}
+
+Search "${type}" in "${name}" with "${text}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${text}=                  Get Random Text                   ${type}                       ${text}
+    ${element}=               Set Variable        //input[@placeholder="${name}"]
+    Clear Text                ${element}
+    Fill Text                 ${element}                        ${text}                       True
+    ${cnt}=                   Get Length                        ${text}
+    IF  ${cnt} > 0
+        Set Global Variable     ${STATE["${name}"]}               ${text}
+    END
+    Sleep    2
+
+No ${name} are shown
+    Wait Until Element Spin
+    ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
+    Wait Until Element Is Visible    ${element}
+    ${text}=    Get Text    ${element}
+    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm kiếm
+
+User look title form "${text}"
+    ${element}    Set Variable    //h1[@class="text-xl font-bold hidden sm:block" and //h1[text() = "${text}"]]
+    Wait Until Element Is Visible    ${element}
+    Element Text Should Be    ${element}    ${text}

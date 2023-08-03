@@ -165,18 +165,18 @@ CRP-11 Verify that create new Post with News is successful & "Lưu và tạo m�
     And Click on the "Xóa" button in the "Tên Post" table line
 
 # # # ========================================Verify refresh page========================================
-# # # CRP-12 Verify entered data not showing when Refresh with F5 key
-# # #     [Tags]    @smoketest    @regression
-# # #     When Go to create post Projects page
-# # #     And Enter information when create post
-# # #     And Reload Page
-# # #     Then User look "Created At" field empty
-# # #     And User look "Name" field empty
-# # #     And User look "Slug" field empty
-# # #     And User look "Description" field empty
-# # #     And User look "Content" field empty
+# # CRP-12 Verify entered data not showing when Refresh with F5 key
+# #     [Tags]    @smoketest    @regression
+# #     When Go to create post Projects page
+# #     And Enter information when create post
+# #     And Reload Page
+# #     Then User look "Created At" field empty
+# #     And User look "Name" field empty
+# #     And User look "Slug" field empty
+# #     And User look "Description" field empty
+# #     And User look "Content" field empty
 
-# # # ========================================View list of Post========================================
+# # ========================================View list of Post========================================
 CRP-13 Verify that the list of Post with Projects can be viewed successfully
     [Tags]    @smoketest    @regression
     When Go to list post Projects page
@@ -301,3 +301,140 @@ EDP-10 Verify that Edit Post with News is successful & "Lưu và tạo mới" bu
     Then User look message "Cập nhật thành công" popup
     And User look title "Tạo mới post News"
     And User look all field empty when edit post
+
+*** Keywords ***
+###========================CREATE POST====================================================
+Click list ${name} with "${text}"
+    ${element}=    Set Variable    xpath=//div[contains(@class, 'truncate') and text()='${text}']
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Wait Until Element Spin
+    Wait Until Element Spin
+
+Click on the "${text}" button in "${name}" at Post Type
+  Wait Until Element Spin
+  ${element}=               Get Elements           //button[@title = "${text}"]
+  IF  '${name}' == 'Projects'
+      Click                     ${element}[0]
+  ELSE IF  '${name}' == 'News'
+      Click                     ${element}[1]
+  END
+  Click Confirm To Action
+
+Press "${enter}" Key
+    ${element}=               Get Element Form Item By Name     Name                       //input[contains(@class, "ant-input")]
+    Press Keys                ${element}                        ${enter}
+
+Enter information when ${name} post
+    And Enter date in "Created At" with "01-10-2023"
+    And Select file in "Thumbnail Url" with "image.jpg"
+    And Enter "name" in "Name" with "_RANDOM_"
+    And Enter "test name" in "Slug" with "_RANDOM_"
+    And Enter "text" in textarea "Description" with "_RANDOM_"
+    And Enter "word" in editor "Content" with "_RANDOM_"
+
+User look "${name}" field empty
+    ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look textarea "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look date in "${name}" field empty
+  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-picker-input")]/input
+  Element Text Should Be    ${element}    ${EMPTY}
+
+User look editor "${name}" field empty
+  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ce-paragraph")]
+  Element Text Should Be    ${element}    ${EMPTY}
+
+User look all field empty when ${name} post
+  User look date in "Created At" field empty
+  User look "Name" field empty
+  User look "Slug" field empty
+  User look textarea "Description" field empty
+  User look editor "Content" field empty
+
+Select language with "${name}"
+    ${element}    Set Variable    //div[text()='${name}']   
+    Click    ${element}
+
+Search "${type}" in "${name}" with "${text}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${text}=                  Get Random Text                   ${type}                       ${text}
+    ${element}=               Set Variable        //input[@placeholder="${name}"]
+    Clear Text                ${element}
+    Fill Text                 ${element}                        ${text}                       True
+    ${cnt}=                   Get Length                        ${text}
+    IF  ${cnt} > 0
+        Set Global Variable     ${STATE["${name}"]}               ${text}
+    END
+    Sleep    2
+No ${name} are shown
+    Wait Until Element Spin
+    ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
+    Wait Until Element Is Visible    ${element}
+    ${text}=    Get Text    ${element}
+    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm kiếm
+User look title form "${text}"
+    ${element}    Set Variable    //h1[@class="text-xl font-bold hidden sm:block" and //h1[text() = "${text}"]]
+    Wait Until Element Is Visible    ${element}
+    Element Text Should Be    ${element}    ${text}
+
+Show list of "${name}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
+    ${count}=    Set Variable    2
+    ${stt}=    Set Variable    1
+    Log To Console    =======================List Of ${name}=================================================
+    FOR    ${item}    IN    @{elements}
+        ${name_post}=       Get Text        //tbody[1]/tr[${count}]/td[1]
+        ${slug}=            Get Text        //tbody[1]/tr[${count}]/td[2]
+        Log To Console        ${stt}. Tên Post: ${name_post} || Slug: ${slug}
+        Log To Console        ===================================================================================
+        ${count}=    Evaluate    ${count} + 1
+        ${stt}=    Evaluate    ${stt} + 1
+      END
+    ${total}=    Evaluate    ${count} - 2
+    Log To Console    Tổng số lượng ${name} là: ${total}
+
+Select ${name} need to edit
+  ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+  ${elementCount}        Get Length            ${elements}
+  Click    ${elements}[2]
+  Wait Until Element Spin 
+
+Go to edit name post type
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Post" sub menu
+    And Click on the "Sửa" button in "Projects" at Post Type
+    Sleep    2
+
+Go to ${name} post ${type} page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Post" sub menu
+    IF  '${type}' == 'Projects'
+      Wait Until Element Spin
+    ELSE IF  '${type}' == 'News'
+      Click list Post_Type with "${type}"
+    END
+    IF  '${name}' == 'create'
+      Click "Tạo mới" button
+    ELSE IF  '${name}' == 'edit'
+      Select Post need to edit
+    ELSE IF  '${name}' == 'list'
+      Wait Until Element Spin
+    END
+    Wait Until Element Spin
+    Sleep    ${SHOULD_TIMEOUT}
+
+Click "${icon}" to "${next}" page
+    ${element}=    Set Variable    //button[@aria-label="${next}"]
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Wait Until Element Spin

@@ -165,3 +165,70 @@ LGE-18: Verify displays the password
 #     And Reload Page
 #     Then User look "Username" field empty
 #     And User look "Password" field empty
+
+*** Keywords ***
+# #############--------------LOGIN----------------##################################
+# Kiểm tra Menu khi đăng nhập thành công
+User look menu "${text}"
+  Element Text Should Be    xpath=//li[span[contains(text(), "${text}")]]    ${text}
+ 
+# Click vào link "Quên mật khẩu?"
+Click "${name}" link
+  ${element}=    Set Variable    //button[contains(@class, 'text-blue-600')]    
+  Click   ${element}
+
+# Kiểm tra Tiêu đề khi nhấn vào link "Quên mật khẩu?"
+User look title form Forgot Password "${title}"
+  Element Text Should Be    xpath=//h3[contains(text(),'${title}')]      ${title}
+
+# Kiểm tra xem thông báo lỗi có hiển thị đúng vị trí mong đợi không (hiển thị 2 validation text).
+Required message "${name}" field displayed under "${text}"
+  ${element}=               Get Element Form Item By Name     ${name}                //*[contains(@class, "ant-picker-input")]/input
+  Wait Until Element Is Visible        //div[contains(text(),'${text}')]
+  Element Text Should Be    //div[contains(text(),'${text}')]                        ${text}
+
+# Form "Quên mật khẩu" biến mất
+"${forgotpassword}" form disappears
+    Wait Until Element Is Not Exist    //h3[contains(text(),'${forgotpassword}')]
+
+# Click icon "Eye" để hiện thị mật khẩu
+Click "Eye" icon to display password
+    ${element}=    Set Variable    xpath=//*[contains(@class, 'absolute') and @id='Layer_1']
+    Click    ${element}
+
+# Kiểm tra mật khẩu có hiển thị hay không khi click icon "eye"
+User look "${name}" field with type "${type}"
+    ${element}=        Get Element Form Item By Name        ${name}        //input[contains(@class, "ant-input")]
+    ${password_field_type}        Get Attribute        ${element}        type
+    Should Be Equal As Strings        ${password_field_type}            ${type}
+
+# Kiểm tra khi reload page
+User look "${name}" field empty
+    ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+# Chọn ngôn ngữ tiếng anh
+Change language with "${text}"
+    Click    //span[contains(@class, "ant-select-selection-item")]
+    Click    //*[contains(@class, "ant-select-item-option-content") and text()="${text}"]
+
+Login to admin version english
+  When Change language with "Tiếng Anh"
+  And Enter "email" in "Username" with "admin@admin.com"
+  And Enter "text" in "Password" with "Password1!"
+  And Click "Log In" button
+  User look message "Success" popup
+
+Login to Manager version english
+  When Change language with "Tiếng Anh"
+  And Enter "email" in "Username" with "manager@gmail.com"
+  And Enter "text" in "Password" with "Tester@123"
+  And Click "Log In" button
+  User look message "Success" popup
+
+Login to Staff version english
+  When Change language with "Tiếng Anh"
+  And Enter "email" in "Username" with "staff@gmail.com"
+  And Enter "text" in "Password" with "Tester@123"
+  And Click "Log In" button
+  User look message "Success" popup

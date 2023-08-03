@@ -368,4 +368,192 @@ CRU-43 Verify that Admin can search unsuccessfully when entering incorrect keywo
 #     Then Show list of "users"
 #     And Click "<" to "prev" page
 #     Log To Console    Danh sách user trang 1
-#     Then Show list of "users" 
+#     Then Show list of "users"
+
+*** Keywords ***
+# #############--------------CREATE USER----------------#########################
+# Kiểm tra xem thông báo lỗi có hiển thị đúng vị trí mong đợi không (hiển thị 2 validation text).
+Required message "${name}" field displayed under "${text}"
+  ${element}=               Get Element Form Item By Name     ${name}                //*[contains(@class, "ant-picker-input")]/input
+  Wait Until Element Is Visible        //div[contains(text(),'${text}')]
+  Element Text Should Be    //div[contains(text(),'${text}')]                        ${text}
+
+User look textarea "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look select "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+# Kiểm tra mật khẩu có hiển thị hay không khi click icon "eye"
+User look "${name}" field with type "${type}"
+    ${element}=        Get Element Form Item By Name        ${name}        //input[contains(@class, "ant-input")]
+    ${password_field_type}        Get Attribute        ${element}        type
+    Should Be Equal As Strings        ${password_field_type}            ${type}
+
+# Input empty
+User look "${name}" field empty
+    ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+# Ngày sinh empty
+User look date in "${name}" field empty
+  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-picker-input")]/input
+  Element Text Should Be    ${element}    ${EMPTY}
+
+# Click sub menu "Danh sách" trong menu "Người Dùng"
+Click "${list}" submenu in "Người Dùng" menu
+    ${element}=        Set Variable        xpath=(//span[text()='${list}'])[2]
+    Click     ${element}
+
+# XÓA USER KHI USER ĐÓ CÒN NHỮNG YÊU CẦU NGHỈ PHÉP CẦN PHÊ DUYỆT (Có 3 user Staff, chọn User thứ 2 để xóa)
+Click "${delete}" user has submitted a request for leave that needs to be approved
+    Click list Role with "Staff"
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//button[@title="${delete}"]
+    ${elementCount}    Get Length            ${elements}
+    ${randomIndex}=    Evaluate              ${elementCount}-1
+    Click     ${elements}[${randomIndex}]
+    Click Confirm To Action
+
+# XÓA USER KHI USER ĐÓ ĐANG QUẢN LÝ MỘT USER KHÁC (Có 3 user Manager, chọn User thứ 2 để xóa)
+Click "${delete}" user still managing other people
+    Click list Role with "Manager"    
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//button[@title="${delete}"]
+    ${elementCount}    Get Length            ${elements}
+    ${randomIndex}=    Evaluate              ${elementCount}-1
+    Click     ${elements}[${randomIndex}]
+    Click Confirm To Action
+
+# Click vào icon "Eye" để hiển thị mật khẩu và nhập lại mật khẩu
+Click "Eye" icon to show "Mật khẩu" field and "Nhập lại mật khẩu" field
+    ${element}=    Get Elements    xpath=//*[contains(@class, 'absolute') and @id='Layer_1']
+    Click    ${element}[0]
+    Click    ${element}[1]
+
+# Chon danh sách user ứng với vai trò tương ứng
+Click list ${name} with "${text}"
+    ${element}=    Set Variable    xpath=//div[contains(@class, 'truncate') and text()='${text}']
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Wait Until Element Spin
+    Wait Until Element Spin
+
+# Nhập từ khóa cần tìm kiếm
+Search "${type}" in "${name}" with "${text}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${text}=                  Get Random Text                   ${type}                       ${text}
+    ${element}=               Set Variable        //input[@placeholder="${name}"]
+    Clear Text                ${element}
+    Fill Text                 ${element}                        ${text}                       True
+    ${cnt}=                   Get Length                        ${text}
+    IF  ${cnt} > 0
+        Set Global Variable     ${STATE["${name}"]}               ${text}
+    END
+    Sleep    2
+
+The page is refreshed with empty fields
+    Then User look "Họ và tên" field empty
+    And User look "Email" field empty
+    And User look "Mật khẩu" field empty
+    And User look "Nhập lại mật khẩu" field empty
+    And User look "Số điện thoại" field empty
+
+# Hiển thị danh sách
+Show list of "${name}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
+    ${count}=    Set Variable    2
+    ${stt}=    Set Variable    1
+    Log To Console    =======================List Of ${name}=================================================
+    FOR    ${item}    IN    @{elements}
+          ${fullname}=        Get Text    //tbody/tr[${count}]/td[1]/div[1]/span[1]
+          ${position}=        Get Text    //tbody/tr[${count}]/td[2]
+          ${role}=            Get Text    //tbody/tr[${count}]/td[3]
+          ${manager}=         Get Text    //tbody/tr[${count}]/td[4]
+          ${team}=            Get Text    //tbody/tr[${count}]/td[5]
+          ${Email}=           Get Text    //tbody/tr[${count}]/td[6]
+          ${phone_number}=    Get Text    //tbody/tr[${count}]/td[7]
+          
+          IF  '${manager}' == '${EMPTY}'
+            ${manager}=    Set Variable    Không có quản lý
+          END
+            
+          IF  '${team}' == '${EMPTY}'
+            ${team}=    Set Variable    Không có nhóm
+          END
+          
+          Log To Console        ${stt}. ${fullname} | ${position} | ${role} | ${manager} | ${team} | ${Email} | ${phone_number} |
+          Log To Console        ========================================================================================================
+          ${count}=    Evaluate    ${count} + 1
+          ${stt}=    Evaluate    ${stt} + 1
+        END
+    ${total}=    Evaluate    ${count} - 2
+    Log To Console    Tổng số lượng ${name} là: ${total}
+
+# Không có user nào được hiển thị khi nhập từ khóa tìm kiếm không hợp lệ
+No ${name} are shown
+    Wait Until Element Spin
+    ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
+    Wait Until Element Is Visible    ${element}
+    ${text}=    Get Text    ${element}
+    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm kiếm
+
+# Chọn Next page hoặc Previous page  
+Click "${icon}" to "${next}" page
+    ${element}=    Set Variable    //button[@aria-label="${next}"]
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Wait Until Element Spin
+
+Go to page create user with the "${role}" role
+  Login to admin
+  When Click "Người Dùng" menu
+  IF  '${role}' == 'Staff'
+    Wait Until Element Spin
+  ELSE IF  '${role}' != 'Staff'
+    Click list Role with "${role}"
+  END
+  Click "Tạo mới" button
+  Wait Until Element Spin
+  Sleep    ${SHOULD_TIMEOUT}
+
+User look all field empty when create user
+  User look "Họ và tên" field empty
+  User look "Email" field empty
+  User look "Mật khẩu" field empty
+  User look "Nhập lại mật khẩu" field empty
+  User look "Số điện thoại" field empty
+  User look date in "Ngày sinh" field empty
+  User look select "Vị trí" field empty
+  User look date in "Ngày đầu đi làm" field empty
+
+Delele select "${name}" field
+    IF  '${name}' == 'Vị trí'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' == 'Thời gian'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' == 'Vai trò'
+        ${num}=    Evaluate    1
+    END
+    ${elements}=               Get Elements        //span[@class='ant-select-clear'] 
+    Click    ${elements}[${num}]
+
+Delele select at "Quản lý" field
+    ${elements}=               Get Element        //span[@class='ant-select-clear'] 
+    Click    ${elements}
+
+Enter invalid information to create user
+  When Enter "text" in "Họ và tên" with "_RANDOM_"
+  And Enter "email" in "Email" with "_RANDOM_"
+  And Enter "text" in "Mật khẩu" with "Nhat@01101999"
+  And Enter "text" in "Nhập lại mật khẩu" with "Nhat@01101999"
+  And Enter "phone" in "Số điện thoại" with "_RANDOM_"
+  And Enter date in "Ngày sinh" with "_RANDOM_"
+  And Click select "Vị trí" with "Developer"
+  And Enter date in "Ngày đầu đi làm" with "_RANDOM_"
+  And Enter "words" in textarea "Mô tả" with "_RANDOM_"

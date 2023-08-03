@@ -502,3 +502,129 @@ EDD-22 Verify that edit Data with Mission is successful & "Lưu và tạo mới"
     Then User look message "Cập nhật thành công" popup
     And User look title "Tạo mới dữ liệu Mission"
     And User look all field empty when edit data Mission
+
+*** Keywords ***
+Click list ${name} with "${text}"
+    ${element}=    Set Variable    xpath=//div[contains(@class, 'truncate') and text()='${text}']
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Wait Until Element Spin
+    Wait Until Element Spin
+
+User look "${name}" field empty
+    ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look textarea "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look editor "${name}" field empty
+  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ce-paragraph")]
+  Element Text Should Be    ${element}    ${EMPTY}
+
+User look all field empty when ${name} data ${type}
+  User look "Name" field empty
+  User look "Order" field empty   
+  IF  '${type}' == 'Member'
+    User look "Position" field empty
+    User look textarea "Description" field empty
+    User look editor "Content" field empty
+  ELSE IF  '${type}' == 'Value'
+    User look textarea "Description" field empty
+  ELSE IF  '${type}' == 'Services'
+    User look textarea "Description" field empty
+  ELSE IF  '${type}' == 'Mission'
+    User look textarea "Description" field empty
+  END
+
+Show list of "${name}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
+    ${count}=    Set Variable    2
+    ${stt}=    Set Variable    1
+    Log To Console    =======================List Of ${name}=================================================
+    FOR    ${item}    IN    @{elements}
+        ${name_data}=        Get Text        //tbody[1]/tr[${count}]/td[1]
+        ${order}=            Get Text        //tbody[1]/tr[${count}]/td[2]
+        Log To Console        ${stt}. Tên dữ liệu: ${name_data} || Order: ${order}
+        Log To Console        ===================================================================================
+        ${count}=    Evaluate    ${count} + 1
+        ${stt}=    Evaluate    ${stt} + 1
+    END
+    ${total}=    Evaluate    ${count} - 2
+    Log To Console    Tổng số lượng ${name} là: ${total}
+
+Select ${name} need to edit
+  ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+  ${elementCount}        Get Length            ${elements}
+  Click    ${elements}[0]
+  Wait Until Element Spin
+
+Go to ${name} data ${type} page
+    Login to Admin
+    When Click "Thiết lập" menu
+    And Click "Dữ liệu" sub menu
+    IF  '${type}' == 'Partner'
+      Wait Until Element Spin
+    ELSE IF  '${type}' != 'Partner'
+      Click list Data_Type with "${type}"
+    END
+    IF  '${name}' == 'create'
+      Click "Tạo mới" button
+      Wait Until Element Spin
+      Sleep    ${SHOULD_TIMEOUT}
+    ELSE IF  '${name}' == 'edit'
+      Select Data need to edit
+      Sleep    2
+    ELSE IF  '${name}' == 'list'
+      Wait Until Element Spin
+      Sleep    ${SHOULD_TIMEOUT}
+    END
+
+Select language with "${name}"
+    ${element}    Set Variable    //div[text()='${name}']   
+    Click    ${element}
+
+Enter information when ${name} data partner
+    And Enter "text" in "Name" with "_RANDOM_"
+    And Enter "order number" in "Order" with "_RANDOM_"
+    And Select file in "Ảnh" with "sieunhando.jpg"
+
+Enter information when ${type} data with ${name}
+    And Enter "order number" in "Order" with "_RANDOM_"
+    And Select file in "Ảnh" with "sieunhando.jpg"
+    And Enter "text" in "Name" with "_RANDOM_"
+    IF  '${name}' == 'Member'
+      Enter "text" in "Position" with "_RANDOM_"
+    END
+    And Enter "text" in textarea "Description" with "_RANDOM_"
+    IF  '${name}' == 'Member'
+      Enter "text" in editor "Content" with "_RANDOM_"
+    END
+
+User look title form "${text}"
+    ${element}    Set Variable    //h1[@class="text-xl font-bold hidden sm:block" and //h1[text() = "${text}"]]
+    Wait Until Element Is Visible    ${element}
+    Element Text Should Be    ${element}    ${text}
+
+Search "${type}" in "${name}" with "${text}"
+    Wait Until Element Spin
+    Wait Until Element Spin
+    ${text}=                  Get Random Text                   ${type}                       ${text}
+    ${element}=               Set Variable        //input[@placeholder="${name}"]
+    Clear Text                ${element}
+    Fill Text                 ${element}                        ${text}                       True
+    ${cnt}=                   Get Length                        ${text}
+    IF  ${cnt} > 0
+        Set Global Variable     ${STATE["${name}"]}               ${text}
+    END
+    Sleep    2
+
+No ${name} are shown
+    Wait Until Element Spin
+    ${element}=    Set Variable    //div[@class="bg-gray-100 text-gray-400 py-4"]
+    Wait Until Element Is Visible    ${element}
+    ${text}=    Get Text    ${element}
+    Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm kiếm

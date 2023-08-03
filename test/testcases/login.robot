@@ -145,4 +145,57 @@ LG-18: Verify displays the password
 #     And Enter "text" in "Mật khẩu" with "_RANDOM_"
 #     And Reload Page
 #     Then User look "Tên đăng nhập" field empty
-#     And User look "Mật khẩu" field empty 
+#     And User look "Mật khẩu" field empty
+
+*** Keywords ***
+# #############--------------LOGIN----------------##################################
+# Kiểm tra Menu khi đăng nhập thành công
+User look menu "${text}"
+  Element Text Should Be    xpath=//li[span[contains(text(), "${text}")]]    ${text}
+ 
+# Click vào link "Quên mật khẩu?"
+Click "${name}" link
+  ${element}=    Set Variable    //button[contains(@class, 'text-blue-600')]    
+  Click   ${element}
+
+# Kiểm tra Tiêu đề khi nhấn vào link "Quên mật khẩu?"
+User look title form Forgot Password "${title}"
+  Element Text Should Be    xpath=//h3[contains(text(),'${title}')]      ${title}
+
+# Form "Quên mật khẩu" biến mất
+"${forgotpassword}" form disappears
+    Wait Until Element Is Not Exist    //h3[contains(text(),'${forgotpassword}')]
+
+# Click icon "Eye" để hiện thị mật khẩu
+Click "Eye" icon to display password
+    ${element}=    Set Variable    xpath=//*[contains(@class, 'absolute') and @id='Layer_1']
+    Click    ${element}
+
+# Kiểm tra mật khẩu có hiển thị hay không khi click icon "eye"
+User look "${name}" field with type "${type}"
+    ${element}=        Get Element Form Item By Name        ${name}        //input[contains(@class, "ant-input")]
+    ${password_field_type}        Get Attribute        ${element}        type
+    Should Be Equal As Strings        ${password_field_type}            ${type}
+
+# Kiểm tra khi reload page
+User look "${name}" field empty
+    ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+# Kiểm tra xem thông báo lỗi có hiển thị đúng vị trí mong đợi không (hiển thị 2 validation text).
+Required message "${name}" field displayed under "${text}"
+  ${element}=               Get Element Form Item By Name     ${name}                //*[contains(@class, "ant-picker-input")]/input
+  Wait Until Element Is Visible        //div[contains(text(),'${text}')]
+  Element Text Should Be    //div[contains(text(),'${text}')]                        ${text}
+
+Login to Manager
+  Enter "email" in "Tên đăng nhập" with "manager@gmail.com"
+  Enter "text" in "Mật khẩu" with "Tester@123"
+  Click "Đăng nhập" button
+  User look message "Thành công" popup
+
+Login to Staff
+  Enter "email" in "Tên đăng nhập" with "staff@gmail.com"
+  Enter "text" in "Mật khẩu" with "Tester@123"
+  Click "Đăng nhập" button
+  User look message "Thành công" popup

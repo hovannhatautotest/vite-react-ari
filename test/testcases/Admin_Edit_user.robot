@@ -226,3 +226,132 @@ EDU-28 Verify that Admin can edit user successfully & "Lưu và tạo mới" but
     Then User look message "Cập nhật thành công" popup
     And User look title "Tạo mới người dùng Staff"
     And User look all field empty when edit user
+
+
+*** Keywords ***
+# #############--------------EDIT USER----------------#########################
+# Chọn user cần chỉnh sửa
+Select the ${text} "${name}" to edit
+    [Arguments]    
+    Wait Until Element Spin
+    ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+    ${elementCount}        Get Length              ${elements}
+    IF  '${name}' == 'Team has been deleted'
+        ${randomIndex}=    Evaluate    ${elementCount}-2
+    ELSE IF  '${name}' == 'Còn những yêu cầu nghỉ cần duyệt'
+        ${randomIndex}=    Evaluate    ${elementCount}-3
+    ELSE IF  '${name}'=='valid'
+        ${randomIndex}=    Evaluate    ${elementCount}-${elementCount}
+    END
+    Click    ${elements}[${randomIndex}]
+    Wait Until Element Spin
+    Wait Until Element Spin
+
+# Xóa thông tin hiện tại của trường: Ngày sinh hoặc Ngày đầu đi làm
+Delete information "${name}"
+    IF  '${name}' == 'Ngày sinh'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' != 'Ngày sinh'
+        ${num}=    Evaluate    1
+    END
+    And Enter date in "${name}" with ""
+    ${elements}=               Get Elements        //span[@class='ant-picker-clear']
+    Click    ${elements}[${num}]
+    And Enter date in "${name}" with ""     
+
+# Xóa thông tin hiện tại của trường: Vị trí hoặc Vai trò
+Delele select "${name}" field
+    IF  '${name}' == 'Vị trí'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' == 'Thời gian'
+        ${num}=    Evaluate    0
+    ELSE IF  '${name}' == 'Vai trò'
+        ${num}=    Evaluate    1
+    END
+    ${elements}=               Get Elements        //span[@class='ant-select-clear'] 
+    Click    ${elements}[${num}]
+
+Delele select at "Quản lý" field
+    ${elements}=               Get Element        //span[@class='ant-select-clear'] 
+    Click    ${elements}
+
+# Chon danh sách user ứng với vai trò tương ứng
+Click list ${name} with "${text}"
+    ${element}=    Set Variable    xpath=//div[contains(@class, 'truncate') and text()='${text}']
+    Wait Until Element Is Visible    ${element}
+    Click    ${element}
+    Wait Until Element Spin
+
+Select ${name} need to edit
+  ${elements}            Get Elements            xpath=//button[@title="Sửa"]
+  ${elementCount}        Get Length            ${elements}
+  ${index}=         Evaluate              ${elementCount}-1
+  IF  '${name}' == 'Post'
+    Click    ${elements}[2]
+  ELSE IF  '${name}' != 'Post'
+    Click    ${elements}[0]
+  END
+  Wait Until Element Spin 
+
+Go to page edit user with the "${role}" role
+  Login to admin
+  When Click "Người Dùng" menu
+  IF  '${role}' == 'Staff'
+    Wait Until Element Spin
+  ELSE IF  '${role}' != 'Staff'
+    Click list Role with "${role}"
+  END
+  Select user need to edit
+  Wait Until Element Spin
+  Sleep    ${SHOULD_TIMEOUT}
+
+Go to page list user with the "${role}" role
+  Login to admin
+  When Click "Người Dùng" menu
+  IF  '${role}' == 'Staff'
+    Wait Until Element Spin
+  ELSE IF  '${role}' != 'Staff'
+    Click list Role with "${role}"
+  END
+  Wait Until Element Spin
+  Sleep    ${SHOULD_TIMEOUT}
+
+# Kiểm tra xem thông báo lỗi có hiển thị đúng vị trí mong đợi không (hiển thị 2 validation text).
+Required message "${name}" field displayed under "${text}"
+  ${element}=               Get Element Form Item By Name     ${name}                //*[contains(@class, "ant-picker-input")]/input
+  Wait Until Element Is Visible        //div[contains(text(),'${text}')]
+  Element Text Should Be    //div[contains(text(),'${text}')]                        ${text}
+
+User look textarea "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+    Element Text Should Be    ${element}    ${EMPTY}
+
+User look select "${name}" field empty
+    ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+# Kiểm tra mật khẩu có hiển thị hay không khi click icon "eye"
+User look "${name}" field with type "${type}"
+    ${element}=        Get Element Form Item By Name        ${name}        //input[contains(@class, "ant-input")]
+    ${password_field_type}        Get Attribute        ${element}        type
+    Should Be Equal As Strings        ${password_field_type}            ${type}
+
+# Input empty
+User look "${name}" field empty
+    ${element}=    Get Element Form Item By Name     ${name}    //input[contains(@class, "ant-input")]
+    Element Text Should Be    ${element}    ${EMPTY}
+
+# Ngày sinh empty
+User look date in "${name}" field empty
+  ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-picker-input")]/input
+  Element Text Should Be    ${element}    ${EMPTY}
+
+User look all field empty when edit user
+  User look "Họ và tên" field empty
+  User look "Email" field empty
+  User look "Mật khẩu" field empty
+  User look "Nhập lại mật khẩu" field empty
+  User look "Số điện thoại" field empty
+  User look date in "Ngày sinh" field empty
+  User look select "Vị trí" field empty
+  User look date in "Ngày đầu đi làm" field empty
