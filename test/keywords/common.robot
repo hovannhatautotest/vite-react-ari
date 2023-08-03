@@ -15,13 +15,6 @@ ${SHOULD_TIMEOUT}   0.1 seconds
 ${URL_DEFAULT}      http://v2.ari.com.vn/
 ${STATE}            Evaluate  json.loads('''{}''')  json
 
-${username_valid}    Hoàng Diệu
-${email_valid}    staff@gmail.com
-${phone_number_valid}    0941225407    
-
-${class_rejected}    w-5 h-5 fill-red-500
-${class_approved}    w-5 h-5 fill-green-500
-
 *** Keywords ***
 
 Login to admin

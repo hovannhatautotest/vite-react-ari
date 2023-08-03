@@ -4,6 +4,11 @@ Resource            ../keywords/common.robot
 Test Setup          Setup
 Test Teardown       Tear Down
 
+*** Variables ***
+${username_valid}    Hoàng Diệu
+${email_valid}    staff@gmail.com
+${phone_number_valid}    0941225407  
+
 *** Test Cases ***
 
 VLOU-01 Verify that user can view the list of Staff successfully

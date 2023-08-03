@@ -3,6 +3,10 @@ Resource                ../keywords/common.robot
 Test Setup              Setup
 Test Teardown           Tear Down
 
+*** Variables ***
+${class_rejected}    w-5 h-5 fill-red-500
+${class_approved}    w-5 h-5 fill-green-500
+
 *** Test Cases ***
 
 ALM_01 Check the ability to display the user's leave list table
@@ -210,3 +214,10 @@ Show list of "${name}" leave date
     ELSE IF    '${name}'=='pending'
       Log To Console    Total number of days off ${name} approval: ${total}
     END
+
+Enter leave date in "${field}" with "${text}"            # NHẬP NGÀY NGHỈ BẮT ĐẦU VÀ KẾT THÚC
+  ${text}=                  Get Random Text                   date                          ${text}
+  ${element}               Set Variable            xpath=//input[@placeholder="${field}"]
+  Click                     ${element}
+  Clear Text                ${element}
+  Fill Text                 ${element}                        ${text}

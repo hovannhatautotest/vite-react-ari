@@ -3,6 +3,10 @@ Resource                ../keywords/common.robot
 Test Setup              Setup
 Test Teardown           Tear Down
 
+** Variables **
+${class_rejected}    w-5 h-5 fill-red-500
+${class_approved}    w-5 h-5 fill-green-500
+
 *** Test Cases ***
 
 ## ============================NAVIGAVE TO CREATE LEAVE DATE===========================================
