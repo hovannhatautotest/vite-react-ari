@@ -148,7 +148,7 @@ Get Random Text
   ELSE IF  ${cnt} > 0 and '${type}' == 'date'
     ${new_text}=            FakerLibrary.Date  	              pattern=%d-%m-%Y
   ELSE IF  ${cnt} > 0 and '${type}' == 'word'
-    ${new_text}=            FakerLibrary.Sentence             nb_words=2
+    ${new_text}=            FakerLibrary.Sentence             nb_words=500
   ELSE IF  ${cnt} > 0
     ${new_text}=            FakerLibrary.Sentence
   END
