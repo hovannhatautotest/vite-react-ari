@@ -15,8 +15,8 @@ ${SEARCH_EMAIL}        admin_balan@getnada.com
 ${SEARCH_PHONE}        0941225407
 ${SEARCH_ROLE}         Quản trị viên
 
-# ${URL_DEFAULT}      http://stag.balance.ari.com.vn/#/      # Web internet
-${URL_DEFAULT}      http://localhost:5173/  
+${URL_DEFAULT}      http://stag.balance.ari.com.vn/#/      # Web internet
+# ${URL_DEFAULT}      http://localhost:5173/  
 ${STATE}            Evaluate  json.loads('''{}''')  json
 
 *** Keywords ***
@@ -24,20 +24,23 @@ ${STATE}            Evaluate  json.loads('''{}''')  json
 Login to Admin
   Enter "email" in "Tên đăng nhập" with "admin_balan@getnada.com"
   Enter "text" in "Mật khẩu" with "Ari123456#"
-  Click "Đăng nhập" button
-  User look message "Đăng nhập thành công" popup
+  Click "Đăng Nhập" button
+  #User look message "Đăng nhập thành công" popup
+  Wait Until Element Is Visible    //*[@id='name-application']  
 
 Login to Store
   Enter "email" in "Tên đăng nhập" with "chstag11111@getnada.com"
   Enter "text" in "Mật khẩu" with "Ari123456#"
-  Click "Đăng nhập" button
-  User look message "Đăng nhập thành công" popup
+  Click "Đăng Nhập" button
+  #User look message "Đăng nhập thành công" popup
+  Wait Until Element Is Visible    //*[@id='name-application']  
 
 Login to Supplier
   Enter "email" in "Tên đăng nhập" with "nccstag11111@getnada.com"
   Enter "text" in "Mật khẩu" with "Ari123456#"
-  Click "Đăng nhập" button
-  User look message "Đăng nhập thành công" popup
+  Click "Đăng Nhập" button
+  #User look message "Đăng nhập thành công" popup
+  Wait Until Element Is Visible    //*[@id='name-application']  
 
 #### Setup e Teardown
 Setup
@@ -96,6 +99,7 @@ Enter at "${name}" field to Login
     Press Keys    ${element}    Enter
     Click Confirm To Action
     Scroll By                 ${None}
+    Wait Until Element Is Visible    //*[@id='name-application'] 
 
 # DASHBOARD CỦA TRANG WEB
 User look dashboard "${dashboard}"
@@ -304,8 +308,8 @@ Click on the previously created "${name}" tree to edit
 ###  -----  Element  -----  ###
 # Nhấp vào nút có nội dung là "${text}".
 Click "${text}" button
-  # Click                     xpath=//button[@id='submit-btn' and text()='${text}']
-  Click                     xpath=//button[@title = "${text}"]
+  Click                     xpath=//button[@id='submit-btn' and text()='${text}']
+  # Click                     xpath=//button[@title = "${text}"]
   Click Confirm To Action
   Scroll By                 ${None}
 
@@ -352,7 +356,8 @@ User look message "${message}" popup
     ${message}=             Replace String                    ${message}                    _@${contains[0]}@_          ${STATE["${contains[0]}"]}
   END
   Element Text Should Be    id=swal2-html-container           ${message}
-  ${element}=               Set Variable                      xpath=//*[contains(@class, "swal2-confirm")]
+  # ${element}=               Set Variable                      xpath=//*[contains(@class, "swal2-confirm")]
+  ${element}=               Set Variable                      xpath=//*[contains(@class, "swal2-cancel")]
   ${passed}                 Run Keyword And Return Status
                             ...   Element Should Be Visible   ${element}
   IF    '${passed}' == 'True'
@@ -398,8 +403,8 @@ User look menu "${text}"
  
 # Click vào link "Quên mật khẩu?"
 Click "${name}" link
-  # Click    //a[contains(text(),'${name}')]   
-  Click        //button[text()='${name}']
+  Click    //a[contains(text(),'${name}')]   
+  # Click        //button[text()='${name}']
 
 # Kiểm tra Tiêu đề khi nhấn vào link "Quên mật khẩu?"
 User look contains title is "${title}"
@@ -411,9 +416,9 @@ User look contains title is "${title}"
 
 # Click icon "Eye" để hiện thị mật khẩu
 Click "Eye" icon to display password 
-  # Click    xpath=//*[contains(@class, 'text-lg')]
-  ${element}    Get Elements    //*[contains(@class, 'absolute')]
-  Click    ${element}[0]
+  Click    xpath=//*[contains(@class, 'text-lg')]
+  # ${element}    Get Elements    //*[contains(@class, 'absolute')]
+  # Click    ${element}[0]
 
 # Kiểm tra mật khẩu có hiển thị hay không khi click icon "eye"
 User look "${name}" field with type "${type}"

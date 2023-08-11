@@ -16,57 +16,57 @@ EDU_01 Verify that the page can be navigated to page Edit user
     And User look contains title is "Chỉnh sửa người dùng"  
 
 # # =====================================================VALIDATION TEXT=====================================================
-# EDU_02 Verify that validation text of "Họ và tên" field display when edit user with "Họ và tên" field empty
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "text" in "Họ và tên" with ""
-#     And Enter "phone" in "Số điện thoại" with ""
-#     Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
+EDU_02 Verify that validation text of "Họ và tên" field display when edit user with "Họ và tên" field empty
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "text" in "Họ và tên" with ""
+    And Enter "phone" in "Số điện thoại" with ""
+    Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
 
-# EDU_03 Verify that validation text of "Họ và tên" field display when enter invalid "Họ và tên" field
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "number" in "Họ và tên" with "_RANDOM_"
-#     And Enter "phone" in "Số điện thoại" with ""
-#     Then Required message "Họ và tên" displayed under "Xin vui lòng chỉ nhập chữ!" field
+EDU_03 Verify that validation text of "Họ và tên" field display when enter invalid "Họ và tên" field
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "number" in "Họ và tên" with "_RANDOM_"
+    And Enter "phone" in "Số điện thoại" with ""
+    Then Required message "Họ và tên" displayed under "Xin vui lòng chỉ nhập chữ!" field
 
-# EDU_04 Verify that validation text of "Số điện thoại" field display when edit user with "Số điện thoại" field empty
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "text" in "Số điện thoại" with ""
-#     And Enter "text" in "Họ và tên" with ""
-#     Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
+EDU_04 Verify that validation text of "Số điện thoại" field display when edit user with "Số điện thoại" field empty
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "text" in "Số điện thoại" with ""
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
 
-# EDU_05 Verify that validation text of "Số điện thoại" field display when enter invalid format phone number "Số điện thoại" field
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "text" in "Số điện thoại" with "_RANDOM_"
-#     And Enter "text" in "Họ và tên" with ""
-#     Then Required message "Số điện thoại" displayed under "Xin vui lòng chỉ nhập số" field
+EDU_05 Verify that validation text of "Số điện thoại" field display when enter invalid format phone number "Số điện thoại" field
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "text" in "Số điện thoại" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng chỉ nhập số" field
 
-# EDU_06 Verify that validation text of "Số điện thoại" field display when enter "Số điện thoại" field more than 12 numbers characters
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "phone_invalid" in "Số điện thoại" with "_RANDOM_"
-#     And Enter "text" in "Họ và tên" with ""
-#     Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa 12 kí tự số!" field
+EDU_06 Verify that validation text of "Số điện thoại" field display when enter "Số điện thoại" field more than 12 numbers characters
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "phone_invalid" in "Số điện thoại" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa 12 kí tự số!" field
 
-# EDU_07 Verify that validation text of "Ghi chú" field when entering greater than 500 characters
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "word" in textarea "Ghi chú" with "_RANDOM_"
-#     And Enter "text" in "Họ và tên" with ""
-#     Then Required message "Ghi chú" displayed under "Chỉ được nhập tối đa 500 kí tự" field
+EDU_07 Verify that validation text of "Ghi chú" field when entering greater than 500 characters
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "word" in textarea "Ghi chú" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Ghi chú" displayed under "Chỉ được nhập tối đa 500 kí tự" field
 
-# # ##=====================================================ERROR MESSAGE=====================================================
-# EDU_12 Verify that error message display when edit user with The phone number has already been registered.
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
-#     And Enter "email" in "Email" with "_RANDOM_"
-#     And Enter "phone" in "Số điện thoại" with "0941225407"
-#     And Click "Lưu" button
-#     Then User look message "Số điện thoại đã được đăng ký trước đó." popup
+# ##=====================================================ERROR MESSAGE=====================================================
+EDU_12 Verify that error message display when edit user with The phone number has already been registered.
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "fullname" in "Họ và tên" with "_RANDOM_"
+    And Enter "email" in "Email" with "_RANDOM_"
+    And Enter "phone" in "Số điện thoại" with "0941225407"
+    And Click "Lưu" button
+    Then User look message "Số điện thoại đã được đăng ký trước đó." popup
 
 *** Keywords ***
 Select User need to edit

@@ -1,66 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.11.4 on win32)" generated="20230809 16:58:44.954" rpa="false" schemaversion="4">
-<suite id="s1" name="Test" source="D:\BALANCE\vite-react-balance\test\testcases\test.robot">
-<test id="s1-t1" name="Kiểm tra đăng nhập hợp lệ" line="5">
-<kw name="Open Browser" library="SeleniumLibrary">
-<arg>http://localhost:5173/</arg>
-<arg>firefox</arg>
-<doc>Opens a new browser instance to the given ``url``.</doc>
-<msg timestamp="20230809 16:58:45.346" level="INFO">Opening browser 'firefox' to base url 'http://localhost:5173/'.</msg>
-<kw name="Capture Page Screenshot" library="SeleniumLibrary">
-<doc>Takes screenshot of the current page and embeds it into log file.</doc>
-<msg timestamp="20230809 16:58:45.396" level="INFO">Cannot capture screenshot because no browser is open.</msg>
-<status status="PASS" starttime="20230809 16:58:45.396" endtime="20230809 16:58:45.397"/>
+<robot generator="Robot 6.1.1 (Python 3.11.4 on win32)" generated="20230811 19:31:35.997" rpa="false" schemaversion="4">
+<suite id="s1" name="Login" source="D:\BALANCE\vite-react-balance\test\testcases\login.robot">
+<test id="s1-t1" name="LG_12: Verify that CAN navigate to the &quot;Forgot Password&quot; page from the link on the Log In page" line="109">
+<kw name="Setup" library="common" type="SETUP">
+<kw name="Set Browser Timeout">
+<arg>${BROWSER_TIMEOUT}</arg>
+<msg timestamp="20230811 19:31:36.769" level="FAIL">No keyword with name 'Set Browser Timeout' found.</msg>
+<status status="FAIL" starttime="20230811 19:31:36.768" endtime="20230811 19:31:36.769"/>
 </kw>
-<msg timestamp="20230809 16:58:45.397" level="FAIL">WebDriverException: Message: 'geckodriver' executable needs to be in PATH. 
-</msg>
-<status status="FAIL" starttime="20230809 16:58:45.346" endtime="20230809 16:58:45.409"/>
+<kw name="New Browser">
+<arg>${BROWSER}</arg>
+<arg>headless=${HEADLESS}</arg>
+<status status="NOT RUN" starttime="20230811 19:31:36.785" endtime="20230811 19:31:36.786"/>
 </kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="NOT RUN" starttime="20230809 16:58:45.410" endtime="20230809 16:58:45.410"/>
+<kw name="New Page">
+<arg>${URL_DEFAULT}</arg>
+<status status="NOT RUN" starttime="20230811 19:31:36.798" endtime="20230811 19:31:36.799"/>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>//input[@id='username']</arg>
-<arg>admin_balan@getnada.com</arg>
-<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
-<status status="NOT RUN" starttime="20230809 16:58:45.411" endtime="20230809 16:58:45.411"/>
+<kw name="Evaluate" library="BuiltIn">
+<var>${STATE}</var>
+<arg>json.loads('''{}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" starttime="20230811 19:31:36.799" endtime="20230811 19:31:36.799"/>
 </kw>
-<kw name="Input Password" library="SeleniumLibrary">
-<arg>//input[@id='password']</arg>
-<arg>Ari123456#</arg>
-<doc>Types the given password into text field identified by ``locator``.</doc>
-<status status="NOT RUN" starttime="20230809 16:58:45.411" endtime="20230809 16:58:45.412"/>
+<status status="FAIL" starttime="20230811 19:31:36.760" endtime="20230811 19:31:36.800"/>
 </kw>
-<kw name="Click Button" library="SeleniumLibrary">
-<arg>//button[@id='idSubmit']</arg>
-<doc>Clicks button identified by ``locator``.</doc>
-<status status="NOT RUN" starttime="20230809 16:58:45.412" endtime="20230809 16:58:45.412"/>
+<kw name="Tear Down" library="common" type="TEARDOWN">
+<kw name="Close Browser">
+<arg>ALL</arg>
+<msg timestamp="20230811 19:31:36.813" level="FAIL">No keyword with name 'Close Browser' found.</msg>
+<status status="FAIL" starttime="20230811 19:31:36.812" endtime="20230811 19:31:36.813"/>
 </kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<arg>id=swal2-html-container</arg>
-<arg>Đăng nhập thành công</arg>
-<doc>Verifies that element ``locator`` contains exact text ``expected``.</doc>
-<status status="NOT RUN" starttime="20230809 16:58:45.413" endtime="20230809 16:58:45.413"/>
+<status status="FAIL" starttime="20230811 19:31:36.801" endtime="20230811 19:31:36.814">No keyword with name 'Close Browser' found.</status>
 </kw>
-<doc>Kiểm tra việc đăng nhập với thông tin hợp lệ</doc>
-<tag>UI</tag>
-<status status="FAIL" starttime="20230809 16:58:45.346" endtime="20230809 16:58:45.414">WebDriverException: Message: 'geckodriver' executable needs to be in PATH. 
-</status>
+<tag>@regression</tag>
+<tag>@smoketest</tag>
+<status status="FAIL" starttime="20230811 19:31:36.759" endtime="20230811 19:31:36.815">Setup failed:
+No keyword with name 'Set Browser Timeout' found.
+
+Also teardown failed:
+No keyword with name 'Close Browser' found.</status>
 </test>
-<status status="FAIL" starttime="20230809 16:58:44.970" endtime="20230809 16:58:45.416"/>
+<status status="FAIL" starttime="20230811 19:31:35.997" endtime="20230811 19:31:36.819"/>
 </suite>
 <statistics>
 <total>
 <stat pass="0" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="0" fail="1" skip="0">UI</stat>
+<stat pass="0" fail="1" skip="0">@regression</stat>
+<stat pass="0" fail="1" skip="0">@smoketest</stat>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Test">Test</stat>
+<stat pass="0" fail="1" skip="0" id="s1" name="Login">Login</stat>
 </suite>
 </statistics>
 <errors>
+<msg timestamp="20230811 19:31:36.359" level="ERROR">Error in file 'D:\BALANCE\vite-react-balance\test\keywords\common.robot' on line 2: Importing library 'Browser' failed: ModuleNotFoundError: No module named 'grpc'
+Traceback (most recent call last):
+  File "C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\__init__.py", line 16, in &lt;module&gt;
+    from .browser import Browser
+  File "C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\browser.py", line 37, in &lt;module&gt;
+    from .keywords import (
+  File "C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\keywords\__init__.py", line 19, in &lt;module&gt;
+    from .getters import Getters
+  File "C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\Browser\keywords\getters.py", line 18, in &lt;module&gt;
+    import grpc  # type: ignore
+    ^^^^^^^^^^^
+PYTHONPATH:
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\Scripts\robot.exe
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\python311.zip
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\DLLs
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311
+  C:\Users\nhats\AppData\Roaming\Python\Python311\site-packages
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages</msg>
+<msg timestamp="20230811 19:31:36.736" level="ERROR">Error in file 'D:\BALANCE\vite-react-balance\test\keywords\common.robot' on line 3: Importing library 'FakerLibrary' failed: ModuleNotFoundError: No module named 'faker'
+Traceback (most recent call last):
+  File "C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\FakerLibrary\__init__.py", line 2, in &lt;module&gt;
+    from .keywords import FakerKeywords
+  File "C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages\FakerLibrary\keywords.py", line 10, in &lt;module&gt;
+    import faker.factory
+PYTHONPATH:
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\Scripts\robot.exe
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\python311.zip
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\DLLs
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311
+  C:\Users\nhats\AppData\Roaming\Python\Python311\site-packages
+  C:\Users\nhats\AppData\Local\Programs\Python\Python311\Lib\site-packages</msg>
 </errors>
 </robot>
