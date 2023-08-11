@@ -308,8 +308,7 @@ Click on the previously created "${name}" tree to edit
 ###  -----  Element  -----  ###
 # Nhấp vào nút có nội dung là "${text}".
 Click "${text}" button
-  Click                     xpath=//button[@id='submit-btn' and text()='${text}']
-  # Click                     xpath=//button[@title = "${text}"]
+  Click                     xpath=//button[text()='${text}']
   Click Confirm To Action
   Scroll By                 ${None}
 
