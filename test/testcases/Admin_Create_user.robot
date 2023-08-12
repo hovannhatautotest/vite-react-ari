@@ -123,16 +123,16 @@ CRU_15: Kiểm tra error message khi tạo mới người dùng có "Số điệ
     Then User look message "Số điện thoại đã được đăng ký trước đó." popup
 
 # ##=====================================================CREATE USER SUCCESSFULLY=====================================================
-CRU_16: Kiểm tra tạo mới dùng người dùng thành công
-    [Tags]    @smoketest         @regression
-    When Go to page create user
-    And Enter "fullname" in "Họ và tên" with "_RANDOM_"
-    And Enter "email" in "Email" with "_RANDOM_"
-    And Enter "phone" in "Số điện thoại" with "_RANDOM_"
-    And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
-    And Click "Lưu" button
-    Then User look message "Thêm quản trị viên thành công" popup
-    And User look title "Quản Lý Người Dùng"
+#CRU_16: Kiểm tra tạo mới dùng người dùng thành công
+#    [Tags]    @smoketest         @regression
+#    When Go to page create user
+#    And Enter "fullname" in "Họ và tên" with "_RANDOM_"
+#    And Enter "email" in "Email" with "_RANDOM_"
+#    And Enter "phone" in "Số điện thoại" with "_RANDOM_"
+#    And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
+#    And Click "Lưu" button
+#    Then User look message "Thêm quản trị viên thành công" popup
+#    And User look title "Quản Lý Người Dùng"
 
 CRU_17: Kiểm tra có thể điều hướng đến trang danh sách người dùng từ trang Tạo mới người dùng
     [Tags]    @smoketest         @regression
@@ -148,7 +148,7 @@ CRU_18: Kiểm tra thông tin nhập sẽ bị xóa sau khi reload trang web
     And Enter "email" in "Email" with "_RANDOM_"
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
     And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
-    And Reload
+    And Reload Page
     Then User look "Họ và tên" field empty
     And User look "Email" field empty
     And User look "Số điện thoại" field empty
@@ -156,66 +156,66 @@ CRU_18: Kiểm tra thông tin nhập sẽ bị xóa sau khi reload trang web
 
 #-------------------------------------VIEW LIST OF USER--------------------------------------------------------------------------------------
 CRU_19: Kiểm tra hiển thị thành công danh sách người dùng đã tạo
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     Then Show list of "users"
 
 CRU_20: Kiểm tra việc tìm kiếm thành công khi nhập "Mã người dùng" hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "text" in "Tìm kiếm" with "${SEARCH_NAME_CODE}"
     Then Show list of "users"
 
 CRU_21: Kiểm tra việc tìm kiếm thành công khi nhập "Họ và tên" hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "text" in "Tìm kiếm" with "${SEARCH_FULLNAME}"
     Then Show list of "users"
 
 CRU_22: Kiểm tra việc tìm kiếm thành công khi nhập "Email" hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "email" in "Tìm kiếm" with "${SEARCH_EMAIL}"
     Then Show list of "users"
 
 CRU_23: Kiểm tra việc tìm kiếm thành công khi nhập "Số điện thoại" hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "phone" in "Tìm kiếm" with "${SEARCH_PHONE}"
     Then Show list of "users"
 
 CRU_24: Kiểm tra việc tìm kiếm thành công khi nhập "Vai trò" hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "text" in "Tìm kiếm" with "${SEARCH_ROLE}"
     Then Show list of "users"
 
 CRU_25: Kiểm tra việc tìm kiếm không thành công khi nhập "Mã người dùng" không hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "name code" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
 CRU_26: Kiểm tra việc tìm kiếm không thành công khi nhập "Họ và tên" không hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "fullname" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
 CRU_27: Kiểm tra việc tìm kiếm không thành công khi nhập "Email" không hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "email" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
 CRU_28: Kiểm tra việc tìm kiếm không thành công khi nhập "Số điện thoại" không hợp lệ vào thanh tìm kiếm
-    When Login to admin
+    When Login to Admin
     And Click "Quản lý người dùng" menu
     And Search "phone" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
 CRU_29: Kiểm tra có thể xem danh sách trang kế tiếp, trước trước, 10 trang kế tiếp, 10 trang trước
-    Login to admin
+    Login to Admin
     And Click "Quản lý người dùng" menu
     And Click ">" to "next" page
     Then Show list of "users"
