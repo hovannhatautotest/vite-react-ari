@@ -16,7 +16,7 @@ ${SEARCH_PHONE}        0941225407
 ${SEARCH_ROLE}         Quản trị viên
 
 ${URL_DEFAULT}      http://stag.balance.ari.com.vn/#/      # Web internet
-# ${URL_DEFAULT}      http://localhost:5173/  
+# ${URL_DEFAULT}      http://localhost:5173/
 ${STATE}            Evaluate  json.loads('''{}''')  json
 
 *** Keywords ***
@@ -26,21 +26,21 @@ Login to Admin
   Enter "text" in "Mật khẩu" with "Ari123456#"
   Click "Đăng Nhập" button
   #User look message "Đăng nhập thành công" popup
-  Wait Until Element Is Visible    //*[@id='name-application']  
+  Wait Until Element Is Visible    //*[@id='name-application']
 
 Login to Store
   Enter "email" in "Tên đăng nhập" with "chstag11111@getnada.com"
   Enter "text" in "Mật khẩu" with "Ari123456#"
   Click "Đăng Nhập" button
   #User look message "Đăng nhập thành công" popup
-  Wait Until Element Is Visible    //*[@id='name-application']  
+  Wait Until Element Is Visible    //*[@id='name-application']
 
 Login to Supplier
   Enter "email" in "Tên đăng nhập" with "nccstag11111@getnada.com"
   Enter "text" in "Mật khẩu" with "Ari123456#"
   Click "Đăng Nhập" button
   #User look message "Đăng nhập thành công" popup
-  Wait Until Element Is Visible    //*[@id='name-application']  
+  Wait Until Element Is Visible    //*[@id='name-application']
 
 #### Setup e Teardown
 Setup
@@ -48,12 +48,12 @@ Setup
   New Browser                 ${BROWSER}  headless=${HEADLESS}
   New Page                    ${URL_DEFAULT}
   ${STATE}                    Evaluate  json.loads('''{}''')  json
-  
+
 Tear Down
   Close Browser               ALL
 
 # Chờ đến khi phần tử được hiển thị trên giao diện người dùng
-Wait Until Element Is Visible    
+Wait Until Element Is Visible
   [Arguments]               ${locator}  ${message}=${EMPTY}   ${timeout}=${BROWSER_TIMEOUT}
   Wait For Elements State   ${locator}  visible               ${timeout}                    ${message}
 
@@ -62,7 +62,7 @@ Wait Until Element Is Not Exist
   [Arguments]               ${locator}  ${message}=${EMPTY}   ${timeout}=${BROWSER_TIMEOUT}
   Wait For Elements State   ${locator}  detached              ${timeout}                    ${message}
 
-#Kiểm tra xem phần tử có tồn tại trên giao diện người dùng hay không. 
+#Kiểm tra xem phần tử có tồn tại trên giao diện người dùng hay không.
 Element Should Be Exist
   [Arguments]               ${locator}  ${message}=${EMPTY}   ${timeout}=${SHOULD_TIMEOUT}
   Wait For Elements State   ${locator}  attached              ${timeout}                    ${message}
@@ -82,7 +82,7 @@ Element Should Not Be Visible
   [Arguments]               ${locator}  ${message}=${EMPTY}   ${timeout}=${SHOULD_TIMEOUT}
   Wait For Elements State   ${locator}  hidden                ${timeout}                    ${message}
 
-# Kiểm tra tiêu đề của trang web 
+# Kiểm tra tiêu đề của trang web
 Title Should Be
     [Arguments]    ${expectedTitle}
     Wait Until Element Spin
@@ -99,7 +99,7 @@ Enter at "${name}" field to Login
     Press Keys    ${element}    Enter
     Click Confirm To Action
     Scroll By                 ${None}
-    Wait Until Element Is Visible    //*[@id='name-application'] 
+    Wait Until Element Is Visible    //*[@id='name-application']
 
 # DASHBOARD CỦA TRANG WEB
 User look dashboard "${dashboard}"
@@ -141,6 +141,12 @@ Get Random Text
   ELSE IF  ${cnt} > 0 and '${type}' == 'phone'
     ${new_text}=            FakerLibrary.Random Int           min=55555555                  max=999999999999
     ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'phone_7'
+    ${new_text}=            FakerLibrary.Random Int           min=0000000                  max=9999999
+    ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'phone_invalid'
+    ${new_text}=            FakerLibrary.Random Int           min=0000000000000             max=9999999999999
+    ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'number'
     ${new_text}=            FakerLibrary.Random Int           min=55555555                  max=999999999999
     ${new_text}=            Convert To String                 ${new_text}
@@ -181,7 +187,7 @@ Enter "${type}" in "${name}" with "${text}"
 # Click vào trường dữ liệu trên form.
 Click in "${name}" field
   ${element}=               Get Element Form Item By Name     ${name}                       //input[contains(@class, "ant-input")]
-  Click                     ${element}                        
+  Click                     ${element}
 
 # Nhập giá trị vào trường Mô tả trên form.
 Enter "${type}" in textarea "${name}" with "${text}"
@@ -381,7 +387,7 @@ Wait Until Element Spin
     Wait Until Element Is Not Exist                           ${element}
   END
 # -------------------------------------------------------------------------------------------------------------
-User look title "${title}"  
+User look title "${title}"
     Wait Until Element Spin
     # Sleep    3
     Title Should Be    ${title}
@@ -399,22 +405,18 @@ Required message "${name}" field displayed under "${text}"
 # Kiểm tra Menu khi đăng nhập thành công
 User look menu "${text}"
   Element Text Should Be    xpath=//span[contains(text(),'${text}')]    ${text}
- 
+
 # Click vào link "Quên mật khẩu?"
 Click "${name}" link
-  Click    //a[contains(text(),'${name}')]   
+  Click    //a[contains(text(),'${name}')]
   # Click        //button[text()='${name}']
 
 # Kiểm tra Tiêu đề khi nhấn vào link "Quên mật khẩu?"
 User look contains title is "${title}"
-  Element Text Should Be    xpath=//h1[contains(text(),'${title}')]      ${title}
-
-# Form "Quên mật khẩu" biến mất
-"${forgotpassword}" form disappears
-    Wait Until Element Is Not Exist    //h3[contains(text(),'${forgotpassword}')]
+  Element Text Should Be    xpath=//p[contains(text(),'${title}')]      ${title}
 
 # Click icon "Eye" để hiện thị mật khẩu
-Click "Eye" icon to display password 
+Click "Eye" icon to display password
   Click    xpath=//*[contains(@class, 'text-lg')]
   # ${element}    Get Elements    //*[contains(@class, 'absolute')]
   # Click    ${element}[0]
@@ -437,7 +439,7 @@ User look textarea "${name}" field empty
 User look select "${name}" field empty
     ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
     Element Text Should Be    ${element}    ${EMPTY}
-    
+
 # Chọn ngôn ngữ tiếng anh
 Change language with "${text}"
     Click    //span[contains(@class, "ant-select-selection-item")]
@@ -454,8 +456,9 @@ Go to page create user
 Show list of "${name}"
     Log To Console    ****************List of ${name}****************
     Wait Until Element Spin
-    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")] 
-    ${count}=           Set Variable        2
+    ${elements}=        Get Elements        xpath=//*[contains(@class, "ant-table-row")]
+    Wait Until Element Is Visible         ${elements}[0]
+    ${count}=           Set Variable        1
     ${stt}=             Set Variable        1
     IF  '${name}' == 'users'
         FOR  ${i}  IN  @{elements}
@@ -464,13 +467,13 @@ Show list of "${name}"
             ${email}        Get Text    //tbody/tr[${count}]/td[3]
             ${phone}        Get Text    //tbody/tr[${count}]/td[4]
             ${role}         Get Text    //tbody/tr[${count}]/td[5]
-            Log To Console    ${stt}. Mã người dùng: ${user_code} | Họ và tên: ${fullname} | Email: ${email} | Số điện thoại: ${phone} | Vai trò: ${role}         
+            Log To Console    ${stt}. Mã người dùng: ${user_code} | Họ và tên: ${fullname} | Email: ${email} | Số điện thoại: ${phone} | Vai trò: ${role}
             Log To Console    ============================================================================================================================================
             ${count}=    Evaluate    ${count} + 1
             ${stt}=    Evaluate    ${stt} + 1
         END
     END
-    ${total}=    Evaluate    ${count} - 2
+    ${total}=    Evaluate    ${count} - 1
     Log To Console    Tổng số lượng ${name} là: ${total}
 
 # Tìm kiếm với từ khóa tương ứng
@@ -494,9 +497,16 @@ No ${name} are shown
     ${text}=    Get Text    ${element}
     Run Keyword If  '${text}' == 'Trống'    Log To Console    Không có ${name} nào ứng với từ khóa tìm kiếm
 
-# Chọn Next page hoặc Previous page  
+# Chọn Next page hoặc Previous page
 Click "${icon}" to "${next}" page
-    ${element}=    Set Variable    //button[@aria-label="${next}"]
-    Wait Until Element Is Visible    ${element}
-    Click    ${element}
+    ${elements}=    Get Elements    //button[contains(@id, '${next}')]
+    IF  '${next}' == 'next'
+        Click    ${elements}[1]
+    ELSE IF  '${next}' == 'prev'
+        Click    ${elements}[1]       
+    ELSE IF  '${next}' != 'next'
+        Click    ${elements}[0]
+    ELSE IF  '${next}' != 'prev'
+        Click    ${elements}[0]
+    END    
     Wait Until Element Spin

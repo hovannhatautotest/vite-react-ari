@@ -7,7 +7,7 @@ Test Teardown       Tear Down
 *** Test Cases ***
 
 # # ============================================NAVIGATE CREATE USER PAGE=====================================================
-CRU_01 Verify that the page can be navigated to create a new user with the Staff role
+CRU_01 Kiểm tra có thể điều hướng đến trang tạo mới người dùng
     [Tags]    @smoketest    @regression
     Login to Admin
     And Click "Quản lý người dùng" menu
@@ -15,74 +15,96 @@ CRU_01 Verify that the page can be navigated to create a new user with the Staff
     Then User look title "Quản Lý Người Dùng"
     And User look contains title is "Thêm người dùng"
 
-# # =====================================================VALIDATION TEXT=====================================================
-CRU_02 Verify that validation text when blank all fields & "Lưu lại" button
+# =====================================================VALIDATION TEXT=====================================================
+CRU_02 Kiểm tra Validation text khi không nhập thông tin nào cả
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Click "Lưu" button
-    Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
-    And Required message "Email" displayed under "Xin vui lòng nhập email" field
-    And Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
+    Then Required message "Họ và tên" displayed under "Xin vui lòng nhập tên người dùng" field
+    And Required message "Email" displayed under "Xin vui lòng nhập email người dùng" field
+    And Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại người dùng" field
 
-CRU_03 Verify that validation text of "Họ và tên" field display when create new user with "Họ và tên" field empty
+CRU_03 Kiểm tra Validation text tại trường Họ và tên khi bỏ trong Họ và tên
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "text" in "Họ và tên" with ""
     And Enter "email" in "Email" with ""
-    Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
+    Then Required message "Họ và tên" displayed under "Xin vui lòng nhập tên người dùng" field
 
-CRU_04 Verify that validation text of "Họ và tên" field display when enter invalid "Họ và tên" field
+CRU_04 Kiểm tra Validation text tại trường Họ và tên khi nhập sai định dạng Họ và tên
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "number" in "Họ và tên" with "_RANDOM_"
     And Enter "email" in "Email" with ""
-    Then Required message "Họ và tên" displayed under "Xin vui lòng chỉ nhập chữ!" field
+    Then Required message "Họ và tên" displayed under "Xin vui lòng chỉ nhập chữ" field
 
-CRU_05 Verify that validation text of "Email" field display when create new user with "Email" field empty
+CRU_05 Kiểm tra Validation text tại trường Email khi không nhập email
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "text" in "Email" with ""
     And Enter "text" in "Họ và tên" with ""
-    Then Required message "Email" displayed under "Xin vui lòng nhập email" field
+    Then Required message "Email" displayed under "Xin vui lòng nhập email người dùng" field
 
-CRU_06 Verify that the Email field's validation text is displayed when create new user with invalid email format and less than 6 characters long.
-    [Tags]    @smoketest         @regression
-    When Go to page create user
-    And Enter "text" in "Email" with "12345"
-    And Enter "text" in "Họ và tên" with ""
-    Then Required message "Email" field displayed under "Vui lòng nhập địa chỉ email hợp lệ!"
-    And Required message "Email" field displayed under "Xin vui lòng nhập tối thiểu 6 kí tự!"
-
-CRU_07 Verify that the Email field's validation text is displayed when create new user with invalid email format and less than 6 characters long.
+CRU_06 Kiểm tra Validation text tại trường Email khi nhập sai định dạng email
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "text" in "Email" with "_RANDOM_"
     And Enter "text" in "Họ và tên" with ""
     Then Required message "Email" displayed under "Vui lòng nhập địa chỉ email hợp lệ!" field
 
-CRU_08 Verify that validation text of "Số điện thoại" field display when create new user with "Số điện thoại" field empty
+CRU_07 Kiểm tra Validation text tại trường Số điện thoại khi không nhập Số điện thoại
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "text" in "Số điện thoại" with ""
     And Enter "text" in "Họ và tên" with ""
-    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại người dùng" field
 
-CRU_09 Verify that validation text of "Số điện thoại" field display when create new user with "Số điện thoại" field invalid format
+CRU_08 Kiểm tra Validation text tại trường Số điện thoại khi nhập sai định dạng số điện thoại và nhỏ hơn 8 ký tự
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "text" in "Số điện thoại" with "abcdef"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Số điện thoại" field displayed under "Xin vui lòng chỉ nhập số"
+    And Required message "Số điện thoại" field displayed under "Xin vui lòng nhập tối thiểu 8 ký tự số"
+
+CRU_09 Kiểm tra Validation text tại trường Số điện thoại khi nhập sai định dạng số điện thoại và lớn hơn 12 ký tự
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "text" in "Số điện thoại" with "_RANDOM_"
     And Enter "text" in "Họ và tên" with ""
-    Then Required message "Số điện thoại" displayed under "Xin vui lòng chỉ nhập số" field
+    Then Required message "Số điện thoại" field displayed under "Xin vui lòng chỉ nhập số"
+    And Required message "Số điện thoại" field displayed under "Xin vui lòng nhập tối đa 12 ký tự số"
 
-CRU_10 Verify that validation text of "Số điện thoại" field display when create new user with "Số điện thoại" field more than 12 numbers characters
+CRU_10 Kiểm tra Validation text tại trường Số điện thoại khi nhập Số điện thoại nhỏ hơn 8 ký tự
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "phone_7" in "Số điện thoại" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối thiểu 8 ký tự số" field
+
+CRU_11 Kiểm tra Validation text tại trường Số điện thoại khi nhập Số điện thoại lớn hơn 12 ký tự
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "phone_invalid" in "Số điện thoại" with "_RANDOM_"
     And Enter "text" in "Họ và tên" with ""
-    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa 12 kí tự số!" field
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa 12 ký tự số" field
 
-# ##=====================================================ERROR MESSAGE=====================================================
-CRU_11 Verify that error message display when create new user with Email has already been registered.
+CRU_12 Kiểm tra Validation text tại trường Số điện thoại khi nhập sai định dạng Số điện thoại và lớn hơn 8 ký tự nhưng nhỏ hơn 12 ký tự
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "text" in "Số điện thoại" with "Hồ Văn Nhật"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng chỉ nhập số" field
+
+CRU_13 Kiểm tra Validation text tại trường Ghi chú khi nhập quá 500 kí tự
+    [Tags]    @smoketest         @regression
+    When Go to page create user
+    And Enter "word" in textarea "Ghi chú" with "_RANDOM_"
+    And Enter "text" in "Họ và tên" with ""
+    Then Required message "Ghi chú" displayed under "Chỉ được nhập tối đa 500 kí tự" field
+
+##=====================================================ERROR MESSAGE=====================================================
+CRU_14 Kiểm tra error message khi tạo mới người dùng có email đã tồn tại trên hệ thống
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
@@ -91,7 +113,7 @@ CRU_11 Verify that error message display when create new user with Email has alr
     And Click "Lưu" button
     Then User look message "Email đã được đăng ký trước đó." popup
 
-CRU_12 Verify that error message display when create new user with The phone number has already been registered.
+CRU_15 Kiểm tra error message khi tạo mới người dùng có Số điện thoại đã tồn tại trên hệ thống
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
@@ -101,7 +123,7 @@ CRU_12 Verify that error message display when create new user with The phone num
     Then User look message "Số điện thoại đã được đăng ký trước đó." popup
 
 # ##=====================================================CREATE USER SUCCESSFULLY=====================================================
-CRU_13 Verify that create new user is successful when Enter valid information
+CRU_16 Kiểm tra tạo mới dùng người dùng thành công
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
@@ -109,11 +131,11 @@ CRU_13 Verify that create new user is successful when Enter valid information
     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
     And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
     And Click "Lưu" button
-    Then User look message "Tạo người dùng mới thành công." popup
+    Then User look message "Thêm quản trị viên thành công" popup
     And User look title "Quản Lý Người Dùng"
 
-# ###-----------------------------------------RELOAD PAGE---------------------------------------------------##
-CRU_14 Verify entered data not showing when Refresh with F5 key
+###-----------------------------------------RELOAD PAGE---------------------------------------------------##
+CRU_17 Kiểm tra thông tin đã nhập sẽ bị xóa khi reload trang web bằng phi F5
     [Tags]    @smoketest         @regression
     When Go to page create user
     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
@@ -126,67 +148,67 @@ CRU_14 Verify entered data not showing when Refresh with F5 key
     And User look "Số điện thoại" field empty
     And User look textarea "Ghi chú" field empty
 
-# #-------------------------------------VIEW LIST OF USER--------------------------------------------------------------------------------------
-CRU_15 Verify that the list of all users can be viewed successfully
+#-------------------------------------VIEW LIST OF USER--------------------------------------------------------------------------------------
+ CRU_18 Kiểm tra hiển thị thành công danh sách người dùng
     When Login to admin
     And Click "Quản lý người dùng" menu
     Then Show list of "users"
 
-CRU_16 Verify that Admin can search user successfully when entering valid keyword to search box with "Mã người dùng"
+ CRU_19 Kiểm tra việc tìm kiếm thành công khi nhập "Mã người dùng" hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "text" in "Tìm kiếm" with "${SEARCH_NAME_CODE}"
     Then Show list of "users"
 
-CRU_17 Verify that Admin can search user successfully when entering valid keyword to search box with "Họ và tên"
+ CRU_20 Kiểm tra việc tìm kiếm thành công khi nhập "Họ và tên" hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "text" in "Tìm kiếm" with "${SEARCH_FULLNAME}"
     Then Show list of "users"
 
-CRU_18 Verify that Admin can search user successfully when entering valid keyword to search box with "Email"
+ CRU_21 Kiểm tra việc tìm kiếm thành công khi nhập "Email" hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "email" in "Tìm kiếm" with "${SEARCH_EMAIL}"
     Then Show list of "users"
 
-CRU_19 Verify that Admin can search user successfully when entering valid keyword to search box with "Số điện thoại"
+ CRU_22 Kiểm tra việc tìm kiếm thành công khi nhập "Số điện thoại" hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "phone" in "Tìm kiếm" with "${SEARCH_PHONE}"
     Then Show list of "users"
 
-CRU_20 Verify that Admin can search user successfully when entering valid keyword to search box with "Vai trò"
+ CRU_23 Kiểm tra việc tìm kiếm thành công khi nhập "Vai trò" hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "text" in "Tìm kiếm" with "${SEARCH_ROLE}"
     Then Show list of "users"
 
-CRU_21 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Mã người dùng"
+ CRU_24 Kiểm tra việc tìm kiếm không thành công khi nhập "Mã người dùng" không hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "name code" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU_22 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Họ và tên"
+ CRU_25 Kiểm tra việc tìm kiếm không thành công khi nhập "Họ và tên" không hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "fullname" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU_23 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Email"
+ CRU_26 Kiểm tra việc tìm kiếm không thành công khi nhập "Email" không hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "email" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU_24 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Số điện thoại"
+ CRU_27 Kiểm tra việc tìm kiếm không thành công khi nhập "Số điện thoại" không hợp lệ vào thanh tìm kiếm
     When Login to admin
     And Click "Quản lý người dùng" menu
     And Search "phone" in "Tìm kiếm" with "_RANDOM_"
     Then No users are shown
 
-CRU_25 Verify that Next page and Previous page, Next 10 page and Previous 10 page
+CRU_28 Kiểm tra có thể xem danh sách trang kế tiếp, trước trước, 10 trang kế tiếp, 10 trang trước
     Login to admin
     And Click "Quản lý người dùng" menu
     And Click ">" to "next" page
