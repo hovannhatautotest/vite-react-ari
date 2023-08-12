@@ -5,7 +5,7 @@ Library             String
 
 *** Variables ***
 ${BROWSER}          chromium
-${HEADLESS}         ${True}
+${HEADLESS}         ${False}
 ${BROWSER_TIMEOUT}  60 seconds
 ${SHOULD_TIMEOUT}   0.1 seconds
 
@@ -139,6 +139,15 @@ Get Random Text
   ELSE IF  ${cnt} > 0 and '${type}' == 'phone_invalid'
     ${new_text}=            FakerLibrary.Random Int           min=0000000000000             max=9999999999999
     ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'fax_7'
+    ${new_text}=            FakerLibrary.Random Int           min=0000000                  max=9999999
+    ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'fax_valid'
+    ${new_text}=            FakerLibrary.Random Int           min=00000000                  max=99999999
+    ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'fax_invalid'
+    ${new_text}=            FakerLibrary.Random Int           min=0000000000000                  max=9999999999999
+    ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'number'
     ${new_text}=            FakerLibrary.Random Int           min=55555555                  max=999999999999
     ${new_text}=            Convert To String                 ${new_text}
@@ -242,7 +251,8 @@ Click radio "${text}" in line "${name}"
 
 # Bật hoặc tắt một switch trên form.
 Click switch "${name}" to be activated
-  ${element}=               Get Element Form Item By Name     ${name}                       //button[contains(@class, "ant-switch")]
+#  ${element}=               Get Element Form Item By Name     ${name}                       //button[contains(@class, "ant-switch")]
+  ${element}=               Set Variable                       //button[contains(@class, "ant-switch")]
   Click                     ${element}
 
 # Chọn một tùy chọn từ một trường select dạng cây trên form.
@@ -310,7 +320,7 @@ Click on the previously created "${name}" tree to edit
 ###  -----  Element  -----  ###
 # Nhấp vào nút có nội dung là "${text}".
 Click "${text}" button
-  Click                     xpath=//button[text()='${text}']
+  Click                     xpath=//button[contains(text(),'${text}')]
   Click Confirm To Action
   Scroll By                 ${None}
 
@@ -455,6 +465,19 @@ Show list of "${name}"
             ${role}         Get Text    //tbody/tr[${count}]/td[5]
             Log To Console    ${stt}. Mã người dùng: ${user_code} | Họ và tên: ${fullname} | Email: ${email} | Số điện thoại: ${phone} | Vai trò: ${role}
             Log To Console    ============================================================================================================================================
+            ${count}=    Evaluate    ${count} + 1
+            ${stt}=    Evaluate    ${stt} + 1
+        END
+    ELSE IF  '${name}' == 'Stores'
+        FOR  ${i}  IN  @{elements}
+            ${store_code}     Get Text      //tbody/tr[${count}]/td[1]
+            ${store_name}     Get Text      //tbody/tr[${count}]/td[2]
+            ${address}        Get Text      //tbody/tr[${count}]/td[3]
+            ${store_type}     Get Text      //tbody/tr[${count}]/td[4]
+            ${store_user}     Get Text      //tbody/tr[${count}]/td[5]
+            ${phone}          Get Text      //tbody/tr[${count}]/td[6]
+            Log To Console    ${stt}. Mã cửa hàng: ${store_code} | Tên cửa hàng: ${store_name} | Địa chỉ: ${address} | Loại cửa hàng: ${store_type} | Người đại diện: ${store_user} | Số điện thoại: ${phone}
+            Log To Console    ================================================================================================================================================================================
             ${count}=    Evaluate    ${count} + 1
             ${stt}=    Evaluate    ${stt} + 1
         END
