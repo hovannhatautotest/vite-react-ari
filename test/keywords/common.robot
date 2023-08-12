@@ -182,8 +182,8 @@ Enter "${type}" in "${name}" with "${text}"
   ${cnt}=                   Get Length                        ${text}
   IF  ${cnt} > 0
     Set Global Variable     ${STATE["${name}"]}               ${text}
-  END
-
+  END                      
+  
 # Click vào trường dữ liệu trên form.
 Click in "${name}" field
   ${element}=               Get Element Form Item By Name     ${name}                       //input[contains(@class, "ant-input")]
@@ -199,6 +199,10 @@ Enter "${type}" in textarea "${name}" with "${text}"
   IF  ${cnt} > 0
     Set Global Variable     ${STATE["${name}"]}               ${text}
   END
+
+Click in textarea "${name}" field
+  ${element}=               Get Element Form Item By Name     ${name}                       //textarea
+  Click                     ${element}
 
 # Nhập giá trị ngày tháng vào trường trên form.
 Enter date in "${name}" with "${text}"
@@ -333,13 +337,6 @@ Click "${text}" menu
   Click                     xpath=//span[contains(text(),'${text}')]
   Wait Until Element Spin
 
-# Nhấp vào submenu có nội dung là "${text}" và điều hướng đến "${url}".
-Click "${text}" sub menu to "${url}"
-  Wait Until Element Spin
-  Click                     xpath=//a[contains(@class, "sub-menu") and descendant::span[contains(text(), "${text}")]]
-  ${curent_url}=            Get Url
-  Should Contain            ${curent_url}                     ${URL_DEFAULT}${url}
-
 # Nhấp vào submenu có nội dung là "${text}".
 Click "${text}" sub menu
   Wait Until Element Spin
@@ -418,8 +415,6 @@ User look contains title is "${title}"
 # Click icon "Eye" để hiện thị mật khẩu
 Click "Eye" icon to display password
   Click    xpath=//*[contains(@class, 'text-lg')]
-  # ${element}    Get Elements    //*[contains(@class, 'absolute')]
-  # Click    ${element}[0]
 
 # Kiểm tra mật khẩu có hiển thị hay không khi click icon "eye"
 User look "${name}" field with type "${type}"
@@ -439,11 +434,6 @@ User look textarea "${name}" field empty
 User look select "${name}" field empty
     ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
     Element Text Should Be    ${element}    ${EMPTY}
-
-# Chọn ngôn ngữ tiếng anh
-Change language with "${text}"
-    Click    //span[contains(@class, "ant-select-selection-item")]
-    Click    //*[contains(@class, "ant-select-item-option-content") and text()="${text}"]
 
 ##=============================CREATE USER==================================================
 # Đến trang tạo mới người dùng

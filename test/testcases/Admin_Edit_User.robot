@@ -7,7 +7,7 @@ Test Teardown       Tear Down
 *** Test Cases ***
 
 # # ============================================NAVIGATE CREATE USER PAGE=====================================================
-EDU_01 Verify that the page can be navigated to page Edit user
+EDU_01: Kiểm tra có thể điều hướng đến trang chỉnh sửa người dùng
     [Tags]    @smoketest    @regression
     Login to Admin
     And Click "Quản lý người dùng" menu
@@ -16,165 +16,121 @@ EDU_01 Verify that the page can be navigated to page Edit user
     And User look contains title is "Chỉnh sửa người dùng"  
 
 # # =====================================================VALIDATION TEXT=====================================================
-EDU_02 Verify that validation text of "Họ và tên" field display when edit user with "Họ và tên" field empty
+EDU_02: Kiểm tra Validation text tại trường Họ và tên khi bỏ trong Họ và tên
     [Tags]    @smoketest         @regression
     When Go to page edit user
     And Enter "text" in "Họ và tên" with ""
-    And Enter "phone" in "Số điện thoại" with ""
-    Then Required message "Họ và tên" displayed under "Xin vui lòng nhập họ và tên" field
+    And Click in "Số điện thoại" field
+    Then Required message "Họ và tên" displayed under "Xin vui lòng nhập tên người dùng" field
 
-EDU_03 Verify that validation text of "Họ và tên" field display when enter invalid "Họ và tên" field
+EDU_03: Kiểm tra Validation text tại trường Họ và tên khi nhập sai định dạng Họ và tên
     [Tags]    @smoketest         @regression
     When Go to page edit user
     And Enter "number" in "Họ và tên" with "_RANDOM_"
-    And Enter "phone" in "Số điện thoại" with ""
-    Then Required message "Họ và tên" displayed under "Xin vui lòng chỉ nhập chữ!" field
+    And Click in "Số điện thoại" field
+    Then Required message "Họ và tên" displayed under "Xin vui lòng chỉ nhập chữ" field
 
-EDU_04 Verify that validation text of "Số điện thoại" field display when edit user with "Số điện thoại" field empty
+EDU_04: Kiểm tra Validation text tại trường Số điện thoại khi không nhập Số điện thoại
     [Tags]    @smoketest         @regression
     When Go to page edit user
     And Enter "text" in "Số điện thoại" with ""
-    And Enter "text" in "Họ và tên" with ""
-    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại" field
+    And Click in "Họ và tên" field
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập số điện thoại người dùng" field
 
-EDU_05 Verify that validation text of "Số điện thoại" field display when enter invalid format phone number "Số điện thoại" field
+EDU_05: Kiểm tra Validation text tại trường Số điện thoại khi nhập sai định dạng số điện thoại và nhỏ hơn 8 ký tự
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "text" in "Số điện thoại" with "abcdef"
+    And Click in "Họ và tên" field
+    Then Required message "Số điện thoại" field displayed under "Xin vui lòng chỉ nhập số"
+    And Required message "Số điện thoại" field displayed under "Xin vui lòng nhập tối thiểu 8 ký tự số"
+
+EDU_06: Kiểm tra Validation text tại trường Số điện thoại khi nhập sai định dạng số điện thoại và lớn hơn 12 ký tự
     [Tags]    @smoketest         @regression
     When Go to page edit user
     And Enter "text" in "Số điện thoại" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with ""
-    Then Required message "Số điện thoại" displayed under "Xin vui lòng chỉ nhập số" field
+    And Click in "Họ và tên" field
+    Then Required message "Số điện thoại" field displayed under "Xin vui lòng chỉ nhập số"
+    And Required message "Số điện thoại" field displayed under "Xin vui lòng nhập tối đa 12 ký tự số"
 
-EDU_06 Verify that validation text of "Số điện thoại" field display when enter "Số điện thoại" field more than 12 numbers characters
+EDU_07: Kiểm tra Validation text tại trường Số điện thoại khi nhập Số điện thoại nhỏ hơn 8 ký tự
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "phone_7" in "Số điện thoại" with "_RANDOM_"
+    And Click in "Họ và tên" field
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối thiểu 8 ký tự số" field
+
+EDU_08: Kiểm tra Validation text tại trường Số điện thoại khi nhập Số điện thoại lớn hơn 12 ký tự
     [Tags]    @smoketest         @regression
     When Go to page edit user
     And Enter "phone_invalid" in "Số điện thoại" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with ""
-    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa 12 kí tự số!" field
+    And Click in "Họ và tên" field
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng nhập tối đa 12 ký tự số" field
 
-EDU_07 Verify that validation text of "Ghi chú" field when entering greater than 500 characters
+EDU_09: Kiểm tra Validation text tại trường Số điện thoại khi nhập sai định dạng Số điện thoại và lớn hơn 8 ký tự nhưng nhỏ hơn 12 ký tự
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "text" in "Số điện thoại" with "Hồ Văn Nhật"
+    And Click in "Họ và tên" field
+    Then Required message "Số điện thoại" displayed under "Xin vui lòng chỉ nhập số" field
+
+EDU_10: Kiểm tra Validation text tại trường Ghi chú khi nhập quá 500 kí tự
     [Tags]    @smoketest         @regression
     When Go to page edit user
     And Enter "word" in textarea "Ghi chú" with "_RANDOM_"
-    And Enter "text" in "Họ và tên" with ""
+    And Click in "Họ và tên" field
     Then Required message "Ghi chú" displayed under "Chỉ được nhập tối đa 500 kí tự" field
 
 # ##=====================================================ERROR MESSAGE=====================================================
-EDU_12 Verify that error message display when edit user with The phone number has already been registered.
+EDU_11: Kiểm tra error message khi chỉnh sửa người dùng với Số điện thoại đã tồn tại trên hệ thống
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "phone" in "Số điện thoại" with "0941225407"
+    And Click "Lưu" button
+    Then User look message "Số điện thoại hoặc email đã tồn tại trong hệ thống." popup
+
+##=====================================================EDIT USER SUCCESSFULLY=====================================================
+EDU_12: Kiểm tra thay đổi thành công thông tin người dùng khi thay đổi "Họ và tên"
     [Tags]    @smoketest         @regression
     When Go to page edit user
     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
-    And Enter "email" in "Email" with "_RANDOM_"
-    And Enter "phone" in "Số điện thoại" with "0941225407"
     And Click "Lưu" button
-    Then User look message "Số điện thoại đã được đăng ký trước đó." popup
+    Then User look message "Lưu người dùng thành công" popup
+    And User look title "Quản Lý Người Dùng"
+    And User look contains title is "Quản lý người dùng"
+
+EDU_13 Kiểm tra thay đổi thành công thông tin người dùng khi thay đổi "Số điện thoại"
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "phone" in "Số điện thoại" with "_RANDOM_"
+    And Click "Lưu" button
+    Then User look message "Lưu người dùng thành công" popup
+    And User look title "Quản Lý Người Dùng"
+    And User look contains title is "Quản lý người dùng"
+
+EDU_14: Kiểm tra thay đổi thành công thông tin người dùng khi thay đổi "Ghi chú"
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
+    And Click "Lưu" button
+    Then User look message "Lưu người dùng thành công" popup
+    And User look title "Quản Lý Người Dùng"
+    And User look contains title is "Quản lý người dùng"
+
+EDU_15: Kiểm tra có thể điều hướng đến trang danh sách người dùng từ trang chỉnh sửa người dùng
+    [Tags]    @smoketest         @regression
+    When Go to page edit user
+    And Click "Trở về" button
+    Then User look title "Quản Lý Người Dùng"
+    And User look contains title is "Quản lý người dùng"
+
 
 *** Keywords ***
 Select User need to edit
-    ${element}    Get Elements    //*[contains(@class, "ant-table-row")]
-    ${count}=    Get Length    ${element}
-    ${index}=    Evaluate    ${count}-${count}
-    Click         ${element}[${index}]    left    2   
+    ${element}    Set Variable   //td[contains(text(),'fateh62@example.net')]
+    Click         ${element}        left        2 
 
 Go to page edit user
     Login to Admin
     And Click "Quản lý người dùng" menu
     And Select User need to edit
-
-
-# # ##=====================================================CREATE USER SUCCESSFULLY=====================================================
-# EDU_13 Verify that edit user is successful when Enter valid information
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
-#     And Enter "email" in "Email" with "_RANDOM_"
-#     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
-#     And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
-#     And Click "Lưu" button
-#     Then User look message "Tạo người dùng mới thành công." popup
-#     And User look title "Quản Lý Người Dùng"
-
-# # ###-----------------------------------------RELOAD PAGE---------------------------------------------------##
-# EDU_14 Verify entered data not showing when Refresh with F5 key
-#     [Tags]    @smoketest         @regression
-#     When Go to page edit user
-#     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
-#     And Enter "email" in "Email" with "_RANDOM_"
-#     And Enter "phone" in "Số điện thoại" with "_RANDOM_"
-#     And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
-#     And Reload
-#     Then User look "Họ và tên" field empty
-#     And User look "Email" field empty
-#     And User look "Số điện thoại" field empty
-#     And User look textarea "Ghi chú" field empty
-
-# # #-------------------------------------VIEW LIST OF USER--------------------------------------------------------------------------------------
-# EDU_15 Verify that the list of all users can be viewed successfully
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     Then Show list of "users"
-
-# EDU_16 Verify that Admin can search user successfully when entering valid keyword to search box with "Mã người dùng"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "text" in "Tìm kiếm" with "${SEARCH_NAME_CODE}"
-#     Then Show list of "users"
-
-# EDU_17 Verify that Admin can search user successfully when entering valid keyword to search box with "Họ và tên"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "text" in "Tìm kiếm" with "${SEARCH_FULLNAME}"
-#     Then Show list of "users"
-
-# EDU_18 Verify that Admin can search user successfully when entering valid keyword to search box with "Email"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "email" in "Tìm kiếm" with "${SEARCH_EMAIL}"
-#     Then Show list of "users"
-
-# EDU_19 Verify that Admin can search user successfully when entering valid keyword to search box with "Số điện thoại"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "phone" in "Tìm kiếm" with "${SEARCH_PHONE}"
-#     Then Show list of "users"
-
-# EDU_20 Verify that Admin can search user successfully when entering valid keyword to search box with "Vai trò"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "text" in "Tìm kiếm" with "${SEARCH_ROLE}"
-#     Then Show list of "users"
-
-# EDU_21 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Mã người dùng"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "name code" in "Tìm kiếm" with "_RANDOM_"
-#     Then No users are shown
-
-# EDU_22 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Họ và tên"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "fullname" in "Tìm kiếm" with "_RANDOM_"
-#     Then No users are shown
-
-# EDU_23 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Email"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "email" in "Tìm kiếm" with "_RANDOM_"
-#     Then No users are shown
-
-# EDU_24 Verify that Admin can search user unsuccessfully when entering invalid keyword to search box with "Số điện thoại"
-#     When Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Search "phone" in "Tìm kiếm" with "_RANDOM_"
-#     Then No users are shown
-
-# EDU_25 Verify that Next page and Previous page, Next 10 page and Previous 10 page
-#     Login to admin
-#     And Click "Quản lý người dùng" menu
-#     And Click ">" to "next" page
-#     Then Show list of "users"
-#     And Click "<" to "prev" page
-#     Then Show list of "users"
-#     And Click ">>" to "next_10" page
-#     Then Show list of "users"
-#     And Click "<<" to "prev_10" page
-#     Then Show list of "users"
