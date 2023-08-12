@@ -21,22 +21,14 @@ ${STATE}            Evaluate  json.loads('''{}''')  json
 
 *** Keywords ***
 
-Login to Admin
-  Enter "email" in "Tên đăng nhập" with "admin_balan@getnada.com"
-  Enter "text" in "Mật khẩu" with "Ari123456#"
-  Click "Đăng Nhập" button
-  #User look message "Đăng nhập thành công" popup
-  Wait Until Element Is Visible    //*[@id='name-application']
-
-Login to Store
-  Enter "email" in "Tên đăng nhập" with "chstag11111@getnada.com"
-  Enter "text" in "Mật khẩu" with "Ari123456#"
-  Click "Đăng Nhập" button
-  #User look message "Đăng nhập thành công" popup
-  Wait Until Element Is Visible    //*[@id='name-application']
-
-Login to Supplier
-  Enter "email" in "Tên đăng nhập" with "nccstag11111@getnada.com"
+Login to ${user}
+  IF  '${user}' == 'Admin'
+    Enter "email" in "Tên đăng nhập" with "admin_balan@getnada.com"
+  ELSE IF  '${user}' == 'Store'
+    Enter "email" in "Tên đăng nhập" with "chstag11111@getnada.com"
+  ELSE IF  '${user}' == 'Supplier'
+    Enter "email" in "Tên đăng nhập" with "nccstag11111@getnada.com"
+  END
   Enter "text" in "Mật khẩu" with "Ari123456#"
   Click "Đăng Nhập" button
   #User look message "Đăng nhập thành công" popup
@@ -182,8 +174,8 @@ Enter "${type}" in "${name}" with "${text}"
   ${cnt}=                   Get Length                        ${text}
   IF  ${cnt} > 0
     Set Global Variable     ${STATE["${name}"]}               ${text}
-  END                      
-  
+  END
+
 # Click vào trường dữ liệu trên form.
 Click in "${name}" field
   ${element}=               Get Element Form Item By Name     ${name}                       //input[contains(@class, "ant-input")]
@@ -410,7 +402,11 @@ Click "${name}" link
 
 # Kiểm tra Tiêu đề khi nhấn vào link "Quên mật khẩu?"
 User look contains title is "${title}"
-  Element Text Should Be    xpath=//p[contains(text(),'${title}')]      ${title}
+  IF    '${title}' == 'Quên Mật Khẩu'
+    Element Text Should Be        //h1[contains(text(),'${title}')]          ${title}
+  ELSE IF    '${title}' != 'Quên Mật Khẩu'
+    Element Text Should Be        //p[contains(text(),'${title}')]          ${title}
+  END
 
 # Click icon "Eye" để hiện thị mật khẩu
 Click "Eye" icon to display password
@@ -493,10 +489,10 @@ Click "${icon}" to "${next}" page
     IF  '${next}' == 'next'
         Click    ${elements}[1]
     ELSE IF  '${next}' == 'prev'
-        Click    ${elements}[1]       
+        Click    ${elements}[1]
     ELSE IF  '${next}' != 'next'
         Click    ${elements}[0]
     ELSE IF  '${next}' != 'prev'
         Click    ${elements}[0]
-    END    
+    END
     Wait Until Element Spin
