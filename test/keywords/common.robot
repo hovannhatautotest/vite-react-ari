@@ -146,7 +146,7 @@ Get Random Text
     ${new_text}=            FakerLibrary.Random Int           min=00000000                  max=99999999
     ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'fax_invalid'
-    ${new_text}=            FakerLibrary.Random Int           min=0000000000000                  max=9999999999999
+    ${new_text}=            FakerLibrary.Random Int           min=1000000000000            max=9999999999999
     ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'number'
     ${new_text}=            FakerLibrary.Random Int           min=55555555                  max=999999999999

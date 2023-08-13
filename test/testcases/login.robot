@@ -135,7 +135,6 @@ LG_15: Kiểm tra gửi mã OTP không thành công khi không nhập Mã OTP
     When Click "Gửi OTP" button
     Then Required message "Mã OTP" displayed under "This is a required field!" field
 
-
 ##========================================ERROR MESSAGE FORGOT PASSWORD PAGE=========================================================
 LG_16: Kiểm tra quên mật khẩu không thành công khi nhập email không tồn tại trên hệ thống
     [Tags]    @smoketest    @regression
