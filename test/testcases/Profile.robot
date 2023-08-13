@@ -15,7 +15,7 @@ PRO_01: Kiểm tra có thể điều hướng đến trang thông tin cá nhân
   And User look contains title is "Thông tin cá nhân"
 
 ###==============================VALIDATION TEXT TAB THÔNG TIN CÁ NHÂN=================================
-PRO_02: Kiểm tra Validation text trường "Họ và tên" khi không nhập họ và tên
+PRO_02: Kiểm tra Validation text khi bỏ trống trường "Họ và tên".
   When Go to profile page
   And Enter "text" in "Họ và tên" with ""
   And Click in "Email" field

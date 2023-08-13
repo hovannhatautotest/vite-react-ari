@@ -1,12 +1,9 @@
 *** Settings ***
 Resource            ../keywords/common.robot
-
 Test Setup          Setup
 Test Teardown       Tear Down
 
-
 *** Test Cases ***
-
 # # ---------------------VERIFY VALIDATION TEXT-------------------------------------------------------
 LG_01: Kiểm tra đăng nhập không thành công khi bỏ trống Tên đăng nhập
     [Tags]    @smoketest    @regression
