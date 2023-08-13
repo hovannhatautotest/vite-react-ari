@@ -10,12 +10,7 @@
       <change beforePath="$PROJECT_DIR$/output.xml" beforeDir="false" afterPath="$PROJECT_DIR$/output.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/playwright-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/playwright-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/keywords/common.robot" beforeDir="false" afterPath="$PROJECT_DIR$/test/keywords/common.robot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/testcases/Admin_Create_Store.robot" beforeDir="false" afterPath="$PROJECT_DIR$/test/testcases/Admin_Create_Store.robot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/testcases/Admin_Create_user.robot" beforeDir="false" afterPath="$PROJECT_DIR$/test/testcases/Admin_Create_user.robot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/testcases/Admin_Edit_User.robot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/testcases/login.robot" beforeDir="false" afterPath="$PROJECT_DIR$/test/testcases/login.robot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ĐỒ ÁN TỐT NGHIỆP.docx" beforeDir="false" afterPath="$PROJECT_DIR$/ĐỒ ÁN TỐT NGHIỆP.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testcases/Profile.robot" beforeDir="false" afterPath="$PROJECT_DIR$/test/testcases/Profile.robot" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

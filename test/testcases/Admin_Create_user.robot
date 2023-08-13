@@ -344,7 +344,7 @@ EDU_13 Kiểm tra thay đổi thành công thông tin người dùng khi thay đ
 EDU_14: Kiểm tra thay đổi thành công thông tin người dùng khi thay đổi "Ghi chú"
     [Tags]    @smoketest         @regression
     When Go to page edit user
-    And Enter "text" in textarea "Ghi chú" with "_RANDOM_"
+    And Enter "paragraph" in textarea "Ghi chú" with "_RANDOM_"
     And Click "Lưu" button
     Then User look message "Lưu người dùng thành công" popup
     And User look title "Quản Lý Người Dùng"

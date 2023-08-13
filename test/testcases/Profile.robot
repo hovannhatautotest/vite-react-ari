@@ -140,6 +140,7 @@ PRO_19: Kiểm tra Validation text trường "Xác nhận mật khẩu" khi nh�
     And Enter "text" in "Xác nhận mật khẩu" with "Hovannhat@01101999"
     And Click in "Mật khẩu hiện tại" field
     And Required message "Xác nhận mật khẩu" displayed under "Xác nhận mật khẩu không chính xác" field
+
 ##============================================ERROR MESSAGE TAB THÔNG TIN CÁ NHÂN===================================================================
 PRO_20: Kiểm tra Error Message khi chỉnh sửa thông tin cá nhân với email đã tồn tại trên hệ thống
     [Tags]    @smoketest         @regression
@@ -179,17 +180,35 @@ PRO_23: Kiểm tra Error Message thay đổi mật khẩu khi nhập mật khẩ
     Then User look message "Mật khẩu trùng với mật khẩu hiện tại." popup
 
 ##===================================UPDATE PROFILE SUCCESSFULLY===============================================
-PRO_24: Kiểm tra Successfully Message khi cập nhật thông tin cá nhân
+PRO_24: Kiểm tra cập nhật thông tin cá nhân thành công khi thay đổi "Họ và tên"
     [Tags]    @smoketest         @regression
     When Go to profile page
     And Enter "text" in "Họ và tên" with "HOANG BEN"
+    And Click "Lưu" button
+    Then User look message "" popup
+
+PRO_25: Kiểm tra cập nhật thông tin cá nhân thành công khi thay đổi "Email"
+    [Tags]    @smoketest         @regression
+    When Go to profile page
     And Enter "email" in "Email" with "chstag11111@getnada.com"
+    And Click "Lưu" button
+    Then User look message "" popup
+
+PRO_26: Kiểm tra cập nhật thông tin cá nhân thành công khi thay đổi "Số điện thoại"
+    [Tags]    @smoketest         @regression
+    When Go to profile page
     And Enter "phone" in "Số điện thoại" with "341693387336"
+    And Click "Lưu" button
+    Then User look message "" popup
+
+PRO_27: Kiểm tra cập nhật thông tin cá nhân thành công khi thay đổi "Ghi chú"
+    [Tags]    @smoketest         @regression
+    When Go to profile page
     And Enter "text" in textarea "Ghi chú" with "Nulla excepturi cum itaque rem."
     And Click "Lưu" button
     Then User look message "" popup
 
-PRO_25: Kiểm tra có thể hủy thao tác thành công khi thay đổi thông tin cá nhân
+PRO_28: Kiểm tra có thể hủy thao tác thành công khi thay đổi thông tin cá nhân
     [Tags]    @smoketest         @regression
     When Go to profile page
     And Enter "fullname" in "Họ và tên" with "_RANDOM_"
@@ -203,7 +222,7 @@ PRO_25: Kiểm tra có thể hủy thao tác thành công khi thay đổi thông
     And User look in textarea "Ghi chú" with "Nulla excepturi cum itaque rem."
 
 ##==============================CHANGE PASSWORD SUCCESSFULLY=========================================
-PRO_26: Kiểm tra Successfully Message khi thay đổi mật khẩu
+PRO_29: Kiểm tra Successfully Message khi thay đổi mật khẩu
     [Tags]    @smoketest         @regression
     When Go to change password page
     And Enter "text" in "Mật khẩu hiện tại" with "Ari123456#"
@@ -217,7 +236,7 @@ PRO_26: Kiểm tra Successfully Message khi thay đổi mật khẩu
     And Click "Đổi mật khẩu" button
     Then User look message "Đổi mật khẩu thành công!" popup
 
-PRO_27: Kiểm tra có thể hủy thao tác thành công khi thay đổi mật khẩu
+PRO_30: Kiểm tra có thể hủy thao tác thành công khi thay đổi mật khẩu
     [Tags]    @smoketest         @regression
     When Go to change password page
     And Enter "text" in "Mật khẩu hiện tại" with "Ari123456#"
