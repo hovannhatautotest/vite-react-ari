@@ -2,7 +2,6 @@
 Library             Browser
 Library             FakerLibrary        locale=en_IN
 Library             String
-
 *** Variables ***
 ${BROWSER}          chromium
 ${HEADLESS}         ${False}
@@ -143,7 +142,7 @@ Get Random Text
     ${new_text}=            FakerLibrary.Random Int           min=0000000                  max=9999999
     ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'fax_valid'
-    ${new_text}=            FakerLibrary.Random Int           min=00000000                  max=99999999
+    ${new_text}=            FakerLibrary.Random Int           min=10000000                  max=99999999
     ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'fax_invalid'
     ${new_text}=            FakerLibrary.Random Int           min=1000000000000            max=9999999999999
@@ -154,12 +153,23 @@ Get Random Text
   ELSE IF  ${cnt} > 0 and '${type}' == 'otp'
     ${new_text}=            FakerLibrary.Random Int           min=100000                  max=999999
     ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == '%'
+    ${new_text}=            FakerLibrary.Random Int           min=0                  max=100
+    ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0 and '${type}' == 'color'
     ${new_text}=            FakerLibrary.Safe Hex Color
   ELSE IF  ${cnt} > 0 and '${type}' == 'date'
     ${new_text}=            FakerLibrary.Date  	              pattern=%d-%m-%Y
   ELSE IF  ${cnt} > 0 and '${type}' == 'word'
     ${new_text}=            FakerLibrary.Sentence             nb_words=500
+  ELSE IF  ${cnt} > 0 and '${type}' == '2000 word'
+    ${new_text}=            FakerLibrary.Sentence             nb_words=2000
+  ELSE IF  ${cnt} > 0 and '${type}' == 'Barcode_valid'
+    ${new_text}=            FakerLibrary.Random Int           min=0000000000000             max=9999999999999
+    ${new_text}=            Convert To String                 ${new_text}
+  ELSE IF  ${cnt} > 0 and '${type}' == 'Barcode_invalid'
+    ${new_text}=            FakerLibrary.Random Int           min=10000000000000             max=99999999999999
+    ${new_text}=            Convert To String                 ${new_text}
   ELSE IF  ${cnt} > 0
     ${new_text}=            FakerLibrary.Sentence
   END
@@ -227,7 +237,12 @@ Click select "${name}" with "${text}"
   Click                     ${element}
   ${element}=               Get Element Form Item By Name     ${name}                       //*[contains(@class, "ant-select-selection-search-input")]
   Fill Text                                                   ${element}                    ${text}
-  Click                     xpath=//*[contains(@class, "ant-select-item-option") and @title="${text}"]
+  ${element}=             Get Elements      xpath=//*[contains(@class, "ant-select-item-option") and @title="${text}"]
+  IF  '${name}' == 'Thuế bán'
+    Click                     ${element}[1]
+  ELSE IF  '${name}' != 'Thuế bán'
+    Click                     ${element}[0]
+  END
   ${cnt}=                   Get Length                        ${text}
   IF  ${cnt} > 0
     Set Global Variable     ${STATE["${name}"]}               ${text}
@@ -241,8 +256,13 @@ Enter "${type}" in editor "${name}" with "${text}"
 
 # Upload file
 Select file in "${name}" with "${text}"
-  ${element}=               Get Element Form Item By Name     ${name}                       //input[@type = "file"]
-  Upload File By Selector   ${element}                        test/upload/${text}
+  ${element}=                     Get Elements        //span[1]/div[1]/div[1]
+  Click       ${element}[0]
+  Sleep       5            ##Tự thao tác với cửa sổ Dialog. path: D:\BALANCE\vite-react-balance\test\upload\vaychinh.jpg
+
+#Select file in "${name}" with "${text}"
+#  ${element}=               Get Element Form Item By Name     ${name}                       //input[@type = "file"]
+#  Upload File By Selector   ${element}                        test/upload/${text}
 
 # Chọn một lựa chọn radio trên form.
 Click radio "${text}" in line "${name}"
@@ -342,8 +362,7 @@ Click "${text}" menu
 # Nhấp vào submenu có nội dung là "${text}".
 Click "${text}" sub menu
   Wait Until Element Spin
-  Click                     xpath=//a[contains(@class, "sub-menu") and descendant::span[contains(text(), "${text}")]]
-  Wait Until Element Spin
+  Click                     xpath=//a[contains(text(),'${text}')]
   Wait Until Element Spin
 
 # Kiểm tra xem thông báo lỗi có hiển thị đúng vị trí mong đợi không
@@ -468,6 +487,7 @@ Show list of "${name}"
             ${count}=    Evaluate    ${count} + 1
             ${stt}=    Evaluate    ${stt} + 1
         END
+
     ELSE IF  '${name}' == 'Stores'
         FOR  ${i}  IN  @{elements}
             ${store_code}     Get Text      //tbody/tr[${count}]/td[1]
@@ -477,6 +497,20 @@ Show list of "${name}"
             ${store_user}     Get Text      //tbody/tr[${count}]/td[5]
             ${phone}          Get Text      //tbody/tr[${count}]/td[6]
             Log To Console    ${stt}. Mã cửa hàng: ${store_code} | Tên cửa hàng: ${store_name} | Địa chỉ: ${address} | Loại cửa hàng: ${store_type} | Người đại diện: ${store_user} | Số điện thoại: ${phone}
+            Log To Console    ================================================================================================================================================================================
+            ${count}=    Evaluate    ${count} + 1
+            ${stt}=    Evaluate    ${stt} + 1
+        END
+
+    ELSE IF  '${name}' == 'Suppliers'
+        FOR  ${i}  IN  @{elements}
+            ${Mã NCC}               Get Text        //tbody/tr[${count}]/td[1]
+            ${Tên NCC}              Get Text        //tbody/tr[${count}]/td[2]
+            ${Địa chỉ}              Get Text        //tbody/tr[${count}]/td[3]
+            ${Người đại diện}       Get Text        //tbody/tr[${count}]/td[4]
+            ${Số điện thoại}        Get Text        //tbody/tr[${count}]/td[5]
+            ${Trạng thái}           Get Text        //tbody/tr[${count}]/td[6]
+            Log To Console    ${stt}. Mã NCC: ${Mã NCC} | Tên nhà cung cấp: ${Tên NCC} | Địa chỉ: ${Địa chỉ} | Người đại diện: ${Người đại diện} | Số điện thoại: ${Số điện thoại} | Trạng thái: ${Trạng thái}
             Log To Console    ================================================================================================================================================================================
             ${count}=    Evaluate    ${count} + 1
             ${stt}=    Evaluate    ${stt} + 1
